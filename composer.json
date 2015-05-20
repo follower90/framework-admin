@@ -1,0 +1,10 @@
+{
+    "name": "follower/admin",
+    "authors": [
+        {
+            "name": "follower",
+            "email": "vitfollower@gmail.com"
+        }
+    ],
+    "require": {}
+}
