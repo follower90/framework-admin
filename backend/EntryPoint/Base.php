@@ -12,7 +12,7 @@ class Base extends \Core\EntryPoint
 		Config::set('site.language', 'ru');
 		Config::set('site.url', '/admin');
 
-		\Admin\Routes\Routes::register();
+		\Admin\Routes\Admin::register();
 
 		$this->setLib('\Admin\Controller');
 

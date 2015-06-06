@@ -2,7 +2,7 @@
 
 namespace Admin\Routes;
 
-class Routes
+class Admin
 {
 	public static function register()
 	{

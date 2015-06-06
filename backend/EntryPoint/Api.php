@@ -23,4 +23,24 @@ class Api extends \Core\EntryPoint
 
 		$app->run();
 	}
+
+	public function debug()
+	{
+		if ($this->request('cmsDebug') == 'on') {
+			return true;
+		}
+
+		return false;
+	}
+
+	public function output($data)
+	{
+		header('Content-Type: application/json');
+
+		if ($this->debug()) {
+			header('Content-Type: text/html');
+		}
+
+		return json_encode($data);
+	}
 }
