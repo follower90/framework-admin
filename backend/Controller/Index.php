@@ -6,6 +6,6 @@ class Index extends \Core\Controller
 {
 	public function methodIndex($args)
 	{
-		echo 'Admin panel, motherfuckers';
+		return $this->view->render($this->_appPath . '/vendor/follower/admin/templates/base.phtml', []);
 	}
 }
