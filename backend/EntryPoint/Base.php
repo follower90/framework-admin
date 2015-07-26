@@ -17,6 +17,7 @@ class Base extends \Core\EntryPoint
 		$this->setLib('\Admin\Controller');
 
 		$app = new App($this);
+		$app->setVendorPath('/vendor/follower/admin');
 
 		$authorize = new \Core\Authorize('Admin');
 		$authorize->getUser();

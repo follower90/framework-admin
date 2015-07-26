@@ -6,6 +6,7 @@ class Index extends \Core\Controller
 {
 	public function methodIndex($args)
 	{
-		return $this->view->render('../vendor/follower/admin/public/templates/base.phtml', []);
+		$data['content'] = 'TEST';
+		return $this->view->render('../vendor/follower/admin/public/templates/base.phtml', $data);
 	}
 }
