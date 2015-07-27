@@ -2,20 +2,46 @@
 
 namespace Admin\Controller;
 
+use \Core\Router;
+
 class Controller extends \Core\Controller
 {
-	private $_scripts = [];
-	private $_styles = [];
+	protected $_scripts = [];
+	protected $_styles = [];
+
+	protected $_data = [];
+
+	protected $_user = false;
 
 	public function __construct()
 	{
 		parent::__construct();
+
+		$authorize = new \Core\Authorize('Admin');
+		$this->_user = $authorize->getUser();
+
+		$this->prepareResources();
 
 		// set global path to public folder (for loading templates, and other resources)
 		$this->view->setDefaultPath('/vendor/follower/admin/public');
 	}
 
 	public function render($data)
+	{
+		$this->_data = array_merge($this->_data, $data);
+
+		if (!$this->_user) {
+			if (Router::get('uri') != '/admin/login') {
+				Router::redirect('/admin/login');
+			}
+
+			return $this->view->render('templates/login.phtml', $this->_data);
+		}
+		
+		return $this->view->render('templates/base.phtml', $this->_data);
+	}
+
+	protected function prepareResources()
 	{
 		$this->addCssPath([
 			'/bower_components/bootstrap/dist/css/bootstrap.min.css',
@@ -31,7 +57,8 @@ class Controller extends \Core\Controller
 			'/dist/js/sb-admin-2.js',
 		]);
 
-		return $this->_render($data);
+		$this->_data['styles'] = $this->_styles;
+		$this->_data['scripts'] = $this->_scripts;
 	}
 
 	protected function addJavaScriptPath($paths = [])
@@ -44,13 +71,5 @@ class Controller extends \Core\Controller
 	{
 		if (!is_array($paths)) $paths = [$paths];
 		$this->_styles = array_merge($paths, $this->_styles);
-	}
-
-	private function _render($data)
-	{
-		$data['styles'] = $this->_styles;
-		$data['scripts'] = $this->_scripts;
-
-		return $this->view->render('templates/base.phtml', $data);
 	}
 }

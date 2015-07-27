@@ -20,7 +20,7 @@ class Base extends \Core\EntryPoint
 		$app->setVendorPath('/vendor/follower/admin');
 
 		$authorize = new \Core\Authorize('Admin');
-		$authorize->getUser();
+		Config::set('user', $authorize->getUser());
 
 		$app->run();
 	}
