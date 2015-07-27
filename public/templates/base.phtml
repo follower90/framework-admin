@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Follower Admin Dashboard</title>
+    <title>Admin Dashboard</title>
 
-    <?php $this->load('css', '/public/bower_components/bootstrap/dist/css/bootstrap.min.css'); ?>
-    <?php $this->load('css', '/public/bower_components/metisMenu/dist/metisMenu.min.css'); ?>
-    <?php $this->load('css', '/public/dist/css/sb-admin-2.css'); ?>
-    <?php $this->load('css', '/public/bower_components/font-awesome/css/font-awesome.min.css'); ?>
-
+    <?php $this->load('css', '/bower_components/bootstrap/dist/css/bootstrap.min.css'); ?>
+    <?php $this->load('css', '/bower_components/metisMenu/dist/metisMenu.min.css'); ?>
+    <?php $this->load('css', '/bower_components/morrisjs/morris.css'); ?>
+    <?php $this->load('css', '/dist/css/timeline.css'); ?>
+    <?php $this->load('css', '/dist/css/sb-admin-2.css'); ?>
+    <?php $this->load('css', '/bower_components/font-awesome/css/font-awesome.min.css'); ?>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -24,16 +25,19 @@
 <body>
     <div id="wrapper">
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <?php include 'topbar.phtml'; ?>
-            <?php include 'sidebar.phtml'; ?>
+            <?php $this->load('phtml', '/templates/topbar.phtml'); ?>
+            <?php $this->load('phtml', '/templates/sidebar.phtml'); ?>
         </nav>
         <div id="page-wrapper">
             <?php echo $vars['content']; ?>
         </div>
     </div>
-    <?php $this->load('js', '/public/bower_components/jquery/dist/jquery.min.js'); ?>
-    <?php $this->load('js', '/public/bower_components/bootstrap/dist/js/bootstrap.min.js'); ?>
-    <?php $this->load('js', '/public/bower_components/metisMenu/dist/metisMenu.min.js'); ?>
-    <?php $this->load('js', '/public/dist/js/sb-admin-2.js'); ?>
+    <?php $this->load('js', '/bower_components/jquery/dist/jquery.min.js'); ?>
+    <?php $this->load('js', '/bower_components/bootstrap/dist/js/bootstrap.min.js'); ?>
+    <?php $this->load('js', '/bower_components/metisMenu/dist/metisMenu.min.js'); ?>
+    <?php $this->load('js', '/bower_components/raphael/raphael-min.js'); ?>
+    <?php $this->load('js', '/bower_components/morrisjs/morris.min.js'); ?>
+    <?php $this->load('js', '/js/morris-data.js'); ?>
+    <?php $this->load('js', '/dist/js/sb-admin-2.js'); ?>
 </body>
 </html>

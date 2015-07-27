@@ -2,11 +2,11 @@
 
 namespace Admin\Controller;
 
-class Index extends \Core\Controller
+class Index extends Controller
 {
 	public function methodIndex($args)
 	{
-		$data['content'] = 'TEST';
-		return $this->view->render('../vendor/follower/admin/public/templates/base.phtml', $data);
+		$data['content'] = $this->view->render('templates/index.phtml', $args);
+		return $this->render($data);
 	}
 }
