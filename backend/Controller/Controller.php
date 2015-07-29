@@ -67,20 +67,20 @@ class Controller extends \Core\Controller
 			'/bower_components/metisMenu/dist/metisMenu.min.js',
 			'/dist/js/sb-admin-2.js',
 		]);
-
-		$this->_data['styles'] = $this->_styles;
-		$this->_data['scripts'] = $this->_scripts;
 	}
 
 	protected function addJavaScriptPath($paths = [])
 	{
 		if (!is_array($paths)) $paths = [$paths];
 		$this->_scripts = array_merge($paths, $this->_scripts);
+		$this->_data['scripts'] = $this->_scripts;
 	}
 
 	public function addCssPath($paths = [])
 	{
 		if (!is_array($paths)) $paths = [$paths];
+
 		$this->_styles = array_merge($paths, $this->_styles);
+		$this->_data['styles'] = $this->_styles;
 	}
 }
