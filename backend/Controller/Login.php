@@ -3,7 +3,6 @@
 namespace Admin\Controller;
 
 use \Admin\Object\Admin;
-use \Core\Authorizer;
 use \Core\Router;
 
 class Login extends Controller
