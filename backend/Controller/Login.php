@@ -23,7 +23,18 @@ class Login extends Controller
 		}
 
 		if (isset($args['login'], $args['password'])) {
-			$this->login();
+			$remember = isset($args['remember']) ? true : false;
+			$hash = function($password) {
+				return Admin::hashPassword($password);
+			};
+
+			$this->_authorize->login($this->request('login'), $this->request('password'), $hash, $remember);
+
+			if (!$this->_authorize->getUser()) {
+				$this->view->addNotice('error', 'Incorrect Password');
+			} else {
+				Router::redirect('/admin');
+			}
 		}
 
 		$this->prepareResources();
@@ -34,20 +45,7 @@ class Login extends Controller
 		return $this->view->render('templates/login.phtml', $data);
 	}
 
-	public function login()
-	{
-		$this->_authorize->login($this->request('login'), $this->request('password'),
-			function($password) {
-				return Admin::hashPassword($password);
-			}
-		);
-
-		if (!$this->_authorize->getUser()) {
-			$this->view->addNotice('error', 'error', 'Incorrect Password');
-		}
-	}
-	
-	public function logout()
+	public function methodLogout()
 	{
 		$this->_authorize->logout();
 		Router::redirect('/admin/login');
