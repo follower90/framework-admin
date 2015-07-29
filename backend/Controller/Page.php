@@ -14,7 +14,7 @@ class Page extends Controller
 			$data['limit'] = $data['onpage'];
 		}
 
-		$data['page'] = $args['page'];
+		$data['page'] = (int)$args['page'];
 		$data['pages'] = \Core\Orm::find('Page', [], [], $data)->getData();
 		$data['total'] = \Core\Orm::count('Page', [], []);
 

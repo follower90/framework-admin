@@ -61,12 +61,11 @@
 					<ul class="pagination">
 
 						<?php
-							if ($vars['page'] > 1) echo '<li class="paginate_button previous" aria-controls="dataTables-example" tabindex="0"
+							if ($vars['total'] > count($vars['pages'])) {
+
+								if ($vars['page'] > 1) echo '<li class="paginate_button previous" aria-controls="dataTables-example" tabindex="0"
 						    id="dataTables-example_previous"><a href="?page='.($vars['page'] - 1).'">Previous</a></li>';
 
-						?>
-						<?php
-							if ($vars['total'] > count($vars['pages'])) {
 							for ($page = 1; ($page-1) * $vars['onpage'] < $vars['total']; $page++) {
 						?>
 
@@ -75,12 +74,13 @@
 								</a>
 							</li>
 
-						<?php }} ?>
-						<?php
-						if ($vars['page']*$vars['onpage'] < $vars['total']) echo '<li class="paginate_button next" aria-controls="dataTables-example" tabindex="0"
+						<?php }
+
+								if ($vars['page']*$vars['onpage'] < $vars['total']) echo '<li class="paginate_button next" aria-controls="dataTables-example" tabindex="0"
 						    id="dataTables-example_next"><a href="?page='.($vars['page']+1).'">Next</a></li>';
 
-						?>
+							} ?>
+
 					</ul>
 				</div>
 			</div>
