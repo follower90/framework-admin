@@ -4,8 +4,12 @@ namespace Admin;
 
 class Notice extends \Core\Notice
 {
+	private $_typesMap = [
+		'error' => 'danger',
+	];
+
 	function show()
 	{
-		return '<div class="alert alert-' . $this->_type . '">' . $this->_text . '</div>';
+		return '<div class="alert alert-' . $this->_typesMap[$this->_type] . '">' . $this->_text . '</div>';
 	}
 }

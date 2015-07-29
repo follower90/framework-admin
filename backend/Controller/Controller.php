@@ -24,9 +24,12 @@ class Controller extends \Core\Controller
 
 		// set global path to public folder (for loading templates, and other resources)
 		$this->view->setDefaultPath('/vendor/follower/admin/public');
+
+		// set object for rendering notices
+		$this->view->setNoticeObject('\Admin\Notice');
 	}
 
-	public function render($data)
+	public function render($data = [])
 	{
 		$this->_data = array_merge($this->_data, $data);
 
@@ -39,6 +42,14 @@ class Controller extends \Core\Controller
 		}
 		
 		return $this->view->render('templates/base.phtml', $this->_data);
+	}
+
+	public function renderPage($template, $data = [])
+	{
+		$this->prepareResources();
+
+		$this->_data = array_merge($this->_data, $data);
+		return $this->view->render($template, $this->_data);
 	}
 
 	protected function prepareResources()
