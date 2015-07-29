@@ -6,7 +6,17 @@ class Page extends Controller
 {
 	public function methodIndex($args)
 	{
-		$data['pages'] = \Core\Orm::find('Page')->getData();
+		$data = [];
+		$data['onpage'] = 10;
+
+		if (isset($args['page'])) {
+			$data['offset'] = ((int)$args['page'] - 1) * $data['onpage'];
+			$data['limit'] = $data['onpage'];
+		}
+
+		$data['page'] = $args['page'];
+		$data['pages'] = \Core\Orm::find('Page', [], [], $data)->getData();
+		$data['total'] = \Core\Orm::count('Page', [], []);
 
 		$data['content'] = $this->view->render('templates/pages/index.phtml', $data);
 
