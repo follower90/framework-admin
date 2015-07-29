@@ -31,7 +31,7 @@ class Login extends Controller
 			$this->_authorize->login($this->request('login'), $this->request('password'), $hash, $remember);
 
 			if (!$this->_authorize->getUser()) {
-				$this->view->addNotice('danger', 'Incorrect Password');
+				$this->view->addNotice(\Admin\Notice::create('danger', 'Incorrect login or password'));
 			} else {
 				Router::redirect('/admin');
 			}
