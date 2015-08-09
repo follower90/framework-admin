@@ -18,7 +18,7 @@ class Page extends \Core\Object
 						'default' => '',
 						'null' => false,
 					],
-					'body' => [
+					'text' => [
 						'type' => 'text',
 						'default' => '',
 						'null' => false,
