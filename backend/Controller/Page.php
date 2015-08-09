@@ -27,4 +27,40 @@ class Page extends Controller
 
 		return $this->render($data);
 	}
+
+	public function methodAdd($args)
+	{
+		$data['content'] = $this->view->render('templates/pages/add.phtml', []);
+		return $this->render($data);
+	}
+
+	public function methodEdit($args)
+	{
+		$data['page'] = \Core\Orm::load('Page', $args['id'])->getValues();
+		$data['content'] = $this->view->render('templates/pages/edit.phtml', $data);
+
+		return $this->render($data);
+	}
+
+	public function methodSave($args)
+	{
+		if (!empty($args['id'])) {
+			$page = \Core\Orm::load('Page', $args['id']);
+		} else {
+			$page = \Core\Orm::create('Page');
+		}
+
+		$page->setValues($args);
+		\Core\Orm::save($page);
+
+		\Core\Router::redirect('/admin/page/edit?id=' . $page->getId());
+	}
+
+	public function methodDelete($args)
+	{
+		$page = \Core\Orm::load('Page', $args['id']);
+
+		\Core\Orm::delete($page);
+		\Core\Router::redirect('/admin/page/');
+	}
 }
