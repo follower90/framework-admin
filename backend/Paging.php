@@ -6,8 +6,6 @@ use \Core\View;
 
 class Paging
 {
-	const TEMPLATE = '/vendor/follower/admin/public/templates/common/paging.phtml';
-
 	private $_class;
 	private $_curPage;
 	private $_onPage;
@@ -26,6 +24,7 @@ class Paging
 	{
 		$paging = new static($className, $params['page_size'], $params['on_page']);
 		$paging->_calculate();
+
 		return $paging;
 	}
 
@@ -33,10 +32,10 @@ class Paging
 	{
 		$this->_paging['offset'] = ($this->_curPage - 1) * $this->_onPage;
 		$this->_paging['limit'] = $this->_onPage;
-		$this->_paging['total'] = \Core\Orm::count($this->_class, [], []);
 		$this->_paging['page'] = $this->_curPage;
 		$this->_paging['onpage'] = $this->_onPage;
 
+		$this->_paging['total'] = \Core\Orm::count($this->_class, [], []);
 		$this->_data = \Core\Orm::find($this->_class, [], [], $this->_paging)->getData();
 
 		$this->_paging['items'] = count($this->_data);
