@@ -8,5 +8,9 @@ class Admin
 	{
 		// No custom routes added yet.
 		// To add them use Router::register method
+
+		// Aliases
+		\Core\Router::alias('pages', 'Page');
+		//\Core\Router::alias('page', 'Error');
 	}
 }
