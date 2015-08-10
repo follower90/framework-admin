@@ -15,7 +15,7 @@ class Page extends Controller
 		$pageSize = 2;
 		$currentPage = empty($args['page']) ? 1 : (int)$args['page'];
 
-		$paginate = Paging::create('Page', ['page_size' => $pageSize,'current_page' => $currentPage ]);
+		$paginate = Paging::create('Page', ['page_size' => $pageSize, 'current_page' => $currentPage ]);
 
 		$data['paging'] = $paginate->getPaging();
 		$data['pages'] = $paginate->getObjects();

@@ -22,7 +22,7 @@ class Paging
 
 	public static function create($className, $params = [])
 	{
-		$paging = new static($className, $params['page_size'], $params['on_page']);
+		$paging = new static($className, $params['current_page'], $params['page_size']);
 		$paging->_calculate();
 
 		return $paging;
@@ -35,9 +35,9 @@ class Paging
 		$this->_paging['page'] = $this->_curPage;
 		$this->_paging['onpage'] = $this->_onPage;
 
-		$this->_paging['total'] = \Core\Orm::count($this->_class, [], []);
 		$this->_data = \Core\Orm::find($this->_class, [], [], $this->_paging)->getData();
 
+		$this->_paging['total'] = \Core\Orm::count($this->_class, [], []);
 		$this->_paging['items'] = count($this->_data);
 	}
 
