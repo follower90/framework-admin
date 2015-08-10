@@ -59,6 +59,8 @@ class Controller extends \Core\Controller
 			'/bower_components/metisMenu/dist/metisMenu.min.css',
 			'/dist/css/sb-admin-2.css',
 			'/bower_components/font-awesome/css/font-awesome.min.css',
+			'/bower_components/datatables-responsive/css/dataTables.responsive.css',
+			'/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css',
 		]);
 
 		$this->addJavaScriptPath([

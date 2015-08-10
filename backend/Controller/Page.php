@@ -2,28 +2,25 @@
 
 namespace Admin\Controller;
 
+use \Admin\Paging;
+use \Core\Orm;
+use \Core\Router;
+
 class Page extends Controller
 {
 	public function methodIndex($args)
 	{
 		$data = [];
-		$data['onpage'] = 10;
 
-		if (isset($args['page'])) {
-			$data['offset'] = ((int)$args['page'] - 1) * $data['onpage'];
-			$data['limit'] = $data['onpage'];
-		}
+		$pageSize = 2;
+		$currentPage = empty($args['page']) ? 1 : (int)$args['page'];
 
-		$data['page'] = (int)$args['page'];
-		$data['pages'] = \Core\Orm::find('Page', [], [], $data)->getData();
-		$data['total'] = \Core\Orm::count('Page', [], []);
+		$paginate = Paging::create('Page', ['page_size' => $pageSize,'current_page' => $currentPage ]);
+
+		$data['paging'] = $paginate->getPaging();
+		$data['pages'] = $paginate->getObjects();
 
 		$data['content'] = $this->view->render('templates/pages/index.phtml', $data);
-
-		$this->addCssPath([
-			'/bower_components/datatables-responsive/css/dataTables.responsive.css',
-			'/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css',
-		]);
 
 		return $this->render($data);
 	}
@@ -36,7 +33,7 @@ class Page extends Controller
 
 	public function methodEdit($args)
 	{
-		$data['page'] = \Core\Orm::load('Page', $args['id'])->getValues();
+		$data['page'] = Orm::load('Page', $args['id'])->getValues();
 		$data['content'] = $this->view->render('templates/pages/edit.phtml', $data);
 
 		return $this->render($data);
@@ -45,22 +42,22 @@ class Page extends Controller
 	public function methodSave($args)
 	{
 		if (!empty($args['id'])) {
-			$page = \Core\Orm::load('Page', $args['id']);
+			$page = Orm::load('Page', $args['id']);
 		} else {
-			$page = \Core\Orm::create('Page');
+			$page = Orm::create('Page');
 		}
 
 		$page->setValues($args);
-		\Core\Orm::save($page);
+		Orm::save($page);
 
-		\Core\Router::redirect('/admin/page/edit?id=' . $page->getId());
+		Router::redirect('/admin/page/edit?id=' . $page->getId());
 	}
 
 	public function methodDelete($args)
 	{
-		$page = \Core\Orm::load('Page', $args['id']);
+		$page = Orm::load('Page', $args['id']);
 
-		\Core\Orm::delete($page);
-		\Core\Router::redirect('/admin/page/');
+		Orm::delete($page);
+		Router::redirect('/admin/page/');
 	}
 }
