@@ -18,7 +18,7 @@
 		    </div>
 		    <div class="form-group">
 		        <label>Description</label>
-		        <textarea class="form-control" name="text"><?=$vars['page']['text'];?></textarea>
+		        <textarea id="editor" class="form-control" name="text"><?=$vars['page']['text'];?></textarea>
 		    </div>
 		   	 <div class="form-group">
 		        <input type="submit" class="btn btn-default" value="Save" />
@@ -27,3 +27,7 @@
 		</form>
 	</div>
 </div>
+
+<script>
+	CKEDITOR.replace('editor');
+</script>

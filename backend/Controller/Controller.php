@@ -68,6 +68,7 @@ class Controller extends \Core\Controller
 			'/bower_components/bootstrap/dist/js/bootstrap.min.js',
 			'/bower_components/metisMenu/dist/metisMenu.min.js',
 			'/dist/js/sb-admin-2.js',
+			'/plugin/ckeditor/ckeditor.js',
 		]);
 	}
 
