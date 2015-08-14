@@ -17,40 +17,38 @@
 
 		<div class="row">
 			<div class="col-lg-12">
-				<div class="panel panel-default">
+				<div class="panel panel-info">
 					<div class="panel-heading">
 						Pages list
 					</div>
 					<!-- /.panel-heading -->
 					<div class="panel-body">
-						<div class="table-responsive">
-							<table class="table table-hover">
+							<table class="table table-hover table-striped table-bordered dataTable">
 								<thead>
 									<tr>
 										<th>#</th>
 										<th>Name</th>
 										<th>Url</th>
-										<th>Actions</th>
+										<th width="90">Actions</th>
 									</tr>
 								</thead>
 								<tbody>
 									<?php 
 										foreach ($vars['pages'] as $row) {
 											echo '
-	                                        	<tr>
+	                                            <tr>
 		                                            <td>' . $row['id'] . '</td>
 		                                            <td>' . $row['name'] . '</td>
 		                                            <td>' . $row['url'] . '</td>
 		                                            <td>
-		                                            <a href="/admin/page/edit?id=' . $row['id'] . '">Edit</a> | 
-		                                            <a href="/admin/page/delete?id=' . $row['id'] . '">Delete</a>
+		                                            <a class="blue" href="/admin/page/edit?id=' . $row['id'] . '"><i class="fa fa-pencil"></i> Edit</a> |
+		                                            <a class="red" href="/admin/page/delete?id=' . $row['id'] . '"><i class="fa fa-times"></i> Delete</a>
 		                                            </td>
 		                                        </tr>';
 										}
 									?>
 								</tbody>
 							</table>
-						</div>
 					</div>
 				</div>
 			</div>
