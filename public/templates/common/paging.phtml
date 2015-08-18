@@ -24,7 +24,8 @@
 
 					<?php for ($page = 1; ($page-1) * $vars['onpage'] < $vars['total']; $page++) { ?>
 
-						<li class="paginate_button " aria-controls="dataTables-example" tabindex="0"><a href="?page=<?=$page;?>">
+						<li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
+							<a href="?page=<?=$page;?>">
 								<?=$page;?>
 							</a>
 						</li>
