@@ -32,8 +32,6 @@ class Paging
 	{
 		$this->_paging['offset'] = ($this->_curPage - 1) * $this->_onPage;
 		$this->_paging['limit'] = $this->_onPage;
-		$this->_paging['page'] = $this->_curPage;
-		$this->_paging['onpage'] = $this->_onPage;
 
 		$this->_data = \Core\Orm::find($this->_class, [], [], $this->_paging)->getData();
 
@@ -43,10 +41,45 @@ class Paging
 
 	public function getPaging()
 	{
+		if ($this->needsPaging()) {
+			$this->_paging['page'] = $this->_curPage;
+			$this->_paging['onpage'] = $this->_onPage;
+
+			$this->_paging['previous'] = $this->_paging['page'] - 1;
+			$this->_paging['next'] = $this->_paging['page'] + 1;
+		}
+
 		$view = new View();
 		$view->setDefaultPath('/vendor/follower/admin/public');
 
+		$view->paging = $this;
 		return $view->render('templates/common/paging.phtml', $this->_paging);
+	}
+
+	public function needsPaging()
+	{
+		return $this->_paging['total'] > $this->_paging['items'];
+	}
+
+	public function firstItemOnPage()
+	{
+		$offset = ($this->_paging['offset'] > 0) ? $this->_paging['offset'] : 1;
+		return $this->_paging['page'] * $offset;
+	}
+
+	public function lastItemOnPage()
+	{
+		return $this->_paging['items'] + $this->_paging['onpage'] * ($this->_paging['page'] - 1);
+	}
+
+	public function isFirstPage()
+	{
+		return $this->_paging['page'] == 1;
+	}
+
+	public function isLastPage()
+	{
+		return $this->_paging['page'] * $this->_paging['onpage'] >= $this->_paging['total'];
 	}
 
 	public function getObjects()
