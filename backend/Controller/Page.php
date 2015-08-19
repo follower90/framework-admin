@@ -2,7 +2,7 @@
 
 namespace Admin\Controller;
 
-use \Admin\Paging;
+use \Core\Paging;
 use \Core\Orm;
 use \Core\Router;
 
@@ -33,7 +33,7 @@ class Page extends Controller
 
 	public function methodEdit($args)
 	{
-		$data['page'] = Orm::load('Page', $args['id'])->getValues();
+		$data['page'] = Orm::load('Page', $args['edit'])->getValues();
 		$data['content'] = $this->view->render('templates/pages/edit.phtml', $data);
 
 		return $this->render($data);
@@ -50,12 +50,12 @@ class Page extends Controller
 		$page->setValues($args);
 		Orm::save($page);
 
-		Router::redirect('/admin/page/edit?id=' . $page->getId());
+		Router::redirect('/admin/page/edit/' . $page->getId());
 	}
 
 	public function methodDelete($args)
 	{
-		$page = Orm::load('Page', $args['id']);
+		$page = Orm::load('Page', $args['delete']);
 
 		Orm::delete($page);
 		Router::redirect('/admin/page/');
