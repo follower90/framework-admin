@@ -35,10 +35,4 @@ class Login extends Controller
 
 		return $this->renderPage('templates/login.phtml');
 	}
-
-	public function methodLogout()
-	{
-		$this->_authorize->logout();
-		Router::redirect('/admin/login');
-	}
 }

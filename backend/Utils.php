@@ -10,6 +10,6 @@ class Utils
 			return $data->getValue('value');
 		}
 
-		return false;
+		return $key;
 	}
 }
