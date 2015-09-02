@@ -13,7 +13,7 @@ class Page extends Controller
 		$data = [];
 
 		$paging = Paging::create('Page', [
-			'page_size' => 1,
+			'page_size' => 10,
 			'current_page' => empty($args['page']) ? 1 : (int)$args['page']
 		]);
 
@@ -25,15 +25,29 @@ class Page extends Controller
 		return $this->render($data);
 	}
 
-	public function methodAdd($args)
+	public function methodNew($args)
 	{
-		$data['content'] = $this->view->render('templates/pages/add.phtml', []);
+		$data['form'] = $this->buildForm('page', [], [
+			['field' => 'name', 'name' => 'Name', 'type' => 'input'],
+			['field' => 'url', 'name' => 'Url', 'type' => 'input'],
+			['field' => 'text', 'name' => 'Text', 'type' => 'textarea'],
+		]);
+
+		$data['content'] = $this->view->render('templates/pages/add.phtml', $data);
 		return $this->render($data);
 	}
 
 	public function methodEdit($args)
 	{
 		$data['page'] = Orm::load('Page', $args['edit'])->getValues();
+
+		$data['form'] = $this->buildForm('page', $data['page'], [
+			['field' => 'id', 'type' => 'hidden'],
+			['field' => 'name', 'name' => 'Name', 'type' => 'input'],
+			['field' => 'url', 'name' => 'Url', 'type' => 'input'],
+			['field' => 'text', 'name' => 'Text', 'type' => 'textarea'],
+		]);
+
 		$data['content'] = $this->view->render('templates/pages/edit.phtml', $data);
 
 		return $this->render($data);
@@ -53,11 +67,71 @@ class Page extends Controller
 		Router::redirect('/admin/page/edit/' . $page->getId());
 	}
 
+	public function methodDuplicate($args)
+	{
+		$page = Orm::load('Page', $args['duplicate']);
+		$data = $page->getValues();
+		unset($data['id']);
+
+		$newPage = Orm::create('Page');
+		$newPage->setValues($data);
+		Orm::save($newPage);
+
+		Router::redirect('/admin/page/');
+	}
+
 	public function methodDelete($args)
 	{
 		$page = Orm::load('Page', $args['delete']);
 
 		Orm::delete($page);
 		Router::redirect('/admin/page/');
+	}
+
+
+	////temporarily here
+	////temporarily looks like shit
+	////@todo
+	public static function buildForm($controller, $values, $fields)
+	{
+		$result = '<form role="form" action="/admin/' . $controller . '/save">';
+		$counter = 0;
+
+		foreach ($fields as $data) {
+			$field = $data['field'];
+			$inputVal = $values[$field] ? ' value="' . $values[$field] . '"' : '' ;
+
+			switch ($data['type']) {
+				case 'hidden':
+					$result .= '<input type="hidden" name="id" ' . $inputVal . ' />';
+					break;
+
+				case 'input':
+					$result .= '<div class="form-group">
+				        <label>' . $data['name'] . '</label>
+				        <input class="form-control" name="' . $field . '" ' . $inputVal . ' />
+				    </div>';
+					break;
+				case 'textarea':
+					$result .= '<div class="form-group">
+					        <label>' . $data['name'] . '</label>
+					        <textarea id="editor-' . ++$counter . '" class="form-control" name="' . $field . '">' . ($values[$field] ? ' ' . $values[$field] : '' ) . '</textarea>
+					        <script>CKEDITOR.replace(\'editor-' . $counter . '\');</script>
+					    </div>';
+					break;
+			}
+		}
+
+		$result .= '<div class="form-group">
+		        <input type="submit" class="btn btn-default" value="Save" />
+		        <input type="button" class="btn btn-cancel"
+		        onclick="location.href=\'/admin/' . $controller . '\';" value="Cancel" />
+		    </div>';
+
+
+
+		$result .= '</form>';
+
+		return $result;
 	}
 }

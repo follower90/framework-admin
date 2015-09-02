@@ -2,6 +2,8 @@
 
 namespace Admin\Routes;
 
+use Core\Router;
+
 class Api
 {
 	public static function register()
