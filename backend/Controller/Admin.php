@@ -27,7 +27,7 @@ class Admin extends Controller
 
 	public function methodNew($args)
 	{
-		$data['form'] = $this->buildForm('page', [], [
+		$data['form'] = $this->buildForm('admin', [], [
 			['field' => 'name', 'name' => 'Name', 'type' => 'input'],
 			['field' => 'url', 'name' => 'Url', 'type' => 'input'],
 			['field' => 'text', 'name' => 'Text', 'type' => 'textarea'],
@@ -41,11 +41,11 @@ class Admin extends Controller
 	{
 		$data['page'] = Orm::load('Admin', $args['edit'])->getValues();
 
-		$data['form'] = $this->buildForm('page', $data['page'], [
+		$data['form'] = $this->buildForm('admin', $data['page'], [
 			['field' => 'id', 'type' => 'hidden'],
 			['field' => 'name', 'name' => 'Name', 'type' => 'input'],
-			['field' => 'url', 'name' => 'Url', 'type' => 'input'],
-			['field' => 'text', 'name' => 'Text', 'type' => 'textarea'],
+			['field' => 'login', 'name' => 'Login', 'type' => 'input'],
+			['field' => 'permissions', 'name' => 'Permissions', 'type' => 'selectize'],
 		]);
 
 		$data['content'] = $this->view->render('templates/admin/edit.phtml', $data);

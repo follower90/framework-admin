@@ -62,6 +62,7 @@ class Controller extends \Core\Controller
 			'/bower_components/font-awesome/css/font-awesome.min.css',
 			'/bower_components/datatables-responsive/css/dataTables.responsive.css',
 			'/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css',
+			'/bower_components/selectize/dist/css/selectize.bootstrap3.css',
 		]);
 
 		$this->addJavaScriptPath([
@@ -71,6 +72,7 @@ class Controller extends \Core\Controller
 			'/bower_components/metisMenu/dist/metisMenu.min.js',
 			'/dist/js/sb-admin-2.js',
 			'/plugin/ckeditor/ckeditor.js',
+			'/bower_components/selectize/dist/js/standalone/selectize.min.js',
 		]);
 	}
 
@@ -87,5 +89,73 @@ class Controller extends \Core\Controller
 
 		$this->_styles = array_merge($paths, $this->_styles);
 		$this->_data['styles'] = $this->_styles;
+	}
+
+
+
+	////temporarily here
+	////temporarily looks like shit
+	////@todo
+	public static function buildForm($controller, $values, $fields)
+	{
+		$result = '<form role="form" action="/admin/' . $controller . '/save">';
+		$counter = 0;
+
+		foreach ($fields as $data) {
+			$field = $data['field'];
+			$inputVal = $values[$field] ? ' value="' . $values[$field] . '"' : '' ;
+			$counter++;
+
+			switch ($data['type']) {
+				case 'hidden':
+					$result .= '<input type="hidden" name="id" ' . $inputVal . ' />';
+					break;
+
+				case 'input':
+					$result .= '<div class="form-group">
+				        <label>' . $data['name'] . '</label>
+				        <input class="form-control" name="' . $field . '" ' . $inputVal . ' />
+				    </div>';
+					break;
+				case 'textarea':
+					$result .= '<div class="form-group">
+					        <label>' . $data['name'] . '</label>
+					        <textarea id="editor-' . $counter . '" class="form-control" name="' . $field . '">' . ($values[$field] ? ' ' . $values[$field] : '' ) . '</textarea>
+					        <script>CKEDITOR.replace(\'editor-' . $counter . '\');</script>
+					    </div>';
+					break;
+
+				case 'selectize':
+					$result .= '
+					<div class="form-group">
+						<label>' . $data['name'] . '</label>
+						<select name="' . $data['name'] . '" id="selectize-' . $counter . '" multiple></select>
+					</div>
+						<script>$("#selectize-' . $counter . '").selectize({
+							plugins: [\'remove_button\'],
+							valueField: \'id\',
+							create: false,
+							labelField: \'title\',
+							searchField: \'title\',
+							options: [
+								{id: 1, title: \'pages-view\'},
+								{id: 2, title: \'pages-edit\'},
+								{id: 3, title: \'pages-create\'}
+							]
+						});</script>';
+			}
+		}
+
+		$result .= '<div class="form-group">
+		        <input type="submit" class="btn btn-default" value="Save" />
+		        <input type="button" class="btn btn-cancel"
+		        onclick="location.href=\'/admin/' . $controller . '\';" value="Cancel" />
+		    </div>';
+
+
+
+		$result .= '</form>';
+
+		return $result;
 	}
 }
