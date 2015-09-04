@@ -40,7 +40,7 @@ class Controller extends \Core\Controller
 
 			return $this->view->render('templates/login.phtml', $this->_data);
 		}
-		
+
 		return $this->view->render('templates/base.phtml', $this->_data);
 	}
 
@@ -129,19 +129,13 @@ class Controller extends \Core\Controller
 					$result .= '
 					<div class="form-group">
 						<label>' . $data['name'] . '</label>
-						<select name="' . $data['name'] . '" id="selectize-' . $counter . '" multiple></select>
+						<select name="' . $data['name'] . '" id="selectize-' . $counter . '" multiple>
+							<option value="1">pages-edit</option>
+							<option value="2" selected>pages-view</option>
+						</select>
 					</div>
 						<script>$("#selectize-' . $counter . '").selectize({
-							plugins: [\'remove_button\'],
-							valueField: \'id\',
-							create: false,
-							labelField: \'title\',
-							searchField: \'title\',
-							options: [
-								{id: 1, title: \'pages-view\'},
-								{id: 2, title: \'pages-edit\'},
-								{id: 3, title: \'pages-create\'}
-							]
+							plugins: [\'remove_button\']
 						});</script>';
 			}
 		}
