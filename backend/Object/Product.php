@@ -10,7 +10,7 @@ class Product extends \Core\Object
 	{
 		if (empty(self::$_config)) {
 			self::$_config = clone parent::getConfig();
-			self::$_config->setTable('Page');
+			self::$_config->setTable('Product');
 			self::$_config->setFields([
 				'languageTable' => [
 					'name' => [

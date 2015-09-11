@@ -10,7 +10,7 @@ class Catalog extends \Core\Object
 	{
 		if (empty(self::$_config)) {
 			self::$_config = clone parent::getConfig();
-			self::$_config->setTable('Page');
+			self::$_config->setTable('Catalog');
 			self::$_config->setFields([
 				'languageTable' => [
 					'name' => [
