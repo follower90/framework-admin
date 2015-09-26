@@ -8,9 +8,7 @@ class Controller extends \Core\Controller
 {
 	protected $_scripts = [];
 	protected $_styles = [];
-
 	protected $_data = [];
-
 	protected $_user = false;
 
 	public function __construct()
@@ -22,10 +20,7 @@ class Controller extends \Core\Controller
 
 		$this->prepareResources();
 
-		// set global path to public folder (for loading templates, and other resources)
 		$this->view->setDefaultPath('/vendor/follower/admin/public');
-
-		// set object for rendering notices
 		$this->view->setNoticeObject('\Admin\Notice');
 	}
 
@@ -91,10 +86,8 @@ class Controller extends \Core\Controller
 		$this->_data['styles'] = $this->_styles;
 	}
 
-
-
 	////temporarily here
-	////temporarily looks like shit
+	////looks like shit
 	////@todo
 	public static function buildForm($controller, $values, $fields)
 	{

@@ -39,7 +39,8 @@ class Admin extends Controller
 
 	public function methodEdit($args)
 	{
-		$data['page'] = Orm::load('Admin', $args['edit'])->getValues();
+		$admin = Orm::load('Admin', $args['edit']);
+		$data['page'] = $admin->getValues();
 
 		$data['form'] = $this->buildForm('admin', $data['page'], [
 			['field' => 'id', 'type' => 'hidden'],
