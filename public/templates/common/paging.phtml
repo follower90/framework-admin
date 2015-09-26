@@ -1,9 +1,9 @@
 <div class="row">
 	<div class="col-lg-6">
 		<div class="dataTables_info">
-			Showing 
-			<?=$this->paging->firstItemOnPage();?> to <?=$this->paging->lastItemOnPage();?> 
-			of <?=$vars['total'];?> entries
+			<?__('Showing');?>
+			<?=$this->paging->firstItemOnPage();?> <?__('to');?> <?=$this->paging->lastItemOnPage();?>
+			<?__('of');?> <?=$vars['total'];?> <?__('entries');?>
 		</div>
 	</div>
 	<div class="col-lg-6">
@@ -16,7 +16,7 @@
 
 						<li class="paginate_button previous" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous">
 							<a href="?page=<?=$vars['previous'];?>">
-								Previous
+								<?__('Previous');?>
 							</a>
 						</li>
 
@@ -36,7 +36,7 @@
 
 						<li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next">
 							<a href="?page=<?=$vars['next'];?>">
-								Next
+								<?__('Next');?>
 							</a>
 						</li>
 

@@ -13,17 +13,17 @@
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        RU  <i class="fa fa-caret-down"></i>
+                        <?=strtoupper(\Core\Config::get('site.language'));?>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-lang">
                         <li>
-                            <a href="admin/lang/ru">
+                            <a href="/admin/lang?switch=ru">
                                 <div>Русский</div>
                             </a>
                         </li>
                             <li class="divider"></li>
                         <li>
-                            <a href="admin/lang/en">
+                            <a href="/admin/lang?switch=en">
                                 <div>English</div>
                             </a>
                         </li>

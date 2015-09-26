@@ -9,9 +9,9 @@ class Base extends \Core\EntryPoint
 {
 	public function init()
 	{
-		Config::set('site.language', 'ru');
 		Config::set('site.url', 'admin');
 
+		\Admin\Utils::setLanguage();
 		\Admin\Routes\Admin::register();
 
 		$this->setLib('\Admin\Controller');

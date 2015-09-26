@@ -2,15 +2,14 @@
 
 namespace Admin\Controller;
 
+use Core\Cookie;
 use \Core\Router;
-use \Core\Config;
 
 class Lang extends Controller
 {
 	public function methodIndex($args)
 	{
-		var_dump($args);
-		Config::set('site.language', 'ru');
+		Cookie::set('site_language', $args['switch']);
 		Router::redirect(Router::get('referer'));
 	}
 }
