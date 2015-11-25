@@ -2,7 +2,7 @@
 
 namespace Admin;
 
-class Notice extends \Core\Notice
+class Notice extends \Core\View\Notice
 {
 	private $_typesMap = [
 		'error' => 'danger',

@@ -2,7 +2,7 @@
 
 namespace Admin\Controller;
 
-use \Core\Paging;
+use \Core\View\Paging;
 use \Core\Orm;
 use \Core\Router;
 
