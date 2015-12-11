@@ -9,6 +9,6 @@ class Api
 	public static function register()
 	{
 		// No custom routes added yet.
-		// To add them use Router::register method
+		// To add them use Router::register or new Router()->route method
 	}
 }
