@@ -25,12 +25,12 @@ class Login extends Controller
 			};
 
 			$this->_authorize->login($this->request('login'), $this->request('password'), $hash, $remember);
-		}
 
-		if (!$this->_authorize->getUser()) {
-			$this->view->addNotice('error', 'Incorrect login or password');
-		} else {
-			Router::redirect('/admin');
+			if (!$this->_authorize->getUser()) {
+				$this->view->addNotice('error', 'Incorrect login or password');
+			} else {
+				Router::redirect('/admin');
+			}
 		}
 
 		return $this->renderPage('templates/login.phtml');
