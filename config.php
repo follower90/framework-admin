@@ -9,3 +9,4 @@
 ]);
 
 \Core\Config::registerProject('Admin', 'default');
+\Core\Config::registerProject('App', 'default');
