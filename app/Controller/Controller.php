@@ -12,10 +12,8 @@ class Controller extends \Core\Controller
 	public function __construct()
 	{
 		parent::__construct();
-
 		$authorize = new \Core\Authorize('User');
 		$this->_user = $authorize->getUser();
-
 		$this->prepareResources();
 
 		$this->view->setDefaultPath('public/app');
@@ -37,7 +35,9 @@ class Controller extends \Core\Controller
 
 	protected function prepareResources()
 	{
-		$this->addCssPath([]);
+		$this->addCssPath([
+			'/css/example.css
+		']);
 		$this->addJavaScriptPath([]);
 	}
 
