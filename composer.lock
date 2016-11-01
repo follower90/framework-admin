@@ -1,0 +1,54 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "14c13bc2687df2f72303da3193ef900d",
+    "content-hash": "a0b28a77d375ad22863c00cb45d334c1",
+    "packages": [
+        {
+            "name": "follower/core",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/follower90/framework-core.git",
+                "reference": "4c62639a5d2c5995ae97f89d6594727b21a3311b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/follower90/framework-core/zipball/4c62639a5d2c5995ae97f89d6594727b21a3311b",
+                "reference": "4c62639a5d2c5995ae97f89d6594727b21a3311b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Сore\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "follower",
+                    "email": "vitfollower@gmail.com"
+                }
+            ],
+            "description": "Core of my framework",
+            "time": "2016-11-01 11:23:06"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "follower/core": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
