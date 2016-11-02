@@ -13,11 +13,12 @@ class Catalog extends Controller
 		}
 
 		if ($args['url'] === 'all') {
-			$catalogs = ['catalog1', 'catalog2', 'catalog3'];
+			$catalogs = \Admin\Object\Catalog::where(['active' => 1])->getData();
 			return $this->view->render('templates/catalog_list.phtml', ['catalogs' => $catalogs]);
 		} else {
-			return $this->view->render('templates/catalog.phtml', ['name' => mb_strtoupper($args['url'])]);
+			$catalog = \Admin\Object\Catalog::findBy(['url' => $args['url']]);
+			if (!$catalog) $this->render404();
+			return $this->view->render('templates/catalog.phtml', $catalog->getValues());
 		}
-
 	}
 }

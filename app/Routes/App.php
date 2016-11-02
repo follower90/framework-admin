@@ -2,14 +2,18 @@
 
 namespace App\Routes;
 
+use Core\Router;
+
 class App
 {
 	public static function register()
 	{
-		\Core\Router::register(['/', 'GET'], 'Index', 'index');
-		\Core\Router::register(['/404', 'GET'], 'Error', 'index');
-		\Core\Router::register(['/catalog/:url', 'GET'], 'Catalog', 'index');
+		Router::register(['/', 'GET'], 'Index', 'index');
 
-		\Core\Router::register(['/:page', 'GET'], 'Page', 'index');
+		Router::register(['/catalog/:url', 'GET'], 'Catalog', 'index');
+		Router::register(['/catalog/*', 'GET'], 'Catalog', 'index');
+
+		Router::register(['/404', 'GET'], 'Error', 'index');
+		Router::register(['/:page', 'GET'], 'Page', 'index');
 	}
 }

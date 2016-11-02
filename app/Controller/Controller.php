@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Core\Config;
+use Core\Router;
 
 class Controller extends \Core\Controller
 {
@@ -55,5 +56,10 @@ class Controller extends \Core\Controller
 
 		$this->_styles = array_merge($paths, $this->_styles);
 		$this->_data['styles'] = $this->_styles;
+	}
+
+	public function render404()
+	{
+		Router::redirect('/404', Router::NOT_FOUND_404);
 	}
 }
