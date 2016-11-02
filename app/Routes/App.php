@@ -8,6 +8,8 @@ class App
 	{
 		\Core\Router::register(['/', 'GET'], 'Index', 'index');
 		\Core\Router::register(['/404', 'GET'], 'Error', 'index');
-		\Core\Router::register(['/*', 'GET'], 'Page', 'index');
+		\Core\Router::register(['/catalog/:url', 'GET'], 'Catalog', 'index');
+
+		\Core\Router::register(['/:page', 'GET'], 'Page', 'index');
 	}
 }
