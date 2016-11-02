@@ -55,6 +55,7 @@ class Page extends Controller
 
 	public function methodSave($args)
 	{
+
 		if (!empty($args['id'])) {
 			$page = Orm::load('Page', $args['id']);
 		} else {

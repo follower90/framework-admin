@@ -36,7 +36,7 @@ class Catalog extends \Core\Object
 				],
 				'active' => [
 					'type' => 'tinyint',
-					'default' => 0,
+					'default' => 1,
 					'null' => false,
 				],
 			]);
