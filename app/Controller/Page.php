@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use Core\Router;
-
 class Page extends Controller
 {
 	public function methodIndex($args)
