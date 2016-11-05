@@ -1,24 +1,19 @@
 <?php
 
-namespace Admin\EntryPoint;
+namespace App\EntryPoint;
 
-use Core\Config;
 use Core\App;
 
 class Api extends \Core\EntryPoint
 {
 	public function init()
 	{
-		Config::set('site.url', 'admin');
-
 		\Admin\Utils::setLanguage();
-		\Admin\Routes\Api::register();
-
-		$this->setLib('\Admin\Api');
+		$this->setLib('\App\Api');
 
 		$app = new App($this);
 
-		$authorize = new \Core\Authorize('Admin');
+		$authorize = new \Core\Authorize('User');
 		$authorize->getUser();
 
 		$app->run();

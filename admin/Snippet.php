@@ -18,7 +18,7 @@ class Snippet
 					$(\'.switcher\').bootstrapSwitch({
 					size: "mini",
 					onSwitchChange: function (event, state) {
-					$.ajax(\'/admin/api/{1}.active\', {
+					$.ajax(\'/admin/api.php?method={1}.active\', {
 							method: \'post\',
 							data: {id: $(this).attr(\'data-id\'), active: state ? 1 : 0}
 						});

@@ -17,6 +17,11 @@ class Admin extends \Core\Object\User
 					'default' => '',
 					'null' => false,
 				],
+				'active' => [
+					'type' => 'tinyint',
+					'default' => 1,
+					'null' => false,
+				],
 			]);
 		}
 
