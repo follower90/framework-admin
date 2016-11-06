@@ -21,7 +21,7 @@ composer install
 ./builder schema:update 'app'
 
 
-./builder schema:migrate 'app'
+./builder schema:migrate 'admin'
 ./builder schema:migrate 'app'
 ```
 
@@ -114,3 +114,19 @@ MySQL::insert($table, $params);
 MySQL::update($table, $params, $conditions);
 MySQL::delete($table, $conditions);
 ```
+
+### Admin Forms for CRUD
+
+Builder for admin pages forms.
+Field is automatically mapped to object property and value will transfered to component as 'value' variable.
+You can write any new form components.
+ 
+```php
+$this->buildForm('page', $page, [
+    ['field' => 'name', 'name' => 'Name', 'type' => 'input'],
+    ['field' => 'url', 'name' => 'Url', 'type' => 'input'],
+    ['field' => 'body', 'name' => 'Text', 'type' => 'textinput'],
+]);
+```
+ 
+All form elements are separated to components in templates/form/snippet/*
