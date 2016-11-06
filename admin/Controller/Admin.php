@@ -25,7 +25,7 @@ class Admin extends Controller
 		return $this->render($data);
 	}
 
-	public function methodNew($args)
+	public function methodNew()
 	{
 		$data['form'] = $this->buildForm('admin', [], [
 			['field' => 'name', 'name' => 'Name', 'type' => 'input'],

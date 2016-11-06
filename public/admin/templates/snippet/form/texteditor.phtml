@@ -1,0 +1,5 @@
+<div class="form-group">
+	<label><?= $vars['name']; ?></label>
+	<textarea id="editor-<?= $vars['count']; ?>" class="form-control" name="<?= $vars['field']; ?>"><?= $vars['value'] ? $vars['value'] : ''; ?></textarea>
+	<script>CKEDITOR.replace('editor-<?= $vars['count']; ?>');</script>
+</div>

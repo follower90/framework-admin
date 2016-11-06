@@ -3,6 +3,7 @@
 namespace Admin\Controller;
 
 use \Core\Router;
+use Core\View;
 
 class Controller extends \Core\Controller
 {
@@ -86,63 +87,26 @@ class Controller extends \Core\Controller
 		$this->_data['styles'] = $this->_styles;
 	}
 
-	////temporarily here
-	////looks like shit
-	////@todo
 	public static function buildForm($controller, $values, $fields)
 	{
-		$result = '<form role="form" action="/admin/' . $controller . '/save">';
-		$counter = 0;
+		$view = new \Core\View();
+		$view->setDefaultPath('public/admin');
+
+		$formFields = [];
+		$counter = 1;
 
 		foreach ($fields as $data) {
-			$field = $data['field'];
-			$inputVal = $values[$field] ? ' value="' . $values[$field] . '"' : '' ;
+			$params = [
+				'count' => $counter,
+				'field' => $data['field'],
+				'name' => isset($data['name']) ? $data['name'] : '',
+				'value' => isset($values[$data['field']]) ? $values[$data['field']] : ''
+			];
+
+			$formFields[] = $view->render('templates/snippet/form/' . $data['type'] . '.phtml', $params);
 			$counter++;
-
-			switch ($data['type']) {
-				case 'hidden':
-					$result .= '<input type="hidden" name="id" ' . $inputVal . ' />';
-					break;
-
-				case 'input':
-					$result .= '<div class="form-group">
-				        <label>' . $data['name'] . '</label>
-				        <input class="form-control" name="' . $field . '" ' . $inputVal . ' />
-				    </div>';
-					break;
-				case 'textarea':
-					$result .= '<div class="form-group">
-					        <label>' . $data['name'] . '</label>
-					        <textarea id="editor-' . $counter . '" class="form-control" name="' . $field . '">' . ($values[$field] ? ' ' . $values[$field] : '' ) . '</textarea>
-					        <script>CKEDITOR.replace(\'editor-' . $counter . '\');</script>
-					    </div>';
-					break;
-
-				case 'selectize':
-					$result .= '
-					<div class="form-group">
-						<label>' . $data['name'] . '</label>
-						<select name="' . $data['name'] . '" id="selectize-' . $counter . '" multiple>
-							<option value="1">pages-edit</option>
-							<option value="2" selected>pages-view</option>
-						</select>
-					</div>
-						<script>$("#selectize-' . $counter . '").selectize({
-							plugins: [\'remove_button\']
-						});</script>';
-			}
 		}
 
-		$result .= '<div class="form-group">
-		        <input type="submit" class="btn btn-default" value="Save" />
-		        <input type="button" class="btn btn-cancel"
-		        onclick="location.href=\'/admin/' . $controller . '\';" value="Cancel" />
-		    </div>';
-
-
-
-		$result .= '</form>';
-
-		return $result;
+		return $view->render('templates/snippet/form/form.phtml', ['controller' => $controller, 'fields' => $formFields]);
 	}
 }

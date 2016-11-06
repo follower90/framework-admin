@@ -1,0 +1,12 @@
+<div class="form-group">
+	<label><?= $vars['name']; ?></label>
+	<select name="<?= $vars['name']; ?>" id="selectize-<?= $vars['count']; ?>" multiple>
+		<option value="1">pages-edit</option>
+		<option value="2" selected>pages-view</option>
+	</select>
+</div>
+<script>
+	$("#selectize-<?= $vars['count']; ?>").selectize({
+		plugins: ['remove_button']
+	});
+</script>

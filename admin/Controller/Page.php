@@ -30,7 +30,7 @@ class Page extends Controller
 		$data['form'] = $this->buildForm('page', [], [
 			['field' => 'name', 'name' => 'Name', 'type' => 'input'],
 			['field' => 'url', 'name' => 'Url', 'type' => 'input'],
-			['field' => 'text', 'name' => 'Text', 'type' => 'textarea'],
+			['field' => 'text', 'name' => 'Text', 'type' => 'texteditor'],
 		]);
 
 		$data['content'] = $this->view->render('templates/pages/add.phtml', $data);
@@ -45,7 +45,7 @@ class Page extends Controller
 			['field' => 'id', 'type' => 'hidden'],
 			['field' => 'name', 'name' => 'Name', 'type' => 'input'],
 			['field' => 'url', 'name' => 'Url', 'type' => 'input'],
-			['field' => 'text', 'name' => 'Text', 'type' => 'textarea'],
+			['field' => 'text', 'name' => 'Text', 'type' => 'texteditor'],
 		]);
 
 		$data['content'] = $this->view->render('templates/pages/edit.phtml', $data);
