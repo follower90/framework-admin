@@ -46,8 +46,7 @@ class Admin extends Controller
 			['field' => 'id', 'type' => 'hidden'],
 			['field' => 'name', 'name' => 'Name', 'type' => 'input'],
 			['field' => 'login', 'name' => 'Login', 'type' => 'input'],
-			['field' => '', 'name' => 'Password', 'type' => 'input'],
-			['field' => 'permissions', 'name' => 'Permissions', 'type' => 'selectize'],
+			['field' => '', 'name' => 'Password', 'type' => 'input']
 		]);
 
 		$data['content'] = $this->view->render('templates/admin/edit.phtml', $data);

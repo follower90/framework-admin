@@ -1,8 +1,12 @@
 <div class="form-group">
-	<label><?= $vars['name']; ?></label>
+	<label><? __($vars['name']); ?></label>
 	<select name="<?= $vars['name']; ?>" id="selectize-<?= $vars['count']; ?>" multiple>
-		<option value="1">pages-edit</option>
-		<option value="2" selected>pages-view</option>
+		<?php
+		foreach ($vars['options'] as $key => $val) {
+			$selected = ($key == $vars['value']) ? ' selected="selected" ' : '';
+			echo '<option value="' . $key . '" ' . $selected . '>' . $val . '</option>';
+		}
+		?>
 	</select>
 </div>
 <script>

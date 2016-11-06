@@ -1,0 +1,11 @@
+<div class="form-group">
+	<label><? __($vars['name']); ?></label>
+	<select class="form-control" name="<?= $vars['name']; ?>">
+		<?php
+			foreach ($vars['options'] as $key => $val) {
+				$selected = ($key == $vars['value']) ? ' selected="selected" ' : '';
+				echo '<option value="' . $key . '" ' . $selected . '>' . $val . '</option>';
+			}
+		?>
+	</select>
+</div>

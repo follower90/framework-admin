@@ -100,6 +100,7 @@ class Controller extends \Core\Controller
 				'count' => $counter,
 				'field' => $data['field'],
 				'name' => isset($data['name']) ? $data['name'] : '',
+				'options' => isset($data['options']) ? $data['options'] : [],
 				'value' => isset($values[$data['field']]) ? $values[$data['field']] : ''
 			];
 
