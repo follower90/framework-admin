@@ -45,11 +45,15 @@ Default login/password: admin/1234
 
 Default routing for pages will work as:
 
-```yoursite.com/controller/action?params=params```
+```
+yoursite.com/controller/action?params=params
+```
 
 Default routing for Api calls will work as:
 
-```yoursite.com/api.php?method=Controller.action?params=params```
+```
+yoursite.com/api.php?method=Controller.action?params=params
+```
 
 You will also get POST variables in your action arguments
 
