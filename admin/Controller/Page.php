@@ -20,12 +20,12 @@ class Page extends Controller
 		$data['paging'] = $paging->getPaging();
 		$data['pages'] = $paging->getObjects();
 
-		$data['content'] = $this->view->render('templates/pages/index.phtml', $data);
+		$data['content'] = $this->view->render('templates/modules/pages/index.phtml', $data);
 
 		return $this->render($data);
 	}
 
-	public function methodNew($args)
+	public function methodNew()
 	{
 		$data['form'] = $this->buildForm('page', [], [
 			['field' => 'name', 'name' => 'Name', 'type' => 'input'],
@@ -33,7 +33,7 @@ class Page extends Controller
 			['field' => 'text', 'name' => 'Text', 'type' => 'texteditor'],
 		]);
 
-		$data['content'] = $this->view->render('templates/pages/add.phtml', $data);
+		$data['content'] = $this->view->render('templates/modules/pages/add.phtml', $data);
 		return $this->render($data);
 	}
 
@@ -48,7 +48,7 @@ class Page extends Controller
 			['field' => 'text', 'name' => 'Text', 'type' => 'texteditor'],
 		]);
 
-		$data['content'] = $this->view->render('templates/pages/edit.phtml', $data);
+		$data['content'] = $this->view->render('templates/modules/pages/edit.phtml', $data);
 
 		return $this->render($data);
 	}

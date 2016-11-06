@@ -20,7 +20,7 @@ class Admin extends Controller
 		$data['paging'] = $paging->getPaging();
 		$data['admins'] = $paging->getObjects();
 
-		$data['content'] = $this->view->render('templates/admin/index.phtml', $data);
+		$data['content'] = $this->view->render('templates/modules/admin/index.phtml', $data);
 
 		return $this->render($data);
 	}
@@ -33,7 +33,7 @@ class Admin extends Controller
 			['field' => 'text', 'name' => 'Text', 'type' => 'textarea'],
 		]);
 
-		$data['content'] = $this->view->render('templates/admin/add.phtml', $data);
+		$data['content'] = $this->view->render('templates/modules/admin/add.phtml', $data);
 		return $this->render($data);
 	}
 
@@ -49,7 +49,7 @@ class Admin extends Controller
 			['field' => '', 'name' => 'Password', 'type' => 'input']
 		]);
 
-		$data['content'] = $this->view->render('templates/admin/edit.phtml', $data);
+		$data['content'] = $this->view->render('templates/modules/admin/edit.phtml', $data);
 
 		return $this->render($data);
 	}

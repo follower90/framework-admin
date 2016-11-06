@@ -14,7 +14,7 @@ class Logout extends Controller
 		$this->_authorize = new \Core\Authorize('Admin');
 	}
 
-	public function methodIndex($args)
+	public function methodIndex()
 	{
 		$this->_authorize->logout();
 		Router::redirect('/admin/login');

@@ -51,24 +51,20 @@ class Controller extends \Core\Controller
 	protected function prepareResources()
 	{
 		$this->addCssPath([
-			'/bower_components/bootstrap/dist/css/bootstrap.min.css',
-			'/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css',
-			'/bower_components/metisMenu/dist/metisMenu.min.css',
-			'/dist/css/sb-admin-2.css',
-			'/bower_components/font-awesome/css/font-awesome.min.css',
-			'/bower_components/datatables-responsive/css/dataTables.responsive.css',
-			'/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css',
-			'/bower_components/selectize/dist/css/selectize.bootstrap3.css',
+			'/css/bootstrap.min.css',
+			'/css/bootstrap-switch.min.css',
+			'/css/sb-admin-2.css',
+			'/css/font-awesome.min.css',
+			'/css/selectize.bootstrap3.css',
 		]);
 
 		$this->addJavaScriptPath([
-			'/bower_components/jquery/dist/jquery.min.js',
-			'/bower_components/bootstrap/dist/js/bootstrap.min.js',
-			'/bower_components/bootstrap-switch/dist/js/bootstrap-switch.min.js',
-			'/bower_components/metisMenu/dist/metisMenu.min.js',
-			'/dist/js/sb-admin-2.js',
-			'/plugin/ckeditor/ckeditor.js',
-			'/bower_components/selectize/dist/js/standalone/selectize.min.js',
+			'/js/jquery.min.js',
+			'/js/bootstrap.min.js',
+			'/js/bootstrap-switch.min.js',
+			'/js/sb-admin-2.js',
+			'/js/plugin/ckeditor/ckeditor.js',
+			'/js/selectize.min.js',
 		]);
 	}
 
