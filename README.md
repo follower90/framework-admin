@@ -130,3 +130,22 @@ $this->buildForm('page', $page, [
 ```
  
 All form elements are separated to components in templates/form/snippet/*
+
+### Admin UI
+
+All components and libs for Admin UI you can take here:
+https://startbootstrap.com/template-overviews/sb-admin-2/
+
+### builder
+
+Builder supports
+ * git composer for admin and core repositories
+ * recreate db schema
+ * create new object from class
+ * run sql-migrations
+ * launch unit tests
+
+To run builder and see help just type in root:
+```
+./builder
+```
