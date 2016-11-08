@@ -1,6 +1,6 @@
 <div class="form-group">
 	<label><? __($vars['name']); ?></label>
-	<select class="form-control" name="<?= $vars['name']; ?>">
+	<select class="form-control" name="<?= $vars['field']; ?>">
 		<?php
 			foreach ($vars['options'] as $key => $val) {
 				$selected = ($key == $vars['value']) ? ' selected="selected" ' : '';

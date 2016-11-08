@@ -1,6 +1,7 @@
 <h1><?= $vars['catalog']['name'];?></h1>
 
-<?php foreach ($vars['products'] as $p) { ?>
-
-
-<?php } ?>
+<?php
+	foreach ($vars['products'] as $product) {
+		include 'product.phtml';
+	}
+?>

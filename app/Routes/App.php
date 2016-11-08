@@ -14,5 +14,6 @@ class App
 		Router::register(['/^\/404$/', 'GET'], 'Error', 'index');
 		Router::register(['/^\/(\w+\d*)$/', 'GET'], 'Page', 'index', ['page']);
 		Router::register(['/^\/catalog\/(.*)$/', 'GET'], 'Catalog', 'index', ['url']);
+		Router::register(['/^\/product\/(.*)$/', 'GET'], 'Product', 'index', ['url']);
 	}
 }

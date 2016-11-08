@@ -2,6 +2,8 @@
 
 namespace Admin\Object;
 
+use Core\Database\PDO;
+
 class Product extends \Core\Object
 {
 	protected static $_config;
@@ -44,5 +46,23 @@ class Product extends \Core\Object
 		);
 
 		return self::$_config;
+	}
+
+	public function setCatalog($id)
+	{
+		if ($id) {
+			$db = PDO::getInstance();
+			$db->query('delete from Product__Catalog where Product = ?', [$this->getId()]);
+			$db->query('insert into Product__Catalog set Product = ?, Catalog = ?', [$this->getId(), $id]);
+		}
+	}
+
+	public function getCatalogId()
+	{
+		if (!$this->getRelated('catalog')->isEmpty()) {
+			return $this->getRelated('catalog')->getFirst()->getId();
+		}
+
+		return null;
 	}
 }

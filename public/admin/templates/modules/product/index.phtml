@@ -1,0 +1,47 @@
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header"><?__('Products')?></h1>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-6">
+		<button class="btn btn-primary" onclick="location.href='/admin/product/new'"><?__('Add new product')?></button>
+	</div>
+</div>
+
+<br/>
+<div class="dataTable_wrapper">
+	<div class="dataTables_wrapper">
+		<div class="row">
+			<div class="col-lg-12">
+				<table class="table table-bordered dataTable">
+					<thead>
+					<tr>
+						<th>ID</th>
+						<th><?__('Product name')?></th>
+						<th><?__('Url')?></th>
+						<th><?__('Active')?></th>
+						<th><?__('Actions')?></th>
+					</tr>
+					</thead>
+					<tbody>
+					<?php
+					foreach ($vars['products'] as $row) {
+						echo '
+                        <tr>
+                            <td>' . $row['id'] . '</td>
+                            <td>' . $row['name'] . '</td>
+                            <td>' . $row['url'] . '</td>
+                            <td>' . _snippet('active', [$row['id'], 'product', $row['active']]) . '</td>
+                            <td>' . _snippet('actions', [$row['id'], 'product', ['duplicate', 'delete']]) . '</td>
+                        </tr>';
+					}
+					?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<?php echo $vars['paging']; ?>
+	</div>
+</div>

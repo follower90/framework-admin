@@ -4,9 +4,10 @@ namespace App\Controller;
 
 class Index extends Controller
 {
-	public function methodIndex($args)
+	public function methodIndex()
 	{
-		$data['content'] = $this->view->render('templates/index.phtml', $args);
+		$page = \Admin\Object\Page::findBy(['url' => '/']);
+		$data['content'] = $this->view->render('templates/index.phtml', ['page' => $page->getValues()]);
 		return $this->render($data);
 	}
 }

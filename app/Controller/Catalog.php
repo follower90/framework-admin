@@ -8,7 +8,7 @@ class Catalog extends Controller
 	{
 		if (!$args['url'] || $args['url'] === 'all') {
 			$catalogs = \Admin\Object\Catalog::where(['active' => 1])->getData();
-			return $this->view->render('templates/catalog_list.phtml', ['catalogs' => $catalogs]);
+			$content = $this->view->render('templates/catalog_list.phtml', ['catalogs' => $catalogs]);
 		} else {
 			$catalog = \Admin\Object\Catalog::findBy(['url' => $args['url']]);
 			if (!$catalog) $this->render404();
@@ -17,8 +17,8 @@ class Catalog extends Controller
 				'catalog' => $catalog->getValues(),
 				'products' => $catalog->getRelated('products')->getData()
 			]);
-
-			return $this->render(['content' => $content]);
 		}
+		
+		return $this->render(['content' => $content]);
 	}
 }
