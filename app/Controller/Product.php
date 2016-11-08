@@ -6,14 +6,12 @@ class Product extends Controller
 {
 	public function methodIndex($args)
 	{
-		if (!$args['url']) $this->render404();
-		$product = \Admin\Object\Product::findBy(['url' => $args['url']]);
-		if (!$product) $this->render404();
+		if (!$args['url'] || !$product = \Admin\Object\Product::findBy(['url' => $args['url']])) {
+			$this->render404();
+		}
 
-		$content = $this->view->render('templates/product_in.phtml', [
-			'product' => $product->getValues()
+		return $this->render([
+			'content' => $this->view->render('templates/product_in.phtml', ['product' => $product->getValues()])
 		]);
-
-		return $this->render(['content' => $content]);
 	}
 }

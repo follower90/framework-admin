@@ -37,9 +37,7 @@ class Controller extends \Core\Controller
 
 	protected function prepareResources()
 	{
-		$this->addCssPath([
-			'/css/bootstrap.min.css'
-		]);
+		$this->addCssPath(['/css/bootstrap.min.css']);
 		$this->addJavaScriptPath([]);
 	}
 

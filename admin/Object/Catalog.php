@@ -51,4 +51,14 @@ class Catalog extends \Core\Object
 
 		return self::$_config;
 	}
+
+	public function validate()
+	{
+		if (trim($this->getValue('url')) === '') {
+			$this->setError('URL is required');
+			return false;
+		}
+
+		return true;
+	}
 }
