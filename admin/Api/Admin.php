@@ -14,7 +14,7 @@ class Admin extends \Core\Api
 		return ['success' => true];
 	}
 
-	public function methodLogin($args)
+	public function methodLogin()
 	{
 		return ['success' => true];
 	}

@@ -12,15 +12,22 @@ cd cms
 
 Write your database connect options
 
-### Command line operations
+### Install composer requirements
 
 ```
 composer install
+```
 
+### Create schema from objects
+
+```
 ./builder schema:update 'admin'
 ./builder schema:update 'app'
+```
 
+### Apply migrate SQL scripts
 
+```
 ./builder schema:migrate 'admin'
 ./builder schema:migrate 'app'
 ```
@@ -60,8 +67,8 @@ You will also get POST variables in your action arguments
 Also possible to write aliasses for controller name or action name:
 
 ```php
-    Router::alias('buildings', 'Catalog');
-    Router::actionAlias('all', 'index');
+Router::alias('buildings', 'Catalog');
+Router::actionAlias('all', 'index');
 ```
 
 Then /buildings/all url will equal to /catalog/index
@@ -148,4 +155,51 @@ Builder supports
 To run builder and see help just type in root:
 ```
 ./builder
+```
+
+### Api and Controllers
+
+You will create new API endpoints and Contollers in these namespaces:
+* \App\Api
+* \App\Controller
+* \Admin\Api
+* \Admin\Controller
+
+with method<ActionName> method.
+It automatically will work at these routes:
+```
+yoursite.com/api.php?method=ControllerName.ActionName
+yoursite.com/admin/api.php?method=ControllerName.ActionName
+
+yoursite.com/admin/controllerName/actionName
+yoursite.com/controllerName/ActionName
+```
+It automatically retrieve to method arguments:
+* GET parameters
+* POST parameters
+* URI-parameters, splitted by slash
+
+For example, `yoursite.com/admin/page/edit/2` will have key 'edit' with value 2 in `\Admin\Controller\Page.methodEdit`
+
+### Snippets
+
+You can use snippets (reusable html-components) in your admin templates.
+
+Implement method that will return rendered HTML and just call it in *.phtml file:
+```php
+_snippet('snippetName', [$arg1, $arg2, ...]);
+```
+
+### Localization
+
+In the templates you should pass all text labels to `__` method.
+
+It will find and output translated value for current user language: 'site_language' in your `Config`
+
+If translation is not existed in your database, it will output entered value.
+
+Need to write smart module for managing translation.
+
+```php
+<? __('catalog.Name'); ?>
 ```
