@@ -13,6 +13,12 @@
 
 </head>
 <body>
-<?php echo $vars['content']; ?>
+<section>
+	<a href="/lang/?switch=ru" class="<?php echo $this->isCurrentLanguage('ru') ? 'active-language' : ''; ?>">RU</a> |
+	<a href="/lang/?switch=en" class="<?php echo $this->isCurrentLanguage('en') ? 'active-language' : ''; ?>">EN</a>
+</section>
+<aside>
+	<?php echo $vars['content']; ?>
+</aside>
 </body>
 </html>
