@@ -31,8 +31,8 @@ class Catalog extends \Core\Object
 				],
 				'parent' => [
 					'type' => 'int',
-					'default' => 0,
-					'null' => false,
+					'default' => null,
+					'null' => true,
 				],
 				'active' => [
 					'type' => 'tinyint',
@@ -41,6 +41,13 @@ class Catalog extends \Core\Object
 				],
 			]);
 		}
+
+		\Core\Orm::registerRelation(
+			['type' => 'multiple', 'alias' => 'products', 'table' => 'Product__Catalog'],
+			['class' => 'Catalog'],
+			['class' => 'Product']
+		);
+
 
 		return self::$_config;
 	}

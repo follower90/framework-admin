@@ -3,7 +3,7 @@
 <ul>
 	<?php
 	foreach ($vars['catalogs'] as $cat) {
-		echo '<li>' . $cat['name'] . '</li>';
+		echo '<li><a href="/catalog/' . $cat['url'] . '">' . $cat['name'] . '</a></li>';
 	}
 	?>
 </ul>
