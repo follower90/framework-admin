@@ -21,6 +21,7 @@
 					<tr>
 						<th>ID</th>
 						<th><? __('Product name') ?></th>
+						<th><? __('Catalog') ?></th>
 						<th><? __('Url') ?></th>
 						<th><? __('Active') ?></th>
 						<th><? __('Actions') ?></th>
@@ -28,14 +29,15 @@
 					</thead>
 					<tbody>
 					<?php
-					foreach ($vars['products'] as $row) {
+					foreach ($vars['products']->getCollection() as $row) {
 						echo '
                         <tr>
-                            <td>' . $row['id'] . '</td>
-                            <td>' . $row['name'] . '</td>
-                            <td>' . $row['url'] . '</td>
-                            <td>' . _snippet('active', [$row['id'], 'product', $row['active']]) . '</td>
-                            <td>' . _snippet('actions', [$row['id'], 'product', ['duplicate', 'delete']]) . '</td>
+                            <td>' . $row->id . '</td>
+                            <td>' . $row->name . '</td>
+                            <td>' . $row->getRelated('catalog')->getFirst()->getValue('name') . '</td>
+                            <td>' . $row->url . '</td>
+                            <td>' . _snippet('active', [$row->id, 'product', $row->active]) . '</td>
+                            <td>' . _snippet('actions', [$row->id, 'product', ['duplicate', 'delete']]) . '</td>
                         </tr>';
 					}
 					?>

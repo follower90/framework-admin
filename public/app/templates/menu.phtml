@@ -13,10 +13,9 @@
 
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li><a href="/">Main</a></li>
-				<li><a href="/catalog/">Catalog</a></li>
-				<li><a href="/about">About</a></li>
-
+				<?php foreach ($vars['main_menu'] as $row) { ?>
+					<li><a href="<?=$row['url'];?>"><?=$row['name'];?></a></li>
+				<?php } ?>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="<?php echo $this->isCurrentLanguage('ru') ? 'active' : ''; ?>"><a

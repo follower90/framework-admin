@@ -18,7 +18,7 @@ class Product extends Controller
 		]);
 
 		$data['paging'] = $paging->getPaging();
-		$data['products'] = $paging->getObjects();
+		$data['products'] = $paging->getObjects(true);
 
 		$data['content'] = $this->view->render('templates/modules/product/index.phtml', $data);
 

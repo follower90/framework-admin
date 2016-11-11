@@ -23,6 +23,7 @@ class Controller extends \Core\Controller
 
 	public function render($data = [])
 	{
+		$data['main_menu'] = \Core\Orm::find('Menu', ['active'], [1])->getData();
 		$this->_data = array_merge($this->_data, $data);
 		return $this->view->render('templates/base.phtml', $this->_data);
 	}
