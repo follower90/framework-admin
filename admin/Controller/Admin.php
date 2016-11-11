@@ -27,30 +27,14 @@ class Admin extends Controller
 
 	public function methodNew()
 	{
-		$data['form'] = $this->buildForm('admin', [], [
-			['field' => 'name', 'name' => 'Name', 'type' => 'input'],
-			['field' => 'url', 'name' => 'Url', 'type' => 'input'],
-			['field' => 'text', 'name' => 'Text', 'type' => 'textarea'],
-		]);
-
-		$data['content'] = $this->view->render('templates/modules/admin/add.phtml', $data);
+		$data['content'] = $this->view->render('templates/modules/admin/add.phtml');
 		return $this->render($data);
 	}
 
 	public function methodEdit($args)
 	{
 		$admin = Orm::load('Admin', $args['edit']);
-		$data['page'] = $admin->getValues();
-
-		$data['form'] = $this->buildForm('admin', $data['page'], [
-			['field' => 'id', 'type' => 'hidden'],
-			['field' => 'name', 'name' => 'Name', 'type' => 'input'],
-			['field' => 'login', 'name' => 'Login', 'type' => 'input'],
-			['field' => '', 'name' => 'Password', 'type' => 'input']
-		]);
-
-		$data['content'] = $this->view->render('templates/modules/admin/edit.phtml', $data);
-
+		$data['content'] = $this->view->render('templates/modules/admin/edit.phtml', ['admin' => $admin->getValues()]);
 		return $this->render($data);
 	}
 

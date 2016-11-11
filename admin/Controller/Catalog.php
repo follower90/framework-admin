@@ -27,28 +27,14 @@ class Catalog extends Controller
 
 	public function methodNew()
 	{
-		$data['form'] = $this->buildForm('catalog', [], [
-			['field' => 'name', 'name' => 'Name', 'type' => 'input'],
-			['field' => 'url', 'name' => 'Url', 'type' => 'input'],
-			['field' => 'text', 'name' => 'Text', 'type' => 'texteditor'],
-		]);
-
-		$data['content'] = $this->view->render('templates/modules/catalog/add.phtml', $data);
+		$data['content'] = $this->view->render('templates/modules/catalog/add.phtml');
 		return $this->render($data);
 	}
 
 	public function methodEdit($args)
 	{
-		$data['catalog'] = Orm::load('Catalog', $args['edit'])->getValues();
-
-		$data['form'] = $this->buildForm('catalog', $data['catalog'], [
-			['field' => 'id', 'type' => 'hidden'],
-			['field' => 'name', 'name' => 'Name', 'type' => 'input'],
-			['field' => 'url', 'name' => 'Url', 'type' => 'input'],
-			['field' => 'text', 'name' => 'Text', 'type' => 'texteditor'],
-		]);
-
-		$data['content'] = $this->view->render('templates/modules/catalog/edit.phtml', $data);
+		$catalog = Orm::load('Catalog', $args['edit'])->getValues();
+		$data['content'] = $this->view->render('templates/modules/catalog/edit.phtml', ['catalog' => $catalog]);
 
 		return $this->render($data);
 	}

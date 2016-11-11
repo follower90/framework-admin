@@ -3,7 +3,7 @@
 namespace Admin\Controller;
 
 use \Core\Router;
-use Core\View;
+use \Core\View;
 
 class Controller extends \Core\Controller
 {
@@ -81,29 +81,5 @@ class Controller extends \Core\Controller
 
 		$this->_styles = array_merge($paths, $this->_styles);
 		$this->_data['styles'] = $this->_styles;
-	}
-
-	public static function buildForm($controller, $values, $fields)
-	{
-		$view = new \Core\View();
-		$view->setDefaultPath('public/admin');
-
-		$formFields = [];
-		$counter = 1;
-
-		foreach ($fields as $data) {
-			$params = [
-				'count' => $counter,
-				'field' => $data['field'],
-				'name' => isset($data['name']) ? $data['name'] : '',
-				'options' => isset($data['options']) ? $data['options'] : [],
-				'value' => isset($values[$data['field']]) ? $values[$data['field']] : ''
-			];
-
-			$formFields[] = $view->render('templates/snippet/form/' . $data['type'] . '.phtml', $params);
-			$counter++;
-		}
-
-		return $view->render('templates/snippet/form/form.phtml', ['controller' => $controller, 'fields' => $formFields]);
 	}
 }

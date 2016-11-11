@@ -27,27 +27,13 @@ class Page extends Controller
 
 	public function methodNew()
 	{
-		$data['form'] = $this->buildForm('page', [], [
-			['field' => 'name', 'name' => 'Name', 'type' => 'input'],
-			['field' => 'url', 'name' => 'Url', 'type' => 'input'],
-			['field' => 'text', 'name' => 'Text', 'type' => 'texteditor'],
-		]);
-
-		$data['content'] = $this->view->render('templates/modules/pages/add.phtml', $data);
+		$data['content'] = $this->view->render('templates/modules/pages/add.phtml', []);
 		return $this->render($data);
 	}
 
 	public function methodEdit($args)
 	{
 		$data['page'] = Orm::load('Page', $args['edit'])->getValues();
-
-		$data['form'] = $this->buildForm('page', $data['page'], [
-			['field' => 'id', 'type' => 'hidden'],
-			['field' => 'name', 'name' => 'Name', 'type' => 'input'],
-			['field' => 'url', 'name' => 'Url', 'type' => 'input'],
-			['field' => 'text', 'name' => 'Text', 'type' => 'texteditor'],
-		]);
-
 		$data['content'] = $this->view->render('templates/modules/pages/edit.phtml', $data);
 
 		return $this->render($data);

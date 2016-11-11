@@ -14,7 +14,7 @@ class Product extends Controller
 
 		$paging = Paging::create('Product', [
 			'page_size' => 10,
-			'current_page' => empty($args['page']) ? 1 : (int)$args['page']
+			'current_page' => empty($args['page']) ? 1 : $args['page']
 		]);
 
 		$data['paging'] = $paging->getPaging();
@@ -27,13 +27,8 @@ class Product extends Controller
 
 	public function methodNew()
 	{
-		$data['form'] = $this->buildForm('product', [], [
-			['field' => 'name', 'name' => 'Name', 'type' => 'input'],
-			['field' => 'url', 'name' => 'Url', 'type' => 'input'],
-			['field' => 'text', 'name' => 'Text', 'type' => 'texteditor'],
-		]);
-
-		$data['content'] = $this->view->render('templates/modules/product/add.phtml', $data);
+		$vars['catalogs'] = Orm::find('Catalog', ['active'], [1])->getHashMap('id', 'name');
+		$data['content'] = $this->view->render('templates/modules/product/add.phtml', $vars);
 		return $this->render($data);
 	}
 
@@ -42,19 +37,9 @@ class Product extends Controller
 		$product = Orm::load('Product', $args['edit']);
 		$data['product'] = $product->getValues();
 		$data['product']['catalog_id'] = $product->getCatalogId();
-
-		$catalogMap = Orm::find('Catalog', ['active'], [1])->getHashMap('id', 'name');
-
-		$data['form'] = $this->buildForm('product', $data['product'], [
-			['field' => 'id', 'type' => 'hidden'],
-			['field' => 'name', 'name' => 'Name', 'type' => 'input'],
-			['field' => 'catalog_id', 'name' => 'Catalog', 'type' => 'select', 'options' => $catalogMap],
-			['field' => 'url', 'name' => 'Url', 'type' => 'input'],
-			['field' => 'text', 'name' => 'Text', 'type' => 'texteditor'],
-		]);
+		$data['catalogs'] = Orm::find('Catalog', ['active'], [1])->getHashMap('id', 'name');
 
 		$data['content'] = $this->view->render('templates/modules/product/edit.phtml', $data);
-
 		return $this->render($data);
 	}
 
@@ -83,13 +68,13 @@ class Product extends Controller
 
 	public function methodDuplicate($args)
 	{
-		$page = Orm::load('Product', $args['duplicate']);
-		$data = $page->getValues();
+		$product = Orm::load('Product', $args['duplicate']);
+		$data = $product->getValues();
 		unset($data['id']);
 
-		$newPage = Orm::create('product');
-		$newPage->setValues($data);
-		Orm::save($newPage);
+		$newProduct = Orm::create('product');
+		$newProduct->setValues($data);
+		Orm::save($newProduct);
 
 		Router::redirect('/admin/product/');
 	}
