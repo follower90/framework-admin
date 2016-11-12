@@ -1,0 +1,34 @@
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header"><? __('Database') ?></h1>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-6">
+		<button class="btn btn-primary"
+				onclick="location.href='/admin/database/export'"><? __('Export to file') ?></button>
+	</div>
+</div>
+
+<br/>
+
+<form role="form" action="/admin/database">
+	<input type="hidden" name="id" value="<?= $vars['page']['id']; ?>"/>
+	<div class="form-group">
+		<label>Host</label>
+		<input class="form-control" name="host" value="<?= $vars['connection']['host']; ?>" readonly />
+	</div>
+	<div class="form-group">
+		<label>Database Name</label>
+		<input class="form-control" name="name" value="<?= $vars['connection']['name']; ?>" readonly />
+	</div>
+	<div class="form-group">
+		<label>Username</label>
+		<input class="form-control" name="user" value="<?= $vars['connection']['user']; ?>" readonly />
+	</div>
+	<div class="form-group">
+		<label>Password</label>
+		<input class="form-control" name="password" value="<?= $vars['connection']['password']; ?>" readonly />
+	</div>
+</form>

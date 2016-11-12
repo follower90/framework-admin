@@ -5,7 +5,7 @@
 		<span class="icon-bar"></span>
 		<span class="icon-bar"></span>
 	</button>
-	<a class="navbar-brand" href="#">Admin Dashboard</a>
+	<a class="navbar-brand" href="#"><? __('Dashboard') ?></a>
 </div>
 
 <ul class="nav navbar-top-links navbar-right">
@@ -33,12 +33,12 @@
 			<i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
 		</a>
 		<ul class="dropdown-menu dropdown-user">
-			<li><a href="/admin/admin/edit/<?php echo \Core\Config::get('user')->getId(); ?>"><i class="fa fa-user fa-fw"></i> User Profile</a>
+			<li><a href="/admin/admin/edit/<?php echo \Core\Config::get('user')->getId(); ?>"><i class="fa fa-user fa-fw"></i> <? __('User Profile'); ?></a>
 			</li>
-			<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+			<li><a href="#"><i class="fa fa-gear fa-fw"></i> <? __('Settings'); ?></a>
 			</li>
 			<li class="divider"></li>
-			<li><a href="/admin/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+			<li><a href="/admin/logout"><i class="fa fa-sign-out fa-fw"></i> <? __('Logout') ?></a>
 			</li>
 		</ul>
 	</li>

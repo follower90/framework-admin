@@ -196,9 +196,9 @@ In the templates you should pass all text labels to `__` method.
 
 It will find and output translated value for current user language: 'site_language' in your `Config`
 
-If translation is not existed in your database, it will output entered value.
+If translation is not existed in your database, it will output entered value and automatically added to translation without value.
 
-Need to write smart module for managing translation.
+Then you can go to /admin/translation and edit new value.
 
 ```php
 <? __('catalog.Name'); ?>

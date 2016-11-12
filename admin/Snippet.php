@@ -41,7 +41,7 @@ class Snippet
 		return $view . $scripts;
 	}
 
-	public static function actions($id, $path, $actions)
+	public static function actions($id, $path, $actions = [])
 	{
 		array_push($actions, 'edit');
 
