@@ -17,6 +17,11 @@ class Translation extends \Core\Object
 					'default' => '',
 					'null' => false,
 				],
+				'type' => [
+					'type' => 'varchar',
+					'default' => '',
+					'null' => false,
+				],
 				'languageTable' => [
 					'value' => [
 						'type' => 'varchar',

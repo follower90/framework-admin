@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">Add new catalog</h3>
+		<h3 class="page-header"><? __('Add new catalog') ?></h3>
 	</div>
 </div>
 
@@ -10,21 +10,21 @@
 	<div class="col-lg-12">
 		<form role="form" action="/admin/catalog/save">
 			<div class="form-group">
-				<label>Name</label>
+				<label><? __('Name') ?></label>
 				<input class="form-control" name="name" value=""/>
 			</div>
 			<div class="form-group">
-				<label>Url</label>
+				<label><? __('Url') ?></label>
 				<input class="form-control" name="url" value=""/>
 			</div>
 			<div class="form-group">
-				<label>Text</label>
+				<label><? __('Text') ?></label>
 				<textarea id="editor-1" class="form-control" name="text"></textarea>
 				<script>CKEDITOR.replace('editor-1');</script>
 			</div>
 			<div class="form-group">
-				<input type="submit" class="btn btn-success" value="Save"/>
-				<input type="button" class="btn btn-primary" onclick="location.href='/admin/catalog';" value="Cancel"/>
+				<input type="submit" class="btn btn-success" value="<? __('Save') ?>"/>
+				<input type="button" class="btn btn-primary" onclick="location.href='/admin/catalog';" value="<? __('Cancel') ?>"/>
 			</div>
 		</form>
 	</div>

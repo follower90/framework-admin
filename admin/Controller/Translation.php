@@ -12,13 +12,20 @@ class Translation extends Controller
 	{
 		$data = [];
 
+		$filter = \Admin\Filter::init('translation');
+		$filter->setFilters($args);
+
+		$type = $filter->getFilter('type') ? $filter->getFilter('type') : 'admin';
+
 		$paging = Paging::create('Translation', [
-			'page_size' => 5,
-			'current_page' => empty($args['page']) ? 1 : (int)$args['page']
+			'page_size' => 50,
+			'current_page' => empty($args['page']) ? 1 : (int)$args['page'],
+			'params' => [['type'], [$type]]
 		]);
 
+		$data['filter'] = $filter->getFilters();
 		$data['paging'] = $paging->getPaging();
-		$data['catalogs'] = $paging->getObjects();
+		$data['translations'] = $paging->getObjects();
 
 		$data['content'] = $this->view->render('templates/modules/translation/index.phtml', $data);
 

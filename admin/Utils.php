@@ -8,14 +8,15 @@ use \Core\Orm;
 
 class Utils
 {
-	public static function translate($key)
+	public static function translate($key, $type = 'admin')
 	{
-		if ($data = Orm::findOne('Translation', ['alias'], [$key])) {
+		if ($data = Orm::findOne('Translation', ['alias', 'type'], [$key, $type])) {
 			return $data->getValue('value') ? $data->getValue('value') : $key;
 		}
 
 		$translate = Orm::create('Translation');
 		$translate->setValue('alias', $key);
+		$translate->setValue('type', $type);
 		Orm::save($translate);
 
 		return $key;

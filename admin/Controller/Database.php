@@ -39,13 +39,9 @@ class Database extends Controller
 					foreach ($row as &$val) {
 						$val = addslashes($val);
 						$val = ereg_replace("\n", "\\n", $val);
-						if (isset($val)) {
-							$val = '"' . $val . '"';
-						} else {
-							$val = '""';
-						}
+						$val = (isset($val)) ? '"' . $val . '"' : '""';
 					}
-					$return .= "("  . implode(',', $row) . ");\n";
+					$return .= "(" . implode(',', $row) . ");\n";
 				}
 			}
 			$return .= "\n\n";

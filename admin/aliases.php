@@ -1,7 +1,7 @@
 <?php
 
 function __($args) {
-	echo \Admin\Utils::translate($args);
+	echo \Admin\Utils::translate($args, 'admin');
 }
 
 function _snippet($name, $params) {
