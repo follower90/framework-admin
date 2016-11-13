@@ -8,7 +8,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/">Application</a>
+			<a class="navbar-brand" href="/">[Sitename]</a>
 		</div>
 
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -18,6 +18,15 @@
 				<?php } ?>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
+
+				<?php if ($vars['user']) { ?>
+					<li><a href="/user/settings"><?= $vars['user']->login; ?></a></li>
+					<li><a href="/user/logout"><? __('Logout') ?></a></li>
+				<?php } else { ?>
+					<li><a href="/user/login"><? __('Sign in') ?></a></li>
+					<li><a href="/user/register"><? __('Register') ?></a></li>
+				<?php } ?>
+
 				<li class="<?php echo $this->isCurrentLanguage('ru') ? 'active' : ''; ?>"><a
 						href="/lang/?switch=ru">RU</a></li>
 				<li class="<?php echo $this->isCurrentLanguage('en') ? 'active' : ''; ?>"><a
