@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header"><? __('Edit user') ?> - <?=$vars['user']['name'];?></h3>
+		<h3 class="page-header"><? __('Edit user') ?> - <?=$vars['user']['login'];?></h3>
 	</div>
 </div>
 
@@ -16,7 +16,7 @@
 			</div>
 			<div class="form-group">
 				<label><? __('Password') ?></label>
-				<input class="form-control" name="url" value="<?= $vars['user']['password']; ?>"/>
+				<input class="form-control" name="password" value="<?= $vars['user']['password']; ?>"/>
 			</div>
 			<div class="form-group">
 				<input type="submit" class="btn btn-default" value="<? __('Save') ?>"/>

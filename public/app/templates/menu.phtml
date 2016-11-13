@@ -20,7 +20,7 @@
 			<ul class="nav navbar-nav navbar-right">
 
 				<?php if ($vars['user']) { ?>
-					<li><a href="/user/settings"><?= $vars['user']->login; ?></a></li>
+					<li><a href="/user/profile"><?= $vars['user']->login; ?></a></li>
 					<li><a href="/user/logout"><? __('Logout') ?></a></li>
 				<?php } else { ?>
 					<li><a href="/user/login"><? __('Sign in') ?></a></li>

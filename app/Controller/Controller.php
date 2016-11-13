@@ -15,7 +15,10 @@ class Controller extends \Core\Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->_user = Config::get('user');
+
+		$authorize = new \Core\Authorize('User');
+		$this->_user = $authorize->getUser();
+
 		$this->prepareResources();
 
 		$this->view->setDefaultPath('public/app');
