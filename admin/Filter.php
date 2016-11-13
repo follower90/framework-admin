@@ -8,7 +8,7 @@ class Filter
 {
 	/**
 	 * @var screen
-	 * Controler name, action name, or other alias
+	 * Controller name, action name, or other alias
 	 */
 	private $_screen;
 	private static $_instance;
