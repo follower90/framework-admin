@@ -16,7 +16,7 @@
 
 						<li class="paginate_button previous" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous">
 							<a href="?page=<?=$vars['previous'];?>">
-								<?__('Previous');?>
+								<?__('Previous page');?>
 							</a>
 						</li>
 
@@ -24,7 +24,9 @@
 
 					<?php for ($page = 1; ($page-1) * $vars['onpage'] < $vars['total']; $page++) { ?>
 
-						<li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
+						<?php $active = ($page == $vars['page']) ? 'active' : ''; ?>
+
+						<li class="paginate_button <?=$active;?>" aria-controls="dataTables-example" tabindex="0">
 							<a href="?page=<?=$page;?>">
 								<?=$page;?>
 							</a>
@@ -36,7 +38,7 @@
 
 						<li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next">
 							<a href="?page=<?=$vars['next'];?>">
-								<?__('Next');?>
+								<?__('Next page');?>
 							</a>
 						</li>
 

@@ -2,6 +2,8 @@
 
 namespace Admin;
 
+use \Core\Session;
+
 class Filter
 {
 	/**
@@ -13,7 +15,7 @@ class Filter
 
 	public function __construct($screen)
 	{
-		$this->_screen = $screen;
+		$this->_screen = $screen . '_filter';
 	}
 
 	/**
@@ -24,26 +26,26 @@ class Filter
 	public static function init($screen)
 	{
 		if (!static::$_instance) {
-			static::$_instance = new \Admin\Filter($screen);
+			static::$_instance = new self($screen);
 		}
 
 		return static::$_instance;
 	}
 
 	/**
- * @param $key
- * @param $value
- * Sets filtering key=>value
- */
+	 * @param $key
+	 * @param $value
+	 * Sets filtering key=>value
+	 */
 	public function setFilter($key, $value)
 	{
-		$filters = \Core\Session::get($this->_screen . '_filter');
+		$filters = Session::get($this->_screen);
 		$filters = json_decode($filters, true);
 
 		if (!$filters) $filters = [];
 		$filters[$key] = $value;
 
-		\Core\Session::set($this->_screen . '_filter', json_encode($filters));
+		Session::set($this->_screen, json_encode($filters));
 	}
 
 	/**
@@ -52,7 +54,9 @@ class Filter
 	 */
 	public function setFilters($data)
 	{
-		foreach ($data as $key => $val) $this->setFilter($key, $val);
+		foreach ($data as $key => $val) {
+			$this->setFilter($key, $val);
+		}
 	}
 
 	/**
@@ -72,7 +76,7 @@ class Filter
 	 */
 	public function getFilters()
 	{
-		$filters = \Core\Session::get($this->_screen . '_filter');
+		$filters = Session::get($this->_screen);
 		return json_decode($filters, true);
 	}
 }

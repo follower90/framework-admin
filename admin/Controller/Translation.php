@@ -18,7 +18,7 @@ class Translation extends Controller
 		$type = $filter->getFilter('type') ? $filter->getFilter('type') : 'admin';
 
 		$paging = Paging::create('Translation', [
-			'page_size' => 50,
+			'page_size' => 30,
 			'current_page' => empty($args['page']) ? 1 : (int)$args['page'],
 			'params' => [['type'], [$type]]
 		]);
