@@ -6,11 +6,6 @@
 
 <?php echo $this->getNotices(); ?>
 
-<?php
-	$width = 320;
-	$height = 240;
-?>
-
 <div class="row">
 	<div class="col-lg-12">
 		<form role="form" action="/admin/product/save">
@@ -21,14 +16,7 @@
 			</div>
 			<div class="form-group">
 				<label><? __('Photo') ?></label>
-				<?php
-					$src = $vars['product']['photo'] ? $vars['product']['photo'] : '/public/admin/images/no_image.gif';
-				?>
-					<img id="result-photo" src="<?=$src;?>" width="<?=$width;?>" height="<?=$height;?>" style="display:block; margin-bottom: 10px;" />
-					<img id="product-photo" width="80%" style="display: none;" src="" />
-					<button class="btn btn-default" type="button" id="crop" style="margin-top: 10px;display:none;"><? __('Crop') ?></button>
-				<?php ?>
-				<input type="file" id="photo-upload" class="form-control" name="photo" value=""/>
+				<?=$vars['edit_photo'];?>
 			</div>
 			<div class="form-group">
 				<label><? __('Catalog') ?></label>
@@ -57,63 +45,3 @@
 		</form>
 	</div>
 </div>
-
-<script>
-	$('#photo-upload').on('change', function () {
-		var self = this;
-		var formData = new FormData();
-			formData.append('type', 'product');
-			formData.append('id', <?= $vars['product']['id']; ?>);
-			formData.append('file', this.files[0]);
-
-		var width = <?=$width;?>, height = <?=$height;?>;
-
-		$.ajax({
-			url: '/admin/api.php?method=File.upload',
-			type: 'POST',
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function(data) {
-				$('#crop').show();
-				$('#photo-upload').hide();
-				$('#product-photo').show();
-				$('#result-photo').hide();
-				$('#product-photo').attr('src', data.response.src);
-				$('.cropper-container').show();
-				$('#product-photo').cropper({
-					aspectRatio: width/height
-				});
-			},
-			error: function() {}
-		});
-	});
-
-	$('#crop').on('click', function() {
-		var result = $('#product-photo').cropper('getCroppedCanvas', {
-			width: width,
-			height: height
-		});
-
-		var image = result.toDataURL('image/jpeg');
-		$('#result-photo').css('display', 'block');
-		$('#result-photo').attr('src', image);
-		$('#product-photo').hide();
-		$('.cropper-container').hide();
-		$('#photo-upload').show();
-		$('#photo-upload').val('');
-		$('#crop').hide();
-
-		$.ajax({
-			url: '/admin/api.php?method=Product.photo',
-			type: 'POST',
-			data: {
-				id: <?= $vars['product']['id']; ?>,
-				file: image
-			},
-			success: function() {},
-			error: function() {}
-		});
-	});
-
-</script>

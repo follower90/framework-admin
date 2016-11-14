@@ -37,12 +37,21 @@ class Product extends Controller
 		$product = Orm::load('Product', $args['edit']);
 		$data['product'] = $product->getValues();
 		$data['product']['catalog_id'] = $product->getCatalogId();
+
+		$data['edit_photo'] = $this->view->render('templates/common/image_crop.phtml', [
+			'width' => 180,
+			'height' => 220,
+			'entity' => 'product',
+			'photo' => $product->getPhotoResourceId(),
+			'id' => $data['product']['id']
+		]);
+
 		$data['catalogs'] = Orm::find('Catalog', ['active'], [1])->getHashMap('id', 'name');
+		$data['content'] = $this->view->render('templates/modules/product/edit.phtml', $data);
 
 		$this->addCssPath(['/css/cropper.min.css']);
 		$this->addJavaScriptPath(['/js/cropper.min.js']);
 
-		$data['content'] = $this->view->render('templates/modules/product/edit.phtml', $data);
 		return $this->render($data);
 	}
 

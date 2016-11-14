@@ -11,6 +11,7 @@ class Resource extends \Core\Api
 		}
 
 		$src = $resource->getPath();
+		
 		if (!file_exists($src)) {
 			throw new \Core\Exception\Exception('File does not exist on storage');
 		}

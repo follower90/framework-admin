@@ -14,7 +14,7 @@ class Database extends Controller
 	public function methodExport()
 	{
 		$filename = 'db-export_' . date('Y-m-d H:i') . '.sql';
-		\Core\Library\File::put('tmp/' . $filename, $this->export());
+		\Core\Library\File::put('/tmp/' . $filename, $this->export());
 		\Core\Library\File::upload(\Core\App::get()->getAppPath() . '/tmp/' . $filename);
 	}
 

@@ -1,2 +1,3 @@
 <h1><?= $vars['product']['name']; ?></h1>
+<img src="/api.php?method=Resource.get&id=<?=$vars['product']['photo_id'];?>" />
 <p><?= htmlspecialchars_decode($vars['product']['text']); ?></p>

@@ -1,0 +1,72 @@
+<div class="state-crop" style="display: none;">
+	<img id="edit-photo" src=""/>
+	<button class="btn btn-default" type="button" id="crop" style="margin-top: 10px;"><? __('Crop') ?></button>
+</div>
+
+<div class="state-view">
+	<img id="result-photo" src="/api.php?method=Resource.get&id=<?= $vars['photo']; ?>" width="<?= $vars['width']; ?>"
+		 height="<?= $vars['height']; ?>"
+		 style="display:block; margin-bottom: 10px;"/>
+	<input type="file" id="edit-upload" class="form-control" name="photo" value=""/>
+</div>
+
+<script>
+	var orig_filename = '';
+	var editor = $('#edit-photo');
+
+	$('#edit-upload').on('change', function () {
+		var formData = new FormData();
+			formData.append('file', this.files[0]);
+
+		orig_filename = this.files[0].name;
+
+		$.ajax({
+			url: '/admin/api.php?method=File.upload',
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (data) {
+				$('.state-view').hide();
+				$('.state-crop').show();
+
+				editor.attr('src', data.response.src);
+				editor.cropper({aspectRatio: <?=$vars['width'];?>/<?=$vars['height'];?>});
+				editor.cropper('replace', data.response.src);
+			},
+			error: function () {
+			}
+		});
+	});
+
+	$('#crop').on('click', function () {
+		var result = $('#edit-photo').cropper('getCroppedCanvas', {
+			width: <?=$vars['width'];?>,
+			height: <?=$vars['height'];?>
+		});
+
+		var image = result.toDataURL('image/jpeg');
+
+		$('.state-crop').hide();
+		$('.state-view').show();
+
+		$('#result-photo').attr('src', image);
+		$('#edit-upload').val('');
+
+		$.ajax({
+			url: '/admin/api.php?method=<?=ucfirst($vars['entity']);?>.uploadPhoto',
+			type: 'POST',
+			data: {
+				id: <?= $vars['id']; ?>,
+				original: orig_filename,
+				type: '<?= \Admin\Object\Object_Resource::TYPE_PHOTO ?>',
+				file: image
+			},
+			success: function () {
+			},
+			error: function () {
+			}
+		});
+	});
+
+</script>
