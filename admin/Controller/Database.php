@@ -4,7 +4,7 @@ namespace Admin\Controller;
 
 class Database extends Controller
 {
-	public function methodIndex($args)
+	public function methodIndex()
 	{
 		$data['connection'] = \Core\Config::dbConnection();
 		$data['content'] = $this->view->render('templates/modules/database/index.phtml', $data);
@@ -13,40 +13,40 @@ class Database extends Controller
 
 	public function methodExport()
 	{
-		$filename = 'db-export_' . date('Y-m-d H:i:s') . '.sql';
-		\Core\Library\File::save('tmp/' . $filename, $this->backup_tables());
+		$filename = 'db-export_' . date('Y-m-d H:i') . '.sql';
+		\Core\Library\File::save('tmp/' . $filename, $this->export());
 		\Core\Library\File::upload('tmp/' . $filename);
 	}
 
-	function backup_tables()
+	private function export()
 	{
-		$return = '';
+		$result = '';
 		$tables = $this->db->rows('SHOW TABLES');
-		foreach ($tables as $key => $table) {
+		foreach ($tables as $table) {
 			$table = reset($table);
+			$data = $this->db->rows('SELECT * FROM ' . $table);
 
-			$result = $this->db->rows('SELECT * FROM ' . $table);
-			$num_fields = $this->db->cell("SELECT count(*) FROM information_schema.columns WHERE table_schema=? and table_name = ?", [\Core\Config::dbConnection()['name'], $table]);
+			$result .= 'DROP TABLE ' . $table . ';';
+			$table = $this->db->row('SHOW CREATE TABLE ' . $table);
+			$result .= "\n\n" . $table['Create Table'] . ";\n\n";
 
-			$return .= 'DROP TABLE ' . $table . ';';
-			$row2 = $this->db->row('SHOW CREATE TABLE ' . $table);
-			$return .= "\n\n" . $row2['Create Table'] . ";\n\n";
-
-			for ($i = 0; $i < $num_fields; $i++) {
-
-				foreach ($result as $row) {
-					$return .= 'INSERT INTO ' . $table . ' VALUES';
-					foreach ($row as &$val) {
-						$val = addslashes($val);
-						$val = ereg_replace("\n", "\\n", $val);
-						$val = (isset($val)) ? '"' . $val . '"' : '""';
+			foreach ($data as $row) {
+				$result .= 'INSERT INTO ' . $table . ' VALUES';
+				foreach ($row as &$val) {
+					$val = addslashes($val);
+					$val = ereg_replace("\n", "\\n", $val);
+					if (isset($val)) {
+						if (!is_numeric($val)) $val = '"' . $val . '"';
+					} else {
+						$val = '""';
 					}
-					$return .= "(" . implode(',', $row) . ");\n";
 				}
+				$result .= "(" . implode(',', $row) . ");\n";
 			}
-			$return .= "\n\n";
+
+			$result .= "\n\n";
 		}
 
-		return $return;
+		return $result;
 	}
 }
