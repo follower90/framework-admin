@@ -39,6 +39,9 @@ class Product extends Controller
 		$data['product']['catalog_id'] = $product->getCatalogId();
 		$data['catalogs'] = Orm::find('Catalog', ['active'], [1])->getHashMap('id', 'name');
 
+		$this->addCssPath(['/css/cropper.min.css']);
+		$this->addJavaScriptPath(['/js/cropper.min.js']);
+
 		$data['content'] = $this->view->render('templates/modules/product/edit.phtml', $data);
 		return $this->render($data);
 	}

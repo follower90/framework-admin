@@ -34,7 +34,7 @@
                         <tr>
                             <td>' . $row->id . '</td>
                             <td>' . $row->name . '</td>
-                            <td>' . $row->getRelated('catalog')->getFirst()->getValue('name') . '</td>
+                            <td>' . ($row->getRelated('catalog')->isEmpty() ? '-' : $row->getRelated('catalog')->getFirst()->getValue('name')) . '</td>
                             <td>' . $row->url . '</td>
                             <td>' . _snippet('active', [$row->id, 'product', $row->active]) . '</td>
                             <td>' . _snippet('actions', [$row->id, 'product', ['duplicate', 'delete']]) . '</td>

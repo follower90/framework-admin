@@ -14,8 +14,8 @@ class Database extends Controller
 	public function methodExport()
 	{
 		$filename = 'db-export_' . date('Y-m-d H:i') . '.sql';
-		\Core\Library\File::save('tmp/' . $filename, $this->export());
-		\Core\Library\File::upload('tmp/' . $filename);
+		\Core\Library\File::put('tmp/' . $filename, $this->export());
+		\Core\Library\File::upload(\Core\App::get()->getAppPath() . '/tmp/' . $filename);
 	}
 
 	private function export()
@@ -27,8 +27,8 @@ class Database extends Controller
 			$data = $this->db->rows('SELECT * FROM ' . $table);
 
 			$result .= 'DROP TABLE ' . $table . ';';
-			$table = $this->db->row('SHOW CREATE TABLE ' . $table);
-			$result .= "\n\n" . $table['Create Table'] . ";\n\n";
+			$create = $this->db->row('SHOW CREATE TABLE ' . $table);
+			$result .= "\n\n" . $create['Create Table'] . ";\n\n";
 
 			foreach ($data as $row) {
 				$result .= 'INSERT INTO ' . $table . ' VALUES';

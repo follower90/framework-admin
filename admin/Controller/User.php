@@ -47,6 +47,13 @@ class User extends Controller
 			$user = Orm::create('User');
 		}
 
+		$password = trim($args['password']);
+		if ($password) {
+			var_dump($password);
+			$user->setValue('password', md5($password));
+		}
+
+		unset($args['password']);
 		$user->setValues($args);
 
 		try {
