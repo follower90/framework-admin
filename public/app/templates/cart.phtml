@@ -15,7 +15,7 @@
 		<?php foreach ($vars['cart'] as $item) { ?>
 			<tr>
 				<td><?= $counter++; ?></td>
-				<td><?= $item['productId']; ?></td>
+				<td><?= $item['product']['name']; ?></td>
 				<td><?= $item['count']; ?></td>
 				<td><a href="#" onclick="removeFromCart(<?= $item['id']; ?>);">remove</a></td>
 			</tr>

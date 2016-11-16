@@ -1,6 +1,5 @@
 AddDefaultCharset utf-8
 AddType text/x-component .htc
-Options +Includes +FollowSymLinks -Indexes
 DirectoryIndex index.php
 
 RewriteEngine on
