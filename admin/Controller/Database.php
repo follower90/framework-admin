@@ -6,8 +6,7 @@ class Database extends Controller
 {
 	public function methodIndex()
 	{
-		$data['connection'] = \Core\Config::dbConnection();
-		$data['content'] = $this->view->render('templates/modules/database/index.phtml', $data);
+		$data['content'] = $this->view->render('templates/modules/database/index.phtml');
 		return $this->render($data);
 	}
 

@@ -10,25 +10,3 @@
 				onclick="location.href='/admin/database/export'"><? __('Export to file') ?></button>
 	</div>
 </div>
-
-<br/>
-
-<form role="form" action="/admin/database">
-	<input type="hidden" name="id" value="<?= $vars['page']['id']; ?>"/>
-	<div class="form-group">
-		<label><? __('Host') ?></label>
-		<input class="form-control" name="host" value="<?= $vars['connection']['host']; ?>" readonly />
-	</div>
-	<div class="form-group">
-		<label><? __('Name') ?></label>
-		<input class="form-control" name="name" value="<?= $vars['connection']['name']; ?>" readonly />
-	</div>
-	<div class="form-group">
-		<label><? __('Username') ?></label>
-		<input class="form-control" name="user" value="<?= $vars['connection']['user']; ?>" readonly />
-	</div>
-	<div class="form-group">
-		<label><? __('Password') ?></label>
-		<input class="form-control" name="password" value="<?= $vars['connection']['password']; ?>" readonly />
-	</div>
-</form>
