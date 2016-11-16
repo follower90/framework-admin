@@ -2,3 +2,4 @@
 vendor
 tmp
 storage
+config.php
