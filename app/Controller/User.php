@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Routes\App;
+
 class User extends Controller
 {
-	public function methodIndex($args)
+	public function methodIndex()
 	{
-		\Core\Router::redirect('/user/profile');
+		return $this->methodProfile();
 	}
 
 	public function methodLogin($args)
@@ -45,8 +47,12 @@ class User extends Controller
 		return $this->render($data);
 	}
 
-	public function methodProfile($args)
+	public function methodProfile()
 	{
+		if (!\Core\App::get()->getUser()) {
+			$this->render404();
+		}
+
 		$data['content'] = $this->view->render('templates/user/profile.phtml');
 		return $this->render($data);
 	}

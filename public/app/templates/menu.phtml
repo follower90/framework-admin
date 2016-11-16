@@ -8,7 +8,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/">[Sitename]</a>
+			<a class="navbar-brand" href="/">[Shop]</a>
 		</div>
 
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -18,6 +18,8 @@
 				<?php } ?>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
+
+				<li><a href="/cart"><?= __('Cart') ?> (<span id="cart-count"></span>)</a></li>
 
 				<?php if ($vars['user']) { ?>
 					<li><a href="/user/profile"><?= $vars['user']->login; ?></a></li>

@@ -11,3 +11,6 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 RewriteRule ^(.*)$ index.php [L,QSA]
 RewriteRule ^api/(.[a-zA-Z0-9\.\-_]+)(/(.*))?$ /api.php?method=$1&params=$3 [QSA,L]
+
+RewriteRule ^admin/(.*)$ index.php [L,QSA]
+RewriteRule ^admin/api/(.[a-zA-Z0-9\.\-_]+)(/(.*))?$ /api.php?method=$1&params=$3 [QSA,L]

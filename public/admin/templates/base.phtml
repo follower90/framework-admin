@@ -17,8 +17,8 @@
 <body>
 <div id="wrapper">
 	<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-		<?php echo $this->load('phtml', '/templates/topbar.phtml'); ?>
-		<?php echo $this->load('phtml', '/templates/sidebar.phtml'); ?>
+		<?php echo $this->load('phtml', '/templates/topbar.phtml', $vars); ?>
+		<?php echo $this->load('phtml', '/templates/sidebar.phtml', $vars); ?>
 	</nav>
 	<div id="page-wrapper">
 		<?php echo $vars['content']; ?>

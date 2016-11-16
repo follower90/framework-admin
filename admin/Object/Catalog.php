@@ -40,14 +40,13 @@ class Catalog extends \Core\Object
 					'null' => false,
 				],
 			]);
+
+			\Core\Orm::registerRelation(
+				['type' => 'multiple', 'alias' => 'products', 'table' => 'Product__Catalog'],
+				['class' => 'Catalog'],
+				['class' => 'Product']
+			);
 		}
-
-		\Core\Orm::registerRelation(
-			['type' => 'multiple', 'alias' => 'products', 'table' => 'Product__Catalog'],
-			['class' => 'Catalog'],
-			['class' => 'Product']
-		);
-
 
 		return self::$_config;
 	}

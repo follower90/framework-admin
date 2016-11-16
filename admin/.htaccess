@@ -1,0 +1,10 @@
+AddDefaultCharset utf-8
+AddType text/x-component .htc
+DirectoryIndex index.php
+
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^(.*)$ index.php [L,QSA]

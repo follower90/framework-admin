@@ -10,15 +10,10 @@ class Controller extends \Core\Controller
 	protected $_scripts = [];
 	protected $_styles = [];
 	protected $_data = [];
-	protected $_user = false;
 
 	public function __construct()
 	{
 		parent::__construct();
-
-		$authorize = new \Core\Authorize('Admin');
-		$this->_user = $authorize->getUser();
-
 		$this->prepareResources();
 
 		$this->view->setDefaultPath('public/admin');
@@ -28,8 +23,9 @@ class Controller extends \Core\Controller
 	public function render($data = [])
 	{
 		$this->_data = array_merge($this->_data, $data);
+		$this->_data['user'] = $this->user;
 
-		if (!$this->_user) {
+		if (!$this->user) {
 			if (Router::get('uri') != '/admin/login') {
 				Router::redirect('/admin/login');
 			}

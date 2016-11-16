@@ -25,8 +25,6 @@ class Database extends Controller
 		foreach ($tables as $table) {
 			$table = reset($table);
 			$data = $this->db->rows('SELECT * FROM ' . $table);
-
-			$result .= 'DROP TABLE ' . $table . ';';
 			$create = $this->db->row('SHOW CREATE TABLE ' . $table);
 			$result .= "\n\n" . $create['Create Table'] . ";\n\n";
 

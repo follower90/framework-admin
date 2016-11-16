@@ -1,0 +1,25 @@
+<h1><? __('Cart'); ?></h1>
+
+<div class="table-responsive">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Name</th>
+				<th>Count</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php $counter = 1; ?>
+		<?php foreach ($vars['cart'] as $item) { ?>
+			<tr>
+				<td><?= $counter++; ?></td>
+				<td><?= $item['productId']; ?></td>
+				<td><?= $item['count']; ?></td>
+				<td><a href="#" onclick="removeFromCart(<?= $item['id']; ?>);">remove</a></td>
+			</tr>
+		<?php } ?>
+		</tbody>
+	</table>
+</div>

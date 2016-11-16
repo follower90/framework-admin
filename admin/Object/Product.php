@@ -31,25 +31,30 @@ class Product extends \Core\Object
 					'default' => '',
 					'null' => false,
 				],
+				'price' => [
+					'type' => 'float',
+					'default' => 0,
+					'null' => false,
+				],
 				'active' => [
 					'type' => 'tinyint',
 					'default' => 1,
 					'null' => false,
 				],
 			]);
+
+			\Core\Orm::registerRelation(
+				['type' => 'multiple', 'alias' => 'catalog', 'table' => 'Product__Catalog'],
+				['class' => 'Product'],
+				['class' => 'Catalog']
+			);
+
+			\Core\Orm::registerRelation(
+				['type' => 'has_many', 'alias' => 'resources', 'table' => 'Product_Resource'],
+				['class' => 'Product', 'field' => 'id'],
+				['class' => 'Product_Resource', 'field' => 'productId']
+			);
 		}
-
-		\Core\Orm::registerRelation(
-			['type' => 'multiple', 'alias' => 'catalog', 'table' => 'Product__Catalog'],
-			['class' => 'Product'],
-			['class' => 'Catalog']
-		);
-
-		\Core\Orm::registerRelation(
-			['type' => 'has_many', 'alias' => 'resources', 'table' => 'Product_Resource'],
-			['class' => 'Product', 'field' => 'id'],
-			['class' => 'Product_Resource', 'field' => 'productId']
-		);
 
 		return self::$_config;
 	}

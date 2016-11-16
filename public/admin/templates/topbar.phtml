@@ -33,7 +33,7 @@
 			<i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
 		</a>
 		<ul class="dropdown-menu dropdown-user">
-			<li><a href="/admin/admin/edit/<?php echo \Core\Config::get('user')->getId(); ?>"><i class="fa fa-user fa-fw"></i> <? __('User Profile'); ?></a>
+			<li><a href="/admin/admin/edit/<?php echo $vars['user']->getId(); ?>"><i class="fa fa-user fa-fw"></i> <? __('User Profile'); ?></a>
 			</li>
 			<li><a href="#"><i class="fa fa-gear fa-fw"></i> <? __('Settings'); ?></a>
 			</li>
