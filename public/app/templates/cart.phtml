@@ -5,9 +5,11 @@
 		<thead>
 			<tr>
 				<th>#</th>
-				<th>Name</th>
-				<th>Count</th>
-				<th>Actions</th>
+				<th><? __('Name') ?></th>
+				<th><? __('Count') ?></th>
+				<th><? __('Price') ?></th>
+				<th><? __('Sum') ?></th>
+				<th><? __('Actions') ?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -16,8 +18,13 @@
 			<tr>
 				<td><?= $counter++; ?></td>
 				<td><?= $item['product']['name']; ?></td>
-				<td><?= $item['count']; ?></td>
-				<td><a href="#" onclick="removeFromCart(<?= $item['id']; ?>);">remove</a></td>
+				<td><input type="number" value="<?= $item['count']; ?>"></td>
+				<td><?= $item['product']['price']; ?></td>
+				<td><?= number_format($item['product']['price']*$item['count'], 2); ?></td>
+				<td>
+					<a href="#" onclick="removeFromCart(<?= $item['id']; ?>);">remove</a> | 
+					<a href="#" onclick="">update</a>
+				</td>
 			</tr>
 		<?php } ?>
 		</tbody>
