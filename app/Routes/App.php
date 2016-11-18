@@ -15,6 +15,7 @@ class App
 
 		Router::register(['/^\/catalog$/', 'GET'], 'Catalog', 'index', ['url']);
 		Router::register(['/^\/cart$/', 'GET'], 'Cart', 'index', ['url']);
+		Router::register(['/^\/order$/', 'GET'], 'Order', 'index', ['url']);
 		Router::register(['/^\/user$/', 'GET'], 'User', 'index', ['url']);
 
 		Router::register(['/^\/catalog\/(.*)$/', 'GET'], 'Catalog', 'index', ['url']);

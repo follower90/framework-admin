@@ -22,8 +22,26 @@ function removeFromCart(id) {
 			id: id
 		}
 	}).success(function () {
-		window.location.reload();
-		//updateCartCount();
+		updateCartCount();
+	});
+}
+
+function updateProductCount(id, count) {
+	$.ajax('/api.php?method=Cart.update', {
+		data: {
+			id: id,
+			count: count
+		}
+	}).success(function () {
+		updateCartCount();
+	});
+}
+
+function confirmOrder() {
+	$.ajax('/api.php?method=Order.create', {
+		
+	}).success(function () {
+		updateCartCount();
 	});
 }
 

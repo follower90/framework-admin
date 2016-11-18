@@ -18,15 +18,17 @@
 			<tr>
 				<td><?= $counter++; ?></td>
 				<td><?= $item['product']['name']; ?></td>
-				<td><input type="number" value="<?= $item['count']; ?>"></td>
+				<td><input type="number" class="cart-num-<?= $item['id']; ?>" value="<?= $item['count']; ?>"></td>
 				<td><?= $item['product']['price']; ?></td>
 				<td><?= number_format($item['product']['price']*$item['count'], 2); ?></td>
 				<td>
-					<a href="#" onclick="removeFromCart(<?= $item['id']; ?>);">remove</a> | 
-					<a href="#" onclick="">update</a>
+					<a href="/cart/remove/<?= $item['id']; ?>" onclick="">remove</a> |
+					<a href="#" onclick='updateProductCount(<?= $item['id']; ?>, $(".cart-num-<?= $item['id']; ?>").val())'>update</a>
 				</td>
 			</tr>
 		<?php } ?>
 		</tbody>
 	</table>
+
+	<button class="btn btn-success" onclick="confirmOrder()"> <?__('Order'); ?></button>
 </div>

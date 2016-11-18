@@ -94,7 +94,6 @@ class Translation extends Controller
 	public function methodCache()
 	{
 		$types = ['admin', 'app'];
-
 		$translationCache = File::get('/translations_cache.json');
 		$data = json_decode($translationCache, true);
 		$newData = [];
@@ -103,15 +102,13 @@ class Translation extends Controller
 			$translation = Orm::find('Translation', ['type'], [$type])->getData();
 			$lang = Config::get('site.language');
 
-
 			foreach ($translation as $t) {
-				if ($t['value']) {
-					$newData[$lang][$type][$t['alias']] = $t['value'];
-				}
+				$newData[$lang][$type][$t['alias']] = $t['value'] ? $t['value'] : $t['alias'];
 			}
 
 			$data = array_merge($data, $newData);
 		}
+
 		File::put('/translations_cache.json', json_encode($data));
 		Router::redirect('/admin/translation/');
 	}

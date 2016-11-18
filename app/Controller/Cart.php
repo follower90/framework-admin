@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Core\Orm;
+
 class Cart extends Controller
 {
 	public function methodIndex()
@@ -14,5 +16,13 @@ class Cart extends Controller
 
 		$data['content'] = $this->view->render('templates/cart.phtml', ['cart' => $cart]);
 		return $this->render($data);
+	}
+
+	public function methodRemove($args)
+	{
+		$item = \App\Services\Cart::find($args['id']);
+		if ($item) Orm::delete($item);
+
+		return $this->methodIndex();
 	}
 }

@@ -16,6 +16,20 @@ class Cart extends \Core\Api
 		return ['count' => $count];
 	}
 
+	public function methodUpdate($args)
+	{
+		if ($args['id']) {
+			$item = \App\Services\Cart::find($args['id']);
+			if ($item) {
+				$item->setValue('count', $args['count']);
+				$item->save();
+
+				return ['success' => true];
+			}
+		}
+
+	}
+
 	public function methodAdd($args)
 	{
 		if ($args['id']) {

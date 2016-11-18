@@ -18,6 +18,15 @@ class Cart
 		return $cart;
 	}
 
+	public static function find($id)
+	{
+		if ($user = \Core\App::getUser()) {
+			return Orm::findBySql('Cart', 'select * from Cart where userId=? or session =? and id=?', [$user->getId(), Session::id(), $id])->getFirst();
+		} else {
+			return Orm::findOne('Cart', ['session', 'id'], [Session::id(), $id]);
+		}
+	}
+
 	public static function getCartCount()
 	{
 		$cart = static::getCart();
