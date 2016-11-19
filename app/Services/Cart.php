@@ -18,6 +18,19 @@ class Cart
 		return $cart;
 	}
 
+	public static function getTotal()
+	{
+		$cart = static::getCart()->getCollection();
+		$total = 0;
+
+		foreach ($cart as $item) {
+			$product = Orm::load('Product', $item->getValue('productId'));
+			$total += $item->getValue('count') * $product->getValue('price');
+		}
+
+		return $total;
+	}
+
 	public static function find($id)
 	{
 		if ($user = \Core\App::getUser()) {
@@ -27,6 +40,19 @@ class Cart
 		}
 	}
 
+	public static function update($id, $count)
+	{
+		if ($user = \Core\App::getUser()) {
+			$item = Orm::findBySql('Cart', 'select * from Cart where userId=? or session =? and id=?', [$user->getId(), Session::id(), $id])->getFirst();
+		} else {
+			$item = Orm::findOne('Cart', ['session', 'id'], [Session::id(), $id]);
+		}
+
+		if ($item->getValue('count') != $count) {
+			$item->setValue('count', $count);
+			$item->save();
+		}
+	}
 	public static function getCartCount()
 	{
 		$cart = static::getCart();
@@ -60,6 +86,13 @@ class Cart
 			]);
 
 			$product->save();
+		}
+	}
+
+	public static function clear()
+	{
+		foreach (static::getCart()->getCollection() as $item) {
+			Orm::delete($item);
 		}
 	}
 

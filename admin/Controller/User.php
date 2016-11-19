@@ -33,7 +33,11 @@ class User extends Controller
 
 	public function methodEdit($args)
 	{
-		$data['user'] = Orm::load('User', $args['edit'])->getValues();
+		$user = Orm::load('User', $args['edit']);
+
+		$data['user'] = $user->getValues();
+		$data['user']['info'] = Orm::findOne('User_Info', ['userId'], [$user->getId()])->getValues();
+
 		$data['content'] = $this->view->render('templates/modules/user/edit.phtml', $data);
 
 		return $this->render($data);
@@ -43,8 +47,10 @@ class User extends Controller
 	{
 		if (!empty($args['id'])) {
 			$user = Orm::load('User', $args['id']);
+			$info = Orm::findOne('User_Info', ['userId'], [$user->getId()]);
 		} else {
 			$user = Orm::create('User');
+			$info = Orm::create('User_Info');
 		}
 
 		$password = trim($args['password']);
@@ -58,6 +64,9 @@ class User extends Controller
 
 		try {
 			Orm::save($user);
+			$info->setValues($args['info']);
+			$info->setValue('userId', $user->getId());
+			$info->save();
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$this->view->addNotice('error', $e->getMessage());
 			if ($user->isNew()) {

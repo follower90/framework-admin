@@ -37,12 +37,4 @@ function updateProductCount(id, count) {
 	});
 }
 
-function confirmOrder() {
-	$.ajax('/api.php?method=Order.create', {
-		
-	}).success(function () {
-		updateCartCount();
-	});
-}
-
 updateCartCount();

@@ -1,34 +1,94 @@
-<h1><? __('Cart'); ?></h1>
-
-<div class="table-responsive">
-	<table class="table table-hover">
-		<thead>
-			<tr>
-				<th>#</th>
-				<th><? __('Name') ?></th>
-				<th><? __('Count') ?></th>
-				<th><? __('Price') ?></th>
-				<th><? __('Sum') ?></th>
-				<th><? __('Actions') ?></th>
-			</tr>
-		</thead>
-		<tbody>
-		<?php $counter = 1; ?>
-		<?php foreach ($vars['cart'] as $item) { ?>
-			<tr>
-				<td><?= $counter++; ?></td>
-				<td><?= $item['product']['name']; ?></td>
-				<td><input type="number" class="cart-num-<?= $item['id']; ?>" value="<?= $item['count']; ?>"></td>
-				<td><?= $item['product']['price']; ?></td>
-				<td><?= number_format($item['product']['price']*$item['count'], 2); ?></td>
-				<td>
-					<a href="/cart/remove/<?= $item['id']; ?>" onclick="">remove</a> |
-					<a href="#" onclick='updateProductCount(<?= $item['id']; ?>, $(".cart-num-<?= $item['id']; ?>").val())'>update</a>
-				</td>
-			</tr>
-		<?php } ?>
-		</tbody>
-	</table>
-
-	<button class="btn btn-success" onclick="confirmOrder()"> <?__('Order'); ?></button>
+<div class="row" xmlns="http://www.w3.org/1999/html">
+	<div class="col-lg-12">
+		<h3 class="page-header"><? __('Cart') ?></h3>
+	</div>
 </div>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="table-responsive">
+			<form type="post" action="/cart/recalculate">
+				<table class="table table-hover">
+					<thead>
+					<tr>
+						<th>#</th>
+						<th><? __('Name') ?></th>
+						<th><? __('Count') ?></th>
+						<th><? __('Price') ?></th>
+						<th><? __('Sum') ?></th>
+						<th><? __('Actions') ?></th>
+					</tr>
+					</thead>
+					<tbody>
+					<?php $counter = 1; ?>
+					<?php foreach ($vars['cart'] as $item) { ?>
+						<tr>
+							<td>
+								<input type="hidden" name="id[]" value="<?= $item['id']; ?>" />
+								<?= $counter++; ?></td>
+							<td>
+								<?= $item['product']['name']; ?>
+							</td>
+							<td>
+								<input type="number" name="count[]" class="cart-num-<?= $item['id']; ?>" value="<?= $item['count']; ?>">
+							</td>
+							<td>
+								<?= $item['product']['price']; ?>
+							</td>
+							<td>
+								<?= number_format($item['product']['price'] * $item['count'], 2); ?>
+							</td>
+							<td>
+								<a href="/cart/remove/<?= $item['id']; ?>"><? __('remove') ?></a>
+							</td>
+						</tr>
+					<?php } ?>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td><?= number_format($vars['total'], 2); ?></td>
+						<td><button class="btn btn-info"><? __('recalculate') ?></button></td>
+					</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<h3 class="page-header"><? __('Order') ?></h3>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-4">
+				<form role="form" action="/cart/order">
+					<div class="form-group">
+						<label><? __('First name') ?></label>
+						<input class="form-control" name="firstName" value="<?=$vars['userinfo']['firstName'];?>"/>
+					</div>
+					<div class="form-group">
+						<label><? __('Last name') ?></label>
+						<input class="form-control" name="lastName" value="<?=$vars['userinfo']['lastName'];?>"/>
+					</div>
+					<div class="form-group">
+						<label><? __('Phone') ?></label>
+						<input class="form-control" name="phone" value="<?=$vars['userinfo']['phone'];?>"/>
+					</div>
+					<div class="form-group">
+						<label><? __('Address') ?></label>
+						<input class="form-control" name="address" value="<?=$vars['userinfo']['address'];?>"/>
+					</div>
+					<div class="form-group">
+						<label><? __('Comment') ?></label>
+						<textarea class="form-control" name="comment"></textarea>
+					</div>
+					<div class="form-group">
+						<input type="submit" class="btn btn-success" value="<? __('Order') ?>"/>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>

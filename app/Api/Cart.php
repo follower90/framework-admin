@@ -28,6 +28,7 @@ class Cart extends \Core\Api
 			}
 		}
 
+		return ['error' => ''];
 	}
 
 	public function methodAdd($args)

@@ -16,16 +16,39 @@ class Order extends \Core\Object
 			self::$_config = clone parent::getConfig();
 			self::$_config->setTable('Order');
 			self::$_config->setFields([
-				'languageTable' => [
-					'name' => [
-						'type' => 'varchar',
-						'default' => '',
-						'null' => false,
-					]
-				],
 				'userId' => [
 					'type' => 'int',
 					'default' => null,
+					'null' => false,
+				],
+				'firstName' => [
+					'type' => 'varchar',
+					'default' => '',
+					'null' => false,
+				],
+				'lastName' => [
+					'type' => 'varchar',
+					'default' => '',
+					'null' => false,
+				],
+				'phone' => [
+					'type' => 'varchar',
+					'default' => '',
+					'null' => false,
+				],
+				'address' => [
+					'type' => 'varchar',
+					'default' => '',
+					'null' => false,
+				],
+				'comment' => [
+					'type' => 'text',
+					'default' => '',
+					'null' => false,
+				],
+				'date' => [
+					'type' => 'datetime',
+					'default' => 'CURRENT_TIMESTAMP',
 					'null' => false,
 				],
 				'sum' => [

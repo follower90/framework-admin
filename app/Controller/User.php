@@ -49,18 +49,20 @@ class User extends Controller
 
 	public function methodProfile()
 	{
-		if (!\Core\App::get()->getUser()) {
+		if (!$user = \Core\App::get()->getUser()) {
 			$this->render404();
 		}
 
-		$data['content'] = $this->view->render('templates/user/profile.phtml');
+		$data['content'] = $this->view->render('templates/user/profile.phtml', ['user' => $user->getValues()]);
 		return $this->render($data);
 	}
 
 	private function authorize($login, $password)
 	{
 		$authorizer = new \Core\Authorize('User');
-		$authorizer->login($login, $password, function ($pass) { return $this->hashFunc($pass); });
+		$authorizer->login($login, $password, function ($pass) {
+			return $this->hashFunc($pass);
+		});
 
 		if (!$authorizer->getUser()) {
 			throw new \Core\Exception\Exception('Invalid login or password');
