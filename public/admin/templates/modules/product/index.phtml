@@ -20,6 +20,7 @@
 					<thead>
 					<tr>
 						<th>ID</th>
+						<th><? __('Photo') ?></th>
 						<th><? __('Name') ?></th>
 						<th><? __('Catalog') ?></th>
 						<th><? __('Url') ?></th>
@@ -33,6 +34,7 @@
 						echo '
                         <tr>
                             <td>' . $row->id . '</td>
+                            <td><img src="/api.php?method=Resource.get&id=' . $row->getValues()['photo_id'] . '"</td>
                             <td>' . $row->name . '</td>
                             <td>' . ($row->getRelated('catalog')->isEmpty() ? '-' : $row->getRelated('catalog')->getFirst()->getValue('name')) . '</td>
                             <td>' . $row->url . '</td>

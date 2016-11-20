@@ -2,7 +2,9 @@
 
 namespace Admin\Object;
 
-class Admin extends \Admin\Object\User
+use Core\Orm;
+
+class User extends \Core\Object
 {
 	protected static $_config;
 
@@ -10,9 +12,14 @@ class Admin extends \Admin\Object\User
 	{
 		if (empty(self::$_config)) {
 			self::$_config = clone parent::getConfig();
-			self::$_config->setTable('Admin');
+			self::$_config->setTable('User');
 			self::$_config->setFields([
-				'name' => [
+				'login' => [
+					'type' => 'varchar',
+					'default' => '',
+					'null' => false,
+				],
+				'password' => [
 					'type' => 'varchar',
 					'default' => '',
 					'null' => false,
@@ -28,8 +35,12 @@ class Admin extends \Admin\Object\User
 		return self::$_config;
 	}
 
-	public static function hashPassword($password)
+	public function getValues()
 	{
-		return md5('2wegdge23t2' . $password . 'Uyh920ht8');
+		$data = parent::getValues();
+		$data['info'] = Orm::findOne('User_Info', ['userId'], [$this->getId()])->getValues();
+
+		return $data;
 	}
 }
+

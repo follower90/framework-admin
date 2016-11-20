@@ -2,7 +2,7 @@
 
 namespace Admin\Object;
 
-class Admin extends \Admin\Object\User
+class User_Session extends \Core\Object
 {
 	protected static $_config;
 
@@ -10,16 +10,21 @@ class Admin extends \Admin\Object\User
 	{
 		if (empty(self::$_config)) {
 			self::$_config = clone parent::getConfig();
-			self::$_config->setTable('Admin');
+			self::$_config->setTable('User_Session');
 			self::$_config->setFields([
-				'name' => [
+				'userId' => [
+					'type' => 'int',
+					'default' => '',
+					'null' => false,
+				],
+				'entity' => [
 					'type' => 'varchar',
 					'default' => '',
 					'null' => false,
 				],
-				'active' => [
-					'type' => 'tinyint',
-					'default' => 1,
+				'hash' => [
+					'type' => 'varchar',
+					'default' => '',
 					'null' => false,
 				],
 			]);
@@ -27,9 +32,5 @@ class Admin extends \Admin\Object\User
 
 		return self::$_config;
 	}
-
-	public static function hashPassword($password)
-	{
-		return md5('2wegdge23t2' . $password . 'Uyh920ht8');
-	}
 }
+

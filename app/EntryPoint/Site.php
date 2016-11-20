@@ -17,7 +17,7 @@ class Site extends \Core\EntryPoint
 		$app = new App($this);
 		$app->setVendorPath('app');
 
-		$authorize = new \Core\Authorize('User');
+		$authorize = new \Admin\Authorize('User');
 		Config::set('user', $authorize->getUser());
 
 		$app->run();

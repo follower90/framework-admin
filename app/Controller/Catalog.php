@@ -11,7 +11,7 @@ class Catalog extends Controller
 			$productsData = [];
 
 			foreach ($products as $product) {
-				$productsData[$product->getId()] = $product->getInfo();
+				$productsData[$product->getId()] = $product->getValues();
 			}
 
 			$content = $this->view->render('templates/catalog_list.phtml', [
@@ -27,7 +27,7 @@ class Catalog extends Controller
 
 			$productsData = [];
 			foreach ($products as $product) {
-				$productsData[] = $product->getInfo();
+				$productsData[] = $product->getValues();
 			}
 
 			$content = $this->view->render('templates/catalog_list.phtml', [

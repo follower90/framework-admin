@@ -37,4 +37,12 @@ class Cart extends \Core\Object
 
 		return self::$_config;
 	}
+
+	public function getValues()
+	{
+		$data = parent::getValues();
+		$data['product'] = \Core\Orm::load('Product', $this->getValue('productId'))->getValues();
+
+		return $data;
+	}
 }

@@ -18,7 +18,7 @@ class Api extends \Core\EntryPoint
 
 		$app = new App($this);
 
-		$authorize = new \Core\Authorize('Admin');
+		$authorize = new \Admin\Authorize('Admin');
 		$authorize->getUser();
 
 		$app->run();

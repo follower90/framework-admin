@@ -1,6 +1,7 @@
 {
   "require": {
-    "follower/core": "dev-master"
+    "follower/core": "dev-master",
+    "eoghanobrien/php-simple-mail": "dev-master"
   },
   "autoload": {
     "classmap": [

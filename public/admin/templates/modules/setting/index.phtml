@@ -1,0 +1,46 @@
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header"><? __('Settings') ?></h1>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-6">
+		<button class="btn btn-primary"
+				onclick="location.href='/admin/setting/new'"><? __('Add new setting') ?></button>
+	</div>
+</div>
+
+<br/>
+<div class="dataTable_wrapper">
+	<div class="dataTables_wrapper">
+		<div class="row">
+			<div class="col-lg-12">
+				<table class="table table-bordered dataTable">
+					<thead>
+					<tr>
+						<th>ID</th>
+						<th><? __('Key') ?></th>
+						<th><? __('Value') ?></th>
+						<th><? __('Actions') ?></th>
+					</tr>
+					</thead>
+					<tbody>
+					<?php
+					foreach ($vars['settings'] as $row) {
+						echo '
+                        <tr>
+                            <td>' . $row['id'] . '</td>
+                            <td>' . $row['key'] . '</td>
+                            <td>' . $row['value'] . '</td>
+                            <td>' . _snippet('actions', [$row['id'], 'catalog', ['duplicate', 'delete']]) . '</td>
+                        </tr>';
+					}
+					?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<?php echo $vars['paging']; ?>
+	</div>
+</div>

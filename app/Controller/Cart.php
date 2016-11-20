@@ -15,10 +15,6 @@ class Cart extends Controller
 
 		$cart = \App\Services\Cart::getCart()->getData();
 
-		foreach($cart as &$c) {
-			$c['product'] = Orm::load('Product', $c['productId'])->getInfo();
-		}
-
 		$data = [
 			'cart' => $cart,
 			'total' => \App\Services\Cart::getTotal(),

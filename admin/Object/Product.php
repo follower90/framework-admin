@@ -59,11 +59,12 @@ class Product extends \Core\Object
 		return self::$_config;
 	}
 
-	public function getInfo()
-	{
-		$data = $this->getValues();
-		$data['photo_id'] = $this->getPhotoResourceId();
 
+	public function getValues()
+	{
+		$data = parent::getValues();
+		$data['photo_id'] = $this->getPhotoResourceId();
+		$data['catalog_id'] = $this->getCatalogId();
 		return $data;
 	}
 

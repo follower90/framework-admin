@@ -24,7 +24,7 @@ class User extends Controller
 
 	public function methodLogout()
 	{
-		$authorizer = new \Core\Authorize('User');
+		$authorizer = new \Admin\Authorize('User');
 		$authorizer->logout();
 
 		\Core\Router::redirect('/');
@@ -33,7 +33,7 @@ class User extends Controller
 	public function methodRegister($args)
 	{
 		if ($args['login'] && $args['password']) {
-			$user = \Core\Object\User::create();
+			$user = \Admin\Object\User::create();
 			$info = Orm::create('User_Info');
 
 			$user->login = $args['login'];
@@ -59,16 +59,13 @@ class User extends Controller
 			$this->render404();
 		}
 
-		$userData = $user->getValues();
-		$userData['info'] = Orm::findOne('User_Info', ['userId'], [$user->getId()])->getValues();
-
-		$data['content'] = $this->view->render('templates/user/profile.phtml', ['user' => $userData]);
+		$data['content'] = $this->view->render('templates/user/profile.phtml', ['user' => $user->getValues()]);
 		return $this->render($data);
 	}
 
 	private function authorize($login, $password)
 	{
-		$authorizer = new \Core\Authorize('User');
+		$authorizer = new \Admin\Authorize('User');
 		$authorizer->login($login, $password, function ($pass) {
 			return $this->hashFunc($pass);
 		});

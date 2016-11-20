@@ -11,7 +11,7 @@ class Product extends Controller
 		}
 
 		return $this->render([
-			'content' => $this->view->render('templates/product_in.phtml', ['product' => $product->getInfo()])
+			'content' => $this->view->render('templates/product_in.phtml', ['product' => $product->getValues()])
 		]);
 	}
 }
