@@ -40,7 +40,7 @@ class Product extends Controller
 
 		$data['edit_photo'] = $this->view->render('templates/common/image_crop.phtml', [
 			'width' => 180,
-			'height' => 220,
+			'height' => 180,
 			'entity' => 'product',
 			'photo' => $product->getPhotoResourceId(),
 			'id' => $data['product']['id']

@@ -13,7 +13,8 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<?php foreach ($vars['main_menu'] as $row) { ?>
-					<li><a href="<?=$row['url'];?>"><?=$row['name'];?></a></li>
+					<? $active = (\Core\Router::get('uri') == $row['url']) ? 'class="active"' : '';?>
+					<li <?=$active;?>><a href="<?=$row['url'];?>"><?=$row['name'];?></a></li>
 				<?php } ?>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">

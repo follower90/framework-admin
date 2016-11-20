@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Routes\App;
+use Core\Orm;
 
 class User extends Controller
 {
@@ -34,9 +34,15 @@ class User extends Controller
 	{
 		if ($args['login'] && $args['password']) {
 			$user = \Core\Object\User::create();
+			$info = Orm::create('User_Info');
+
 			$user->login = $args['login'];
 			$user->password = $this->hashFunc($args['password']);
 			$user->save();
+
+			$info->setValues($args['info']);
+			$info->setValue('userId', $user->getId());
+			$info->save();
 
 			$this->authorize($user->login, $user->password);
 			$data['content'] = $this->view->render('templates/user/register_success.phtml');
@@ -53,7 +59,10 @@ class User extends Controller
 			$this->render404();
 		}
 
-		$data['content'] = $this->view->render('templates/user/profile.phtml', ['user' => $user->getValues()]);
+		$userData = $user->getValues();
+		$userData['info'] = Orm::findOne('User_Info', ['userId'], [$user->getId()])->getValues();
+
+		$data['content'] = $this->view->render('templates/user/profile.phtml', ['user' => $userData]);
 		return $this->render($data);
 	}
 

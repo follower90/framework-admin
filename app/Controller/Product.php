@@ -10,11 +10,8 @@ class Product extends Controller
 			$this->render404();
 		}
 
-		$data['product'] = $product->getValues();
-		$data['product']['photo_id'] = $product->getPhotoResourceId();
-
 		return $this->render([
-			'content' => $this->view->render('templates/product_in.phtml', $data)
+			'content' => $this->view->render('templates/product_in.phtml', ['product' => $product->getInfo()])
 		]);
 	}
 }

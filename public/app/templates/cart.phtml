@@ -12,6 +12,7 @@
 					<thead>
 					<tr>
 						<th>#</th>
+						<th><? __('Photo') ?></th>
 						<th><? __('Name') ?></th>
 						<th><? __('Count') ?></th>
 						<th><? __('Price') ?></th>
@@ -25,12 +26,16 @@
 						<tr>
 							<td>
 								<input type="hidden" name="id[]" value="<?= $item['id']; ?>" />
-								<?= $counter++; ?></td>
+								<?= $counter++; ?>
+							</td>
+							<td>
+								<img height="50" src="/api.php?method=Resource.get&id=<?= $item['product']['photo_id']; ?>" />
+							</td>
 							<td>
 								<?= $item['product']['name']; ?>
 							</td>
 							<td>
-								<input type="number" name="count[]" class="cart-num-<?= $item['id']; ?>" value="<?= $item['count']; ?>">
+								<input type="number" min="1" step="1" name="count[]" class="cart-num-<?= $item['id']; ?>" value="<?= $item['count']; ?>">
 							</td>
 							<td>
 								<?= $item['product']['price']; ?>
@@ -44,10 +49,7 @@
 						</tr>
 					<?php } ?>
 					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+						<td colspan="5"></td>
 						<td><?= number_format($vars['total'], 2); ?></td>
 						<td><button class="btn btn-info"><? __('recalculate') ?></button></td>
 					</tr>

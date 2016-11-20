@@ -1,3 +1,5 @@
-<div>
+<div class="product">
 	<a href="/product/<?= $product['url']; ?>"><?= $product['name']; ?></a>
+	<br/>
+	<a href="/product/<?= $product['url']; ?>"><img src="/api.php?method=Resource.get&id=<?=$product['photo_id'];?>" /></a>
 </div>

@@ -55,7 +55,6 @@ class User extends Controller
 
 		$password = trim($args['password']);
 		if ($password) {
-			var_dump($password);
 			$user->setValue('password', md5($password));
 		}
 

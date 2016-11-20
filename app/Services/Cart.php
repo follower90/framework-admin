@@ -34,7 +34,7 @@ class Cart
 	public static function find($id)
 	{
 		if ($user = \Core\App::getUser()) {
-			return Orm::findBySql('Cart', 'select * from Cart where userId=? or session =? and id=?', [$user->getId(), Session::id(), $id])->getFirst();
+			return Orm::findBySql('Cart', 'select * from Cart where (userId=? or session =?) and id=?', [$user->getId(), Session::id(), $id])->getFirst();
 		} else {
 			return Orm::findOne('Cart', ['session', 'id'], [Session::id(), $id]);
 		}
@@ -42,14 +42,15 @@ class Cart
 
 	public static function update($id, $count)
 	{
+		if ($count < 0) return;
 		if ($user = \Core\App::getUser()) {
-			$item = Orm::findBySql('Cart', 'select * from Cart where userId=? or session =? and id=?', [$user->getId(), Session::id(), $id])->getFirst();
+			$item = Orm::findBySql('Cart', 'select * from Cart where (userId=? or session =?) and id=?', [$user->getId(), Session::id(), $id])->getFirst();
 		} else {
 			$item = Orm::findOne('Cart', ['session', 'id'], [Session::id(), $id]);
 		}
 
 		if ($item->getValue('count') != $count) {
-			$item->setValue('count', $count);
+			$item->setValue('count', (int) $count);
 			$item->save();
 		}
 	}

@@ -59,6 +59,14 @@ class Product extends \Core\Object
 		return self::$_config;
 	}
 
+	public function getInfo()
+	{
+		$data = $this->getValues();
+		$data['photo_id'] = $this->getPhotoResourceId();
+
+		return $data;
+	}
+
 	public function setCatalog($id)
 	{
 		if ($id) {

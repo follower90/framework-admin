@@ -16,13 +16,13 @@ class Cart extends Controller
 		$cart = \App\Services\Cart::getCart()->getData();
 
 		foreach($cart as &$c) {
-			$c['product'] = Orm::load('Product', $c['productId'])->getValues();
+			$c['product'] = Orm::load('Product', $c['productId'])->getInfo();
 		}
 
 		$data = [
 			'cart' => $cart,
 			'total' => \App\Services\Cart::getTotal(),
-			'userinfo' => Orm::findOne('User_Info', ['userId'], $this->user->getId())->getValues()
+			'userinfo' => $this->user ? Orm::findOne('User_Info', ['userId'], $this->user->getId())->getValues() : []
 		];
 
 		$data['content'] = $this->view->render('templates/cart.phtml', $data);
@@ -31,7 +31,7 @@ class Cart extends Controller
 
 	public function methodRemove($args)
 	{
-		$item = \App\Services\Cart::find($args['id']);
+		$item = \App\Services\Cart::find($args['remove']);
 		if ($item) Orm::delete($item);
 
 		return $this->methodIndex();
