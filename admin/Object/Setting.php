@@ -10,7 +10,7 @@ class Setting extends \Core\Object
 	{
 		if (empty(self::$_config)) {
 			self::$_config = clone parent::getConfig();
-			self::$_config->setTable('Admin');
+			self::$_config->setTable('Setting');
 			self::$_config->setFields([
 				'key' => [
 					'type' => 'varchar',
@@ -44,5 +44,7 @@ class Setting extends \Core\Object
 
 		$object->setValue('value', $value);
 		$object->save();
+
+		return $object;
 	}
 }

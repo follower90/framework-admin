@@ -41,23 +41,7 @@ class Setting extends Controller
 
 	public function methodSave($args)
 	{
-		if (!empty($args['id'])) {
-			$setting = Orm::load('Setting', $args['id']);
-		} else {
-			$setting = Orm::create('Setting');
-		}
-
-		$setting->setValues($args);
-
-		try {
-			Orm::save($setting);
-		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
-			$this->view->addNotice('error', $e->getMessage());
-			if ($setting->isNew()) {
-				Router::redirect('/admin/setting/new');
-			}
-		}
-
+		$setting = \Admin\Object\Setting::put($args['key'], $args['value']);
 		Router::redirect('/admin/setting/edit/' . $setting->getId());
 	}
 
