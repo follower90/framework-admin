@@ -1,7 +1,42 @@
-<h1><?= $vars['catalog']['name'];?></h1>
+<h1><? __('Catalog'); ?></h1>
 
-<?php
-	foreach ($vars['products'] as $product) {
-		include 'product.phtml';
-	}
-?>
+<div class="row">
+	<div class="col-lg-2">
+		<ul class="nav nav-pills nav-stacked">
+			<li role="presentation"><a href="/catalog/">Все категории</a></li>
+			<?php
+			foreach ($vars['catalogs'] as $cat) {
+				$active = ($cat['id'] == $vars['catalog']) ? 'class="active"' : '';
+				echo '<li role="presentation" ' . $active . '><a href="/catalog/' . $cat['url'] . '">' . $cat['name'] . '</a></li>';
+			}
+			?>
+		</ul>
+	</div>
+	<div class="col-lg-10">
+		<div class="row">
+			<div class="col-lg-4">
+				<form method="get">
+					<div class="form-group">
+						<label>Сортировка</label>
+						<select class="form-control" name="sort" onchange="submit();">
+							<option <?= ($vars['sort'] == '') ? 'selected' : '' ?> value="">обычная</option>
+							<option <?= ($vars['sort'] == 'price:asc') ? 'selected' : '' ?> value="price:asc">от дешевых к дорогим</option>
+							<option <?= ($vars['sort'] == 'price:desc') ? 'selected' : '' ?> value="price:desc">от дорогих к дешевым</option>
+						</select>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="row">
+					<?php
+						foreach ($vars['products'] as $product) {
+							include 'product.phtml';
+						}
+					?>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

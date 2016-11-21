@@ -64,7 +64,6 @@ class Product extends \Core\Object
 	{
 		$data = parent::getValues();
 		$data['photo_id'] = $this->getPhotoResourceId();
-		$data['catalog_id'] = $this->getCatalogId();
 		return $data;
 	}
 
