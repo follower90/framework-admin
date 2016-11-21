@@ -1,5 +1,9 @@
 <?php
 
+function i18n($args) {
+	return \Admin\Utils::translate($args, 'app');
+}
+
 function __($args) {
-	echo \Admin\Utils::translate($args, 'app');
+	echo  i18n($args);
 }

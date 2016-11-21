@@ -91,9 +91,12 @@ class User extends Controller
 
 	public function methodDelete($args)
 	{
-		$page = Orm::load('User', $args['delete']);
+		$user = Orm::load('User', $args['delete']);
+		$userInfo = Orm::findOne('User_Info', ['userId'], [$args['delete']]);
 
-		Orm::delete($page);
+		Orm::delete($user);
+		Orm::delete($userInfo);
+
 		Router::redirect('/admin/user/');
 	}
 }

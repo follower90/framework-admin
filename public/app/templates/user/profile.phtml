@@ -17,7 +17,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<form role="form" action="/profile/save">
+		<form role="form" method="post" action="/user/save">
 			<div class="form-group">
 				<label><? __('Login') ?></label>
 				<input class="form-control" name="login" value="<?= $vars['user']['login']; ?>" readonly />

@@ -1,7 +1,11 @@
 <?php
 
+function i18n($args) {
+	return \Admin\Utils::translate($args, 'admin');
+}
+
 function __($args) {
-	echo \Admin\Utils::translate($args, 'admin');
+	echo i18n($args);
 }
 
 function _snippet($name, $params) {
