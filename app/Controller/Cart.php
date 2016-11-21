@@ -8,7 +8,7 @@ class Cart extends Controller
 {
 	public function methodIndex()
 	{
-		if (\App\Services\Cart::getCartCount() == 0) {
+		if (\App\Service\Cart::getCartCount() == 0) {
 			$data['content'] = $this->view->render('templates/cart_empty.phtml');
 			return $this->render($data);
 		}
@@ -27,7 +27,7 @@ class Cart extends Controller
 
 	public function methodRemove($args)
 	{
-		$item = \App\Services\Cart::find($args['remove']);
+		$item = \App\Service\Cart::find($args['remove']);
 		if ($item) Orm::delete($item);
 
 		return $this->methodIndex();
@@ -37,7 +37,7 @@ class Cart extends Controller
 	{
 		$i = 0;
 		foreach ($args['id'] as $id) {
-			\App\Services\Cart::update($id, $args['count'][$i]);
+			\App\Service\Cart::update($id, $args['count'][$i]);
 		}
 		return $this->methodIndex();
 	}
@@ -58,7 +58,7 @@ class Cart extends Controller
 
 		$order->save();
 
-		$cart = \App\Services\Cart::getCart()->getCollection();
+		$cart = \App\Service\Cart::getCart()->getCollection();
 
 		foreach($cart as $c) {
 			$product = Orm::load('Product', $c->getValue('productId'));
@@ -75,7 +75,7 @@ class Cart extends Controller
 			$orderedProduct->save();
 		}
 
-		\App\Services\Cart::clear();
+		\App\Service\Cart::clear();
 		return $this->methodIndex();
 	}
 }
