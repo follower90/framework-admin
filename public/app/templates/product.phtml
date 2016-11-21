@@ -1,6 +1,9 @@
-<div class="product col-lg-2">
-	<a href="/product/<?= $product['url']; ?>"><?= $product['name']; ?></a>
+<div class="text-center product col-lg-3">
+	<br/>
+	<a class="text-uppercase" href="/product/<?= $product['url']; ?>"><?= $product['name']; ?></a>
 	<br/>
 	<a href="/product/<?= $product['url']; ?>"><img src="/api.php?method=Resource.get&id=<?=$product['photo_id'];?>" /></a>
-	<p><?= $product['price']; ?> грн</p>
+	<br/>
+	<p class="text-muted"> <?= $product['price']; ?> грн</p>
+	<br/>
 </div>

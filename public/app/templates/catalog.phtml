@@ -31,7 +31,11 @@
 			<div class="col-lg-12">
 				<div class="row">
 					<?php
+						$i = 0;
+
+					$vars['products']  = array_merge($vars['products'] , $vars['products'] , $vars['products'] );
 						foreach ($vars['products'] as $product) {
+							if ($i++ % 4 === 0) echo '</div><div class="row">';
 							include 'product.phtml';
 						}
 					?>

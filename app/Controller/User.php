@@ -69,9 +69,10 @@ class User extends Controller
 		}
 	}
 
-	public function methodRegistrationSuccess()
+	private function methodRegistrationSuccess()
 	{
-		$data['content'] = $this->view->render('templates/user/register_success.phtml');
+		$info = Orm::findOne('InfoBlock', ['alias'], ['register_success'])->getValues();
+		$data['content'] = $this->view->render('templates/page.phtml', $info);
 		return $this->render($data);
 	}
 
