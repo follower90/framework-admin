@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use Core\Config;
 use Core\Orm;
+use Core\Router;
 
 class User extends Controller
 {
@@ -36,20 +38,39 @@ class User extends Controller
 			$user = \Admin\Object\User::create();
 			$info = Orm::create('User_Info');
 
-			$user->login = $args['login'];
-			$user->password = $this->hashFunc($args['password']);
+			$user->setValues([
+				'login' => $args['login'],
+				'password' => $this->hashFunc($args['password'])
+			]);
+
 			$user->save();
 
 			$info->setValues($args['info']);
 			$info->setValue('userId', $user->getId());
 			$info->save();
 
-			$this->authorize($user->login, $user->password);
-			$data['content'] = $this->view->render('templates/user/register_success.phtml');
+			$siteName = \Admin\Object\Setting::get('sitename');
+			$body = $this->view->render('templates/mail/' . Config::get('site.language') . '/registration_message.phtml', [
+				'login' => $args['login'],
+				'password' => $args['password'],
+				'site' => $siteName,
+				'name' => $args['info']['firstName'] .' '. $args['info']['lastName'],
+			]);
+
+			\App\Service\Mail::send($args['info']['email'], $siteName .' - ' . \Admin\Utils::translate('Registration successfull', 'app'), $body);
+
+			$this->authorize($args['login'], $args['password']);
+			\Core\Router::redirect('/user/registered');
+
 		} else {
 			$data['content'] = $this->view->render('templates/user/register.phtml');
+			return $this->render($data);
 		}
+	}
 
+	public function methodRegistered($args)
+	{
+		$data['content'] = $this->view->render('templates/user/register_success.phtml');
 		return $this->render($data);
 	}
 
@@ -69,14 +90,10 @@ class User extends Controller
 		$authorizer->login($login, $password, function ($pass) {
 			return $this->hashFunc($pass);
 		});
-
-		if (!$authorizer->getUser()) {
-			throw new \Core\Exception\Exception('Invalid login or password');
-		}
 	}
 
-	private function hashFunc($pass)
+	private function hashFunc($password)
 	{
-		return md5($pass);
+		return md5($password);
 	}
 }

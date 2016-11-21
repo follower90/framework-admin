@@ -4,8 +4,7 @@ namespace App\Service;
 
 class Mail
 {
-
-	public static function send($email, $subject, $body, $attachments)
+	public static function send($email, $subject, $body, $attachments = [])
 	{
 		$siteName = \Admin\Object\Setting::get('sitename');
 		$siteEmail = \Admin\Object\Setting::get('email');

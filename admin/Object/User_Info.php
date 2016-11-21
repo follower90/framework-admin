@@ -17,6 +17,11 @@ class User_Info extends \Core\Object
 					'default' => null,
 					'null' => false,
 				],
+				'email' => [
+					'type' => 'varchar',
+					'default' => '',
+					'null' => false,
+				],
 				'firstName' => [
 					'type' => 'varchar',
 					'default' => '',
