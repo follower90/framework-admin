@@ -79,9 +79,14 @@ class Order extends Controller
 
 	public function methodDelete($args)
 	{
-		$page = Orm::load('Order', $args['delete']);
+		$order = Orm::load('Order', $args['delete']);
+		$orderProducts = Orm::find('Order_Product', ['orderId'], [$args['delete']])->getCollection();
 
-		Orm::delete($page);
+		foreach ($orderProducts as $product) {
+			Orm::delete($product);
+		}
+
+		Orm::delete($order);
 		Router::redirect('/admin/order/');
 	}
 }

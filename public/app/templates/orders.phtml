@@ -25,6 +25,7 @@
 					<th><? __('Date') ?></th>
 					<th><? __('Sum') ?></th>
 					<th><? __('Status') ?></th>
+					<th><? __('Actions') ?></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -35,6 +36,7 @@
 						<td><?= $item['date']; ?></td>
 						<td><?= $item['sum']; ?></td>
 						<td><?= $item['status']; ?></td>
+						<td><a href="/order/show/<?= $item['id']; ?>"><? __('details'); ?></a></td>
 					</tr>
 				<?php } ?>
 				</tbody>

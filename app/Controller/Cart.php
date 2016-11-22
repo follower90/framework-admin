@@ -13,11 +13,11 @@ class Cart extends Controller
 			return $this->render($data);
 		}
 
-		$cart = \App\Services\Cart::getCart()->getData();
+		$cart = \App\Service\Cart::getCart()->getData();
 
 		$data = [
 			'cart' => $cart,
-			'total' => \App\Services\Cart::getTotal(),
+			'total' => \App\Service\Cart::getTotal(),
 			'userinfo' => $this->user ? Orm::findOne('User_Info', ['userId'], $this->user->getId())->getValues() : []
 		];
 
@@ -48,9 +48,10 @@ class Cart extends Controller
 
 		$order->setValues([
 			'userId' => $this->user ? $this->user->getId() : null,
-			'sum' => \App\Services\Cart::getTotal(),
+			'sum' => \App\Service\Cart::getTotal(),
 			'firstName' => $args['firstName'],
 			'lastName' => $args['lastName'],
+			'email' => $args['email'],
 			'phone' => $args['phone'],
 			'address' => $args['address'],
 			'comment' => $args['comment']
@@ -75,7 +76,31 @@ class Cart extends Controller
 			$orderedProduct->save();
 		}
 
+		$siteName = \Admin\Object\Setting::get('sitename');
+		$userInfo = $this->user->getValues();
+
+		$mailTemplate = \Admin\Object\MailTemplate::get('new_order');
+		$body = $this->view->renderInlineTemplate(
+			$mailTemplate->getValue('body'),
+			[
+				'products' => \Core\Orm::find('Order_Product',['orderId'],[$order->getId()])->getData(),
+				'order' => $order->getValues(),
+				'site' => $siteName,
+				'name' => $userInfo['info']['firstName'] .' '. $userInfo['info']['lastName'],
+			]
+		);
+
+		\App\Service\Mail::send($userInfo['info']['email'], $siteName .' - ' . $mailTemplate->getValue('subject'), $body);
+
+
 		\App\Service\Cart::clear();
-		return $this->methodIndex();
+		return $this->methodOrderSent();
+	}
+
+	private function methodOrderSent()
+	{
+		$info = Orm::findOne('InfoBlock', ['alias'], ['order_sent'])->getValues();
+		$data['content'] = $this->view->render('templates/page.phtml', $info);
+		return $this->render($data);
 	}
 }

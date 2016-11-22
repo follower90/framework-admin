@@ -52,14 +52,19 @@ class User extends Controller
 			$this->authorize($args['login'], $args['password']);
 
 			$siteName = \Admin\Object\Setting::get('sitename');
-			$body = $this->view->render('templates/mail/' . Config::get('site.language') . '/registration_message.phtml', [
-				'login' => $args['login'],
-				'password' => $args['password'],
-				'site' => $siteName,
-				'name' => $args['info']['firstName'] .' '. $args['info']['lastName'],
-			]);
 
-			\App\Service\Mail::send($args['info']['email'], $siteName .' - ' . i18n('Registration successfull'), $body);
+			$mailTemplate = \Admin\Object\MailTemplate::get('registration_success');
+			$body = $this->view->renderInlineTemplate(
+				$mailTemplate->getValue('body'),
+				[
+					'login' => $args['login'],
+					'password' => $args['password'],
+					'site' => $siteName,
+					'name' => $args['info']['firstName'] .' '. $args['info']['lastName'],
+				]
+			);
+./
+			\App\Service\Mail::send($args['info']['email'], $siteName .' - ' . $mailTemplate->getValue('subject'), $body);
 
 			return $this->methodRegistrationSuccess();
 

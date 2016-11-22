@@ -35,6 +35,10 @@
 								   value="<?= $vars['order']['lastName']; ?>"/>
 						</div>
 						<div class="form-group">
+							<label><? __('E-Mail') ?></label>
+							<input class="form-control" name="info[email]" value="<?= $vars['order']['email']; ?>"/>
+						</div>
+						<div class="form-group">
 							<label><? __('Phone') ?></label>
 							<input class="form-control" name="info[phone]" value="<?= $vars['order']['phone']; ?>"/>
 						</div>
@@ -76,10 +80,12 @@
 											</thead>
 											<tbody>
 												<?php foreach ($vars['products'] as $var) { ?>
-													<th><?= $var['id']; ?></th>
-													<th><?= $var['name']; ?></th>
-													<th><?= $var['count']; ?></th>
-													<th><?= $var['price']; ?></th>
+													<tr>
+														<td><?= $var['id']; ?></td>
+														<td><?= $var['name']; ?></td>
+														<td><?= $var['count']; ?></td>
+														<td><?= number_format($var['price'], 2); ?></td>
+													</tr>
 												<?php } ?>
 											</tbody>
 										</table>

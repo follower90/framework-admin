@@ -26,6 +26,11 @@ class Order extends \Core\Object
 					'default' => '',
 					'null' => false,
 				],
+				'email' => [
+					'type' => 'varchar',
+					'default' => '',
+					'null' => false,
+				],
 				'lastName' => [
 					'type' => 'varchar',
 					'default' => '',
