@@ -11,6 +11,22 @@
 			}
 			?>
 		</ul>
+
+		<form method="get">
+			<?php
+			foreach ($vars['filters'] as $cat) {
+				echo '<p>' . $cat['name'] . '</p>';
+
+				foreach ($cat['filters'] as $filter) {
+					$checked = in_array($filter['id'], $vars['checked_filters']) ? 'checked' : '';
+					echo '<label>
+								<input '.$checked.' onchange="submit();" value="'.$filter['id'].'" name="filter[]" type="checkbox">
+								' . $filter['name'] . '</label><br/>';
+				}
+			}
+			?>
+		</form>
+
 	</div>
 	<div class="col-lg-10">
 		<div class="row">

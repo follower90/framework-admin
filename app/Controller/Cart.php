@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use Core\Orm;
+use Core\Router;
+use Core\Session;
 
 class Cart extends Controller
 {
@@ -92,14 +94,14 @@ class Cart extends Controller
 
 		\App\Service\Mail::send($userInfo['info']['email'], $siteName .' - ' . $mailTemplate->getValue('subject'), $body);
 
-
 		\App\Service\Cart::clear();
-		return $this->methodOrderSent();
+		Router::redirect('/cart/ordersent');
 	}
 
-	private function methodOrderSent()
+	public function methodOrderSent($args)
 	{
 		$info = Orm::findOne('InfoBlock', ['alias'], ['order_sent'])->getValues();
+
 		$data['content'] = $this->view->render('templates/page.phtml', $info);
 		return $this->render($data);
 	}

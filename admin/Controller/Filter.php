@@ -33,8 +33,9 @@ class Filter extends Controller
 
 	public function methodEdit($args)
 	{
-		$filter = Orm::load('FilterSet', $args['edit'])->getValues();
-		$data['content'] = $this->view->render('templates/modules/filter/edit.phtml', ['filter' => $filter]);
+		$set = Orm::load('FilterSet', $args['edit']);
+		$filters = Orm::find('Filter', ['filterSetId'], [$set->getId()])->getData();
+		$data['content'] = $this->view->render('templates/modules/filter/edit.phtml', ['filter' => $set->getValues(), 'filters' => $filters]);
 
 		return $this->render($data);
 	}
@@ -59,6 +60,33 @@ class Filter extends Controller
 		}
 
 		Router::redirect('/admin/filter/edit/' . $filter->getId());
+	}
+
+	public function methodSavefilters($args)
+	{
+		$filterSet = Orm::load('FilterSet', $args['set_id']);
+
+		$ids = [];
+		$i = 0;
+
+		foreach ($args['name'] as $name) {
+			if (empty($name)) continue;
+
+			$id = $args['id'][$i];
+
+			$filter = $id ? Orm::load('Filter', $id) : Orm::create('Filter');
+			$filter->setValues([
+				'name' => $name,
+				'filterSetId' => $filterSet->getId()
+			]);
+
+			$filter->save();
+			array_push($ids, $filter->getId());
+			$i++;
+		}
+
+		Orm::find('Filter', ['filterSetId', '!id'], [$filterSet->getId(), $ids])->removeAll();
+		Router::redirect('/admin/filter/edit/' . $filterSet->getId());
 	}
 
 	public function methodDuplicate($args)

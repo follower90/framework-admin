@@ -17,12 +17,7 @@ class Filter extends \Core\Object
 						'type' => 'varchar',
 						'default' => '',
 						'null' => false,
-					],
-					'info' => [
-						'type' => 'text',
-						'default' => '',
-						'null' => false,
-					],
+					]
 				],
 				'filterSetId' => [
 					'type' => 'int',

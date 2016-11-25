@@ -50,6 +50,12 @@ class Product extends \Core\Object
 			);
 
 			\Core\Orm::registerRelation(
+				['type' => 'multiple', 'alias' => 'filters', 'table' => 'Product__Filter'],
+				['class' => 'Product'],
+				['class' => 'Filter']
+			);
+
+			\Core\Orm::registerRelation(
 				['type' => 'has_many', 'alias' => 'resources', 'table' => 'Product_Resource'],
 				['class' => 'Product', 'field' => 'id'],
 				['class' => 'Product_Resource', 'field' => 'productId']
@@ -74,6 +80,22 @@ class Product extends \Core\Object
 			$db->query('delete from Product__Catalog where Product = ?', [$this->getId()]);
 			$db->query('insert into Product__Catalog set Product = ?, Catalog = ?', [$this->getId(), $id]);
 		}
+	}
+
+	public function setFilters($ids = [])
+	{
+		$db = PDO::getInstance();
+		$db->query('delete from Product__Filter where Product = ?', [$this->getId()]);
+
+
+		foreach ($ids as $filter) {
+			$db->query('insert into Product__Filter set Product = ?, Filter = ?', [$this->getId(), $filter]);
+		}
+	}
+
+	public function getFilters()
+	{
+		return $this->getRelated('filters');
 	}
 
 	public function getCatalogId()

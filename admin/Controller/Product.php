@@ -38,6 +38,12 @@ class Product extends Controller
 		$data['product'] = $product->getValues();
 		$data['product']['catalog_id'] = $product->getCatalogId();
 
+		$data['filters'] = Orm::find('Filter')->getData();
+		$data['set_filters'] = $product->getFilters()->getValues('id');
+
+		foreach ($data['filters'] as &$filter) {
+			$filter['group'] = Orm::load('FilterSet', $filter['filterSetId'])->getValue('name');
+		}
 		$data['edit_photo'] = $this->view->render('templates/common/image_crop.phtml', [
 			'width' => 180,
 			'height' => 180,
@@ -75,6 +81,14 @@ class Product extends Controller
 			}
 		}
 
+		Router::redirect('/admin/product/edit/' . $product->getId());
+	}
+
+	public function methodSavefilters($args)
+	{
+		$product = Orm::load('Product', $args['id']);
+
+		$product->setFilters($args['filterId']);
 		Router::redirect('/admin/product/edit/' . $product->getId());
 	}
 

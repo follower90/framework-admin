@@ -63,7 +63,7 @@ class User extends Controller
 					'name' => $args['info']['firstName'] .' '. $args['info']['lastName'],
 				]
 			);
-./
+
 			\App\Service\Mail::send($args['info']['email'], $siteName .' - ' . $mailTemplate->getValue('subject'), $body);
 
 			return $this->methodRegistrationSuccess();
