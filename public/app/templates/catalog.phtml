@@ -12,7 +12,7 @@
 			?>
 		</ul>
 
-		<form method="get">
+		<div id="catalog-filters">
 			<?php
 			foreach ($vars['filters'] as $cat) {
 				echo '<p>' . $cat['name'] . '</p>';
@@ -20,41 +20,69 @@
 				foreach ($cat['filters'] as $filter) {
 					$checked = in_array($filter['id'], $vars['checked_filters']) ? 'checked' : '';
 					echo '<label>
-								<input '.$checked.' onchange="submit();" value="'.$filter['id'].'" name="filter[]" type="checkbox">
+								<input '.$checked.' class="filter" value="'.$filter['id'].'" name="filter[]" type="checkbox">
 								' . $filter['name'] . '</label><br/>';
 				}
 			}
 			?>
-		</form>
-
+		</div>
 	</div>
 	<div class="col-lg-10">
 		<div class="row">
 			<div class="col-lg-4">
-				<form method="get">
 					<div class="form-group">
 						<label>Сортировка</label>
-						<select class="form-control" name="sort" onchange="submit();">
+						<select class="form-control" name="sort" id="catalog-sort">
 							<option <?= ($vars['sort'] == '') ? 'selected' : '' ?> value="">обычная</option>
 							<option <?= ($vars['sort'] == 'price:asc') ? 'selected' : '' ?> value="price:asc">от дешевых к дорогим</option>
 							<option <?= ($vars['sort'] == 'price:desc') ? 'selected' : '' ?> value="price:desc">от дорогих к дешевым</option>
 						</select>
 					</div>
-				</form>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-12">
-				<div class="row">
-					<?php
-						$i = 0;
-						foreach ($vars['products'] as $product) {
-							if ($i++ % 4 === 0) echo '</div><div class="row">';
-							include 'product.phtml';
-						}
-					?>
-				</div>
+			<div id="products-list">
+				<?php include 'products_list.phtml'; ?>
 			</div>
 		</div>
 	</div>
 </div>
+
+<script>
+	$('#catalog-filters').on('click', function (e) {
+		var elem = $(e.target);
+		if (elem.hasClass('filter')) {
+			requestProducts();
+		}
+	});
+
+	$('#catalog-sort').on('change', function () {
+		requestProducts();
+	});
+
+	function requestProducts()
+	{
+		var filters = [];
+		$('#catalog-filters input[type=checkbox]').each(function (n, i) {
+			if ($(i).is(':checked')) {
+				filters.push($(i).val());
+			}
+		});
+
+		$.ajax('/api.php?method=Catalog.products', {
+			method: 'POST',
+			data: {
+				filters: filters,
+				catalog: '<?=$vars['catalog']?>',
+				sort: $('#catalog-sort').val()
+			}
+			,
+			success: function (data) {
+				$('#products-list').html(data.response);
+			},
+			error: function (e) {
+				$('#products-list').html(e);
+			}
+		});
+	}
+</script>
