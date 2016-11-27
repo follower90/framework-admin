@@ -1,0 +1,10 @@
+<div class="col-lg-4">
+	<div class="form-group">
+		<label><? __('Сортировка') ?></label>
+		<select class="form-control" name="sort" id="catalog-sort">
+			<option <?= ($vars['sort'] == '') ? 'selected' : '' ?> value=""><? __('обычная') ?></option>
+			<option <?= ($vars['sort'] == 'price:asc') ? 'selected' : '' ?> value="price:asc"><? __('от дешевых к дорогим') ?></option>
+			<option <?= ($vars['sort'] == 'price:desc') ? 'selected' : '' ?> value="price:desc"><? __('от дорогих к дешевым') ?></option>
+		</select>
+	</div>
+</div>

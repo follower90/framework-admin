@@ -1,0 +1,34 @@
+<h1><? __('Catalog'); ?></h1>
+
+<div class="row">
+	<div class="col-lg-2">
+		<?php include 'catalogs_list.phtml'; ?>
+
+		<div id="catalog-filters">
+			<?php include 'products_filters.phtml'; ?>
+		</div>
+	</div>
+
+	<div class="col-lg-10">
+		<div class="row">
+			<?php include 'products_sort.phtml'; ?>
+		</div>
+		<div class="row">
+			<div id="products-list">
+				<?php include 'products_list.phtml'; ?>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	$('#catalog-filters').on('click', function (e) {
+		if ($(e.target).hasClass('filter')) {
+			requestProducts(<?=$vars['catalog']?>);
+		}
+	});
+
+	$('#catalog-sort').on('change', function () {
+		requestProducts(<?=$vars['catalog']?>);
+	});
+</script>

@@ -13,7 +13,7 @@ class Catalog extends \Core\Api
 		$view = new View();
 		$view->setDefaultPath('public/app');
 
-		return $view->render('templates/products_list.phtml', [
+		return $view->render('templates/catalog/products_list.phtml', [
 			'products' => $products->getData(),
 		]);
 	}

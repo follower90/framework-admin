@@ -1,0 +1,9 @@
+<ul class="nav nav-pills nav-stacked">
+	<li role="presentation"><a href="/catalog/"><? __('Все категории') ?></a></li>
+	<?php
+	foreach ($vars['catalogs'] as $cat) {
+		$active = ($cat['id'] == $vars['catalog']) ? 'class="active"' : '';
+		echo '<li role="presentation" ' . $active . '><a href="/catalog/' . $cat['url'] . '">' . $cat['name'] . '</a></li>';
+	}
+	?>
+</ul>

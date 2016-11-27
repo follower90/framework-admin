@@ -3,10 +3,12 @@
 namespace App\Service;
 
 use Core\Database\PDO;
+use Core\Exception\Exception;
+use Core\Orm;
 
 class Product
 {
-	public static function filterBy($catalog = null, $filters = [], $sort = '')
+	public static function filterBy($catalogId = null, $filters = [], $sort = '')
 	{
 		$db = PDO::getInstance();
 		$productFilters = ['active' => 1];
@@ -24,10 +26,13 @@ class Product
 			}
 		}
 
-		if ($catalog) {
-			$catalog = \Admin\Object\Catalog::findBy(['url' => $args['url']]);
-			$productIds = $catalog->getRelated('products')->getValues('id');
+		if ($catalogId) {
+			$catalog = Orm::load('Catalog', $catalogId);
+			if (!$catalog) {
+				throw new Exception('Incorrect catalog');
+			}
 
+			$productIds = $catalog->getRelated('products')->getValues('id');
 			if (isset($productFilters['id'])) {
 				$productFilters['id'][] = $productIds;
 			} else {
@@ -35,6 +40,30 @@ class Product
 			}
 		}
 
-		return \Core\Orm::find('Product', array_keys($productFilters), array_values($productFilters), $params);
+		return Orm::find('Product', array_keys($productFilters), array_values($productFilters), $params);
+	}
+
+	public static function getAvailableFilters($products)
+	{
+		$filters = [];
+		foreach ($products->getCollection() as $product) {
+			foreach ($product->getFilters()->getCollection() as $filter) {
+				array_push($filters, $filter->getValues());
+			}
+		}
+
+		$filterSets = [];
+
+		foreach ($filters as $filter) {
+			$set = Orm::load('FilterSet', $filter['filterSetId'])->getValues();
+
+			if (!isset($filterSets[$set['id']])) {
+				$filterSets[$set['id']] = $set;
+			}
+
+			$filterSets[$set['id']]['filters'][] = $filter;
+		}
+
+		return $filterSets;
 	}
 }
