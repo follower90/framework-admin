@@ -1,12 +1,15 @@
 <?php
+
 foreach ($vars['filters'] as $cat) {
 	echo '<h4 >' . $cat['name'] . '</h4>';
 
 	foreach ($cat['filters'] as $filter) {
 		$checked = in_array($filter['id'], $vars['checked_filters']) ? 'checked' : '';
-		echo '<label>
-								<input '.$checked.' class="filter" value="'.$filter['id'].'" name="filter[]" type="checkbox">
-								' . $filter['name'] . '</label><br/>';
+		$disabled = ($filter['count'] == 0) ? 'disabled' : '';
+
+		echo '<span ' . ($disabled ? 'style="opacity:0.5;"' : '') . '>';
+		echo '<label><input type="checkbox" '.$checked.' ' . $disabled . ' class="filter" value="'.$filter['id'].'" name="filter[]"  />&nbsp;&nbsp;';
+		echo $filter['name'] . '</label> ('.$filter['count'].')<br/>';
+		echo '</span>';
 	}
 }
-?>

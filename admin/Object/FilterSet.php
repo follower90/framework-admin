@@ -32,7 +32,7 @@ class FilterSet extends \Core\Object
 			]);
 
 			\Core\Orm::registerRelation(
-				['type' => 'has_many', 'alias' => 'filters', 'table' => 'Filter'],
+				['type' => 'has_many', 'alias' => 'included_filters', 'table' => 'Filter'],
 				['class' => 'Filter', 'field' => 'filterSetId'],
 				['class' => 'FilterSet', 'field' => 'id']
 			);

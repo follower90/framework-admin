@@ -29,10 +29,11 @@
 					<li><a href="/user/register"><? __('Register') ?></a></li>
 				<?php } ?>
 
-				<li class="<?php echo $this->isCurrentLanguage('ru') ? 'active' : ''; ?>"><a
-						href="/lang/?switch=ru">RU</a></li>
-				<li class="<?php echo $this->isCurrentLanguage('en') ? 'active' : ''; ?>"><a
-						href="/lang/?switch=en">EN</a></li>
+				<?php foreach ($vars['languages'] as $key => $lang) { ?>
+					<li class="<?php echo $this->isCurrentLanguage($key) ? 'active' : ''; ?>">
+						<a href="/lang/?switch=<?= $key; ?>"><?= strtoupper($key); ?></a>
+					</li>
+				<?php } ?>
 			</ul>
 		</div>
 	</div>

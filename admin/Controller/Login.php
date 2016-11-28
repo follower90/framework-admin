@@ -24,7 +24,7 @@ class Login extends Controller
 				return Admin::hashPassword($password);
 			};
 
-			$this->_authorize->login($this->request('login'), $this->request('password'), $hash, $remember);
+			$this->_authorize->login($args['login'], $args['password'], $hash, $remember);
 
 			if (!$this->_authorize->getUser()) {
 				$this->view->addNotice('error', 'Incorrect login or password');

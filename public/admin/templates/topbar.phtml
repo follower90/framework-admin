@@ -14,17 +14,11 @@
 			<?= strtoupper(\Core\Config::get('site.language')); ?> <i class="fa fa-caret-down"></i>
 		</a>
 		<ul class="dropdown-menu dropdown-lang">
-			<li>
-				<a href="/admin/lang?switch=ru">
-					<div>Русский</div>
-				</a>
-			</li>
-			<li class="divider"></li>
-			<li>
-				<a href="/admin/lang?switch=en">
-					<div>English</div>
-				</a>
-			</li>
+			<?php foreach ($vars['languages'] as $key => $lang) { ?>
+				<li>
+					<a href="/admin/lang?switch=<?= $key; ?>"><?= $lang; ?></a>
+				</li>
+			<?php } ?>
 		</ul>
 	</li>
 

@@ -22,7 +22,7 @@ class Catalog extends Controller
 		$content = $this->view->render('templates/catalog/catalog.phtml', [
 			'catalogs' => \Admin\Object\Catalog::where(['active' => 1])->getData(),
 			'catalog' => $catalogId,
-			'filters' => \App\Service\Product::getAvailableFilters($products),
+			'filters' => \App\Service\Product::getAvailableFiltersDataForCatalog($catalogId, $products),
 			'products' => $products->getData(),
 			'checked_filters' => $filters,
 			'sort' => $sort

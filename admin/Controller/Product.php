@@ -2,9 +2,10 @@
 
 namespace Admin\Controller;
 
-use \Core\View\Paging;
-use \Core\Orm;
-use \Core\Router;
+use Core\Library\String;
+use Core\View\Paging;
+use Core\Orm;
+use Core\Router;
 
 class Product extends Controller
 {
@@ -67,6 +68,10 @@ class Product extends Controller
 			$product = Orm::load('Product', $args['id']);
 		} else {
 			$product = Orm::create('Product');
+		}
+
+		if (empty($args['url'])) {
+			$args['url'] = String::translit($args['name']);
 		}
 
 		$product->setValues($args);

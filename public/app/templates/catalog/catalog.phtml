@@ -4,7 +4,7 @@
 	<div class="col-lg-2">
 		<?php include 'catalogs_list.phtml'; ?>
 
-		<div id="catalog-filters">
+		<div id="products-filters">
 			<?php include 'products_filters.phtml'; ?>
 		</div>
 	</div>
@@ -22,13 +22,13 @@
 </div>
 
 <script>
-	$('#catalog-filters').on('click', function (e) {
+	$('#products-filters').on('click', function (e) {
 		if ($(e.target).hasClass('filter')) {
 			requestProducts(<?=$vars['catalog']?>);
 		}
 	});
 
-	$('#catalog-sort').on('change', function () {
+	$('#products-sort').on('change', function () {
 		requestProducts(<?=$vars['catalog']?>);
 	});
 </script>

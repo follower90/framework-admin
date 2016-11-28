@@ -1,6 +1,8 @@
 <?php
 
-\Core\Config::setDb('default', [
+use \Core\Config;
+
+Config::setDb('default', [
 	'host' => '127.0.0.1',
 	'name' =>  'admin',
 	'user' => 'root',
@@ -8,5 +10,10 @@
 	'charset' => 'utf8'
 ]);
 
-\Core\Config::registerProject('Admin', 'default');
-\Core\Config::registerProject('App', 'default');
+Config::setAvailableLanguages([
+	'ru' => 'Русский',
+	'en' => 'English'
+]);
+
+Config::registerProject('Admin', 'default');
+Config::registerProject('App', 'default');

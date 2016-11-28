@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Core\Config;
 use Core\Router;
 
 class Controller extends \Core\Controller
@@ -21,6 +22,8 @@ class Controller extends \Core\Controller
 	public function render($data = [])
 	{
 		$data['user'] = $this->user;
+		$data['languages'] = Config::getAvailableLanguages();
+
 		$data['main_menu'] = \Core\Orm::find('Menu', ['active'], [1])->getData();
 		$this->_data = array_merge($this->_data, $data);
 		return $this->view->render('templates/base.phtml', $this->_data);
@@ -36,7 +39,10 @@ class Controller extends \Core\Controller
 
 	protected function prepareResources()
 	{
-		$this->addCssPath(['/css/bootstrap.min.css']);
+		$this->addCssPath([
+			'/css/bootstrap.min.css'
+		]);
+
 		$this->addJavaScriptPath([
 			'/js/jquery.min.js',
 			'/js/cart.js'
@@ -53,7 +59,6 @@ class Controller extends \Core\Controller
 	public function addCssPath($paths = [])
 	{
 		if (!is_array($paths)) $paths = [$paths];
-
 		$this->_styles = array_merge($paths, $this->_styles);
 		$this->_data['styles'] = $this->_styles;
 	}

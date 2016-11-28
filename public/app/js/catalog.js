@@ -1,8 +1,8 @@
 function requestProducts(catalogId)
 {
 	var filters = [];
-	var sort = $('#catalog-sort').val();
-	$('#catalog-filters input[type=checkbox]').each(function (n, i) {
+	var sort = $('#products-sort').val();
+	$('#products-filters input[type=checkbox]').each(function (n, i) {
 		if ($(i).is(':checked')) filters.push($(i).val());
 	});
 
@@ -23,10 +23,18 @@ function requestProducts(catalogId)
 			});
 
 			window.history.pushState('', '', url);
-			$('#products-list').html(data.response);
+
+			repaceHtmlWithFade('#products-list', data.response.products);
+			$('#products-filters').html(data.response.filters);
 		},
 		error: function (e) {
 			$('#products-list').html(e);
 		}
 	});
+}
+
+function repaceHtmlWithFade(elem, data) {
+	$(elem).css({opacity: 0.5});
+	$(elem).html(data);
+	$(elem).animate({opacity: 1}, 800);
 }

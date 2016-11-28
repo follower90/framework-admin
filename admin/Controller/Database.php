@@ -23,12 +23,13 @@ class Database extends Controller
 		$tables = $this->db->rows('SHOW TABLES');
 		foreach ($tables as $table) {
 			$table = reset($table);
-			$data = $this->db->rows('SELECT * FROM ' . $table);
-			$create = $this->db->row('SHOW CREATE TABLE ' . $table);
+			$data = $this->db->rows('SELECT * FROM `' . $table . '`;');
+			$create = $this->db->row('SHOW CREATE TABLE `' . $table . '`;`');
+			$result .= 'DROP TABLE IF EXISTS `' . $table . "`;\n";
 			$result .= "\n\n" . $create['Create Table'] . ";\n\n";
 
 			foreach ($data as $row) {
-				$result .= 'INSERT INTO ' . $table . ' VALUES';
+				$result .= 'INSERT INTO `' . $table . '` VALUES';
 				foreach ($row as &$val) {
 					$val = addslashes($val);
 					$val = ereg_replace("\n", "\\n", $val);

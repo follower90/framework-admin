@@ -2,6 +2,7 @@
 
 namespace Admin\Controller;
 
+use Core\Config;
 use \Core\Router;
 use \Core\View;
 
@@ -24,6 +25,7 @@ class Controller extends \Core\Controller
 	{
 		$this->_data = array_merge($this->_data, $data);
 		$this->_data['user'] = $this->user;
+		$this->_data['languages'] = Config::getAvailableLanguages();
 
 		if (!$this->user) {
 			if (Router::get('uri') != '/admin/login') {

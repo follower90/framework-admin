@@ -46,6 +46,12 @@ class Catalog extends \Core\Object
 				['class' => 'Catalog'],
 				['class' => 'Product']
 			);
+
+			\Core\Orm::registerRelation(
+				['type' => 'multiple', 'alias' => 'filter_sets', 'table' => 'Catalog__FilterSet'],
+				['class' => 'Catalog'],
+				['class' => 'FilterSet']
+			);
 		}
 
 		return self::$_config;
