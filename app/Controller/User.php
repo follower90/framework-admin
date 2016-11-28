@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use Core\Config;
 use Core\Orm;
 use Core\Router;
 
@@ -21,6 +20,7 @@ class User extends Controller
 		}
 
 		$data['content'] = $this->view->render('templates/user/login.phtml');
+		$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => i18n('Authorization')]]);
 		return $this->render($data);
 	}
 
@@ -70,6 +70,8 @@ class User extends Controller
 
 		} else {
 			$data['content'] = $this->view->render('templates/user/register.phtml');
+
+			$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => i18n('Registration')]]);
 			return $this->render($data);
 		}
 	}
@@ -105,6 +107,7 @@ class User extends Controller
 		}
 
 		$data['content'] = $this->view->render('templates/user/profile.phtml', ['user' => $user->getValues()]);
+		$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => i18n('Profile')]]);
 		return $this->render($data);
 	}
 

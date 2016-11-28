@@ -60,7 +60,7 @@ class Controller extends \Core\Controller
 			$last = array_pop($data);
 		}
 
-		foreach ($data as $key => $val) {
+		foreach ($data as $val) {
 			$result .= '<li><a href=' . $val['url'] .'>' . $val['name']. '</a></li>';
 		}
 

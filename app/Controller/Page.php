@@ -10,7 +10,8 @@ class Page extends Controller
 		if (!$page) $this->render404();
 
 		return $this->render([
-			'content' => $this->view->render('templates/page.phtml', $page->getValues())
+			'content' => $this->view->render('templates/page.phtml', $page->getValues()),
+			'breadcrumbs' => $this->renderBreadCrumbs([['name' => $page->getValue('name')]])
 		]);
 	}
 }

@@ -23,6 +23,7 @@ class Cart extends Controller
 		];
 
 		$data['content'] = $this->view->render('templates/cart.phtml', $data);
+		$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => i18n('Cart')]]);
 		return $this->render($data);
 	}
 
