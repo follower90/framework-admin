@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use Core\Orm;
 use Core\Router;
-use Core\Session;
 
 class Cart extends Controller
 {

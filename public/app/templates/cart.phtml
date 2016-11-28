@@ -6,57 +6,55 @@
 
 <div class="container-fluid">
 	<div class="row">
-		<div class="table-responsive">
-			<form type="post" action="/cart/recalculate">
-				<table class="table table-hover">
-					<thead>
+		<form type="post" action="/cart/recalculate">
+			<table class="table table-hover">
+				<thead>
+				<tr>
+					<th>#</th>
+					<th><? __('Photo') ?></th>
+					<th><? __('Name') ?></th>
+					<th><? __('Count') ?></th>
+					<th><? __('Price') ?></th>
+					<th><? __('Sum') ?></th>
+					<th><? __('Actions') ?></th>
+				</tr>
+				</thead>
+				<tbody>
+				<?php $counter = 1; ?>
+				<?php foreach ($vars['cart'] as $item) { ?>
 					<tr>
-						<th>#</th>
-						<th><? __('Photo') ?></th>
-						<th><? __('Name') ?></th>
-						<th><? __('Count') ?></th>
-						<th><? __('Price') ?></th>
-						<th><? __('Sum') ?></th>
-						<th><? __('Actions') ?></th>
+						<td>
+							<input type="hidden" name="id[]" value="<?= $item['id']; ?>" />
+							<?= $counter++; ?>
+						</td>
+						<td>
+							<img height="50" src="/api.php?method=Resource.get&id=<?= $item['product']['photo_id']; ?>" />
+						</td>
+						<td>
+							<?= $item['product']['name']; ?>
+						</td>
+						<td>
+							<input type="number" min="1" step="1" name="count[]" class="cart-num-<?= $item['id']; ?>" value="<?= $item['count']; ?>">
+						</td>
+						<td>
+							<?= number_format($item['product']['price'], 2); ?>
+						</td>
+						<td>
+							<?= number_format($item['product']['price'] * $item['count'], 2); ?>
+						</td>
+						<td>
+							<a href="/cart/remove/<?= $item['id']; ?>"><? __('remove') ?></a>
+						</td>
 					</tr>
-					</thead>
-					<tbody>
-					<?php $counter = 1; ?>
-					<?php foreach ($vars['cart'] as $item) { ?>
-						<tr>
-							<td>
-								<input type="hidden" name="id[]" value="<?= $item['id']; ?>" />
-								<?= $counter++; ?>
-							</td>
-							<td>
-								<img height="50" src="/api.php?method=Resource.get&id=<?= $item['product']['photo_id']; ?>" />
-							</td>
-							<td>
-								<?= $item['product']['name']; ?>
-							</td>
-							<td>
-								<input type="number" min="1" step="1" name="count[]" class="cart-num-<?= $item['id']; ?>" value="<?= $item['count']; ?>">
-							</td>
-							<td>
-								<?= number_format($item['product']['price'], 2); ?>
-							</td>
-							<td>
-								<?= number_format($item['product']['price'] * $item['count'], 2); ?>
-							</td>
-							<td>
-								<a href="/cart/remove/<?= $item['id']; ?>"><? __('remove') ?></a>
-							</td>
-						</tr>
-					<?php } ?>
-					<tr>
-						<td colspan="5"></td>
-						<td><?= number_format($vars['total'], 2); ?></td>
-						<td><button class="btn btn-info"><? __('recalculate') ?></button></td>
-					</tr>
-					</tbody>
-				</table>
-			</form>
-		</div>
+				<?php } ?>
+				<tr>
+					<td colspan="5"></td>
+					<td><?= number_format($vars['total'], 2); ?></td>
+					<td><button class="btn btn-info"><? __('recalculate') ?></button></td>
+				</tr>
+				</tbody>
+			</table>
+		</form>
 
 		<div class="row">
 			<div class="col-lg-12">

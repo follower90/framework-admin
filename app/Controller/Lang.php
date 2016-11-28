@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use Core\Cookie;
-use \Core\Router;
+use Core\Router;
 
 class Lang extends Controller
 {

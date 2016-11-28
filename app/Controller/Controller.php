@@ -25,6 +25,7 @@ class Controller extends \Core\Controller
 		$data['languages'] = Config::getAvailableLanguages();
 
 		$data['main_menu'] = \Core\Orm::find('Menu', ['active'], [1])->getData();
+
 		$this->_data = array_merge($this->_data, $data);
 		return $this->view->render('templates/base.phtml', $this->_data);
 	}
@@ -49,6 +50,22 @@ class Controller extends \Core\Controller
 			'/js/cart.js',
 			'/js/app.js'
 		]);
+	}
+
+	protected function renderBreadCrumbs($data = [])
+	{
+		$result = '<li><a href="/">'. i18n('Main').'</a></li>';
+
+		if (sizeof($data) > 0) {
+			$last = array_pop($data);
+		}
+
+		foreach ($data as $key => $val) {
+			$result .= '<li><a href=' . $val['url'] .'>' . $val['name']. '</a></li>';
+		}
+
+		$result .= '<li class="active">'. $last['name'] . '</li>';
+		return '<ol class="breadcrumb">' . $result . '</ol>';
 	}
 
 	protected function addJavaScriptPath($paths = [])
