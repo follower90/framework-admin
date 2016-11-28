@@ -3,4 +3,6 @@
 <p><?= htmlspecialchars_decode($vars['product']['text']); ?></p>
 <p><b><?=$vars['product']['price'];?> грн</b></p>
 
-<button class="btn btn-success" onclick="addToCart(<?=$vars['product']['id'];?>);"><? __('Add to cart') ?></button>
+<div class="form-group">
+	<button class="btn btn-success" onclick="addToCart(<?=$vars['product']['id'];?>);"><? __('Add to cart') ?></button>
+</div>

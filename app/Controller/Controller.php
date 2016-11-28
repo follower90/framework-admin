@@ -46,7 +46,8 @@ class Controller extends \Core\Controller
 		$this->addJavaScriptPath([
 			'/js/jquery.min.js',
 			'/js/bootstrap.min.js',
-			'/js/cart.js'
+			'/js/cart.js',
+			'/js/app.js'
 		]);
 	}
 
