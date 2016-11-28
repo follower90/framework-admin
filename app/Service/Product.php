@@ -46,6 +46,8 @@ class Product
 						array_push($productFilters['id'], $filterProduct['Product']);
 					}
 				}
+			} else {
+				$productFilters['id'] = $productIds;
 			}
 		}
 
