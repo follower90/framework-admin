@@ -11,7 +11,7 @@ class Logout extends Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->_authorize = new \Core\Authorize('Admin');
+		$this->_authorize = new \Admin\Authorize('Admin');
 	}
 
 	public function methodIndex()
