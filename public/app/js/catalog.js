@@ -16,7 +16,9 @@ function requestProducts(catalogId)
 		,
 		success: function (data) {
 			var url = window.location.href.split('?')[0];
-				url += '?sort=' + sort;
+				url += '?search';
+
+			if (sort) url += '&sort=' + sort;
 
 			filters.forEach(function (filter) {
 				url += '&filters[]=' + filter;

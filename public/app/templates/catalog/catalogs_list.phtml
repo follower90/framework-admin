@@ -1,9 +1,19 @@
-<ul class="nav nav-pills nav-stacked">
-	<li role="presentation"><a href="/catalog/"><? __('All categories') ?></a></li>
-	<?php
-	foreach ($vars['catalogs'] as $cat) {
-		$active = ($cat['id'] == $vars['catalog']) ? 'class="active"' : '';
-		echo '<li role="presentation" ' . $active . '><a href="/catalog/' . $cat['url'] . '">' . $cat['name'] . '</a></li>';
-	}
-	?>
-</ul>
+<div class="row">
+	<div class="col-lg-12">
+		<?php echo $vars['breadcrumbs']; ?>
+	</div>
+</div>
+
+<h1><? __('Catalog'); ?></h1>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="row">
+			<div class="col-lg-12">
+				<?php foreach ($vars['catalogs'] as $row) { ?>
+					<a href="<?=$row['url'];?>"><?=$row['name'];?></a> <br/>
+				<?php } ?>
+			</div>
+		</div>
+	</div>
+</div>

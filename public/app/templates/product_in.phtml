@@ -1,7 +1,7 @@
 <h1><?= $vars['product']['name']; ?></h1>
 <img src="/api.php?method=Resource.get&id=<?=$vars['product']['photo_id'];?>" />
 <p><?= htmlspecialchars_decode($vars['product']['text']); ?></p>
-<p><b><?=$vars['product']['price'];?> грн</b></p>
+<p><b><?=$vars['product']['price'];?> <? __('UAH') ?></b></p>
 
 <div class="form-group">
 	<button class="btn btn-success" onclick="addToCart(<?=$vars['product']['id'];?>);"><? __('Add to cart') ?></button>

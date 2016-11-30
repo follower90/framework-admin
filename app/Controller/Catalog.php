@@ -13,6 +13,11 @@ class Catalog extends Controller
 
 		if (!$args['url'] || $args['url'] === 'all') {
 			$catalogId = null;
+			$content = $this->view->render('templates/catalog/catalogs_list.phtml', [
+				'breadcrumbs' => $this->getBreadcrumbs(),
+				'catalogs' => \Admin\Object\Catalog::where(['active' => 1])->getData()
+			]);
+			return $this->render(['content' => $content]);
 		} else {
 			$catalog = \Admin\Object\Catalog::findBy(['url' => $args['url']]);
 			if (!$catalog) $this->render404();
