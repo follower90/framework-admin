@@ -2,9 +2,9 @@
 
 namespace Admin\Controller;
 
-use \Core\View\Paging;
-use \Core\Orm;
-use \Core\Router;
+use Core\View\Paging;
+use Core\Orm;
+use Core\Router;
 
 class Page extends Controller
 {

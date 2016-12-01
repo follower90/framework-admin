@@ -3,8 +3,8 @@
 namespace Admin\Controller;
 
 use Core\Config;
-use \Core\Router;
-use \Core\View;
+use Core\Router;
+use Core\View;
 
 class Controller extends \Core\Controller
 {

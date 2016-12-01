@@ -2,7 +2,7 @@
 
 namespace Admin\Controller;
 
-use \Core\Router;
+use Core\Router;
 
 class Logout extends Controller
 {

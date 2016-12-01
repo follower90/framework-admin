@@ -2,9 +2,9 @@
 
 namespace Admin\Api;
 
-use \Admin\Object\Product_Resource;
-use \Core\App;
-use \Core\Library\File;
+use Admin\Object\Product_Resource;
+use Core\Library\File;
+use Core\App;
 
 class Product extends \Core\Api
 {

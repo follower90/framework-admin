@@ -17,6 +17,11 @@ class Admin extends \Admin\Object\User
 					'default' => '',
 					'null' => false,
 				],
+				'groupId' => [
+					'type' => 'int',
+					'default' => null,
+					'null' => false,
+				],
 				'active' => [
 					'type' => 'tinyint',
 					'default' => 1,
@@ -24,6 +29,12 @@ class Admin extends \Admin\Object\User
 				],
 			]);
 		}
+
+		\Core\Orm::registerRelation(
+			['type' => 'has_one', 'alias' => 'admin_group', 'table' => 'Admin_Group'],
+			['class' => 'Admin', 'field' => 'groupId'],
+			['class' => 'Admin_Group', 'field' => 'id']
+		);
 
 		return self::$_config;
 	}

@@ -2,8 +2,8 @@
 
 namespace Admin\Controller;
 
-use \Admin\Object\Admin;
-use \Core\Router;
+use Admin\Object\Admin;
+use Core\Router;
 
 class Login extends Controller
 {

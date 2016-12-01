@@ -20,7 +20,7 @@
 					<tr>
 						<th>ID</th>
 						<th><? __('Login') ?></th>
-						<th><? __('Name') ?></th>
+						<th><? __('Group') ?></th>
 						<th><? __('Active') ?></th>
 						<th><? __('Actions') ?></th>
 					</tr>
@@ -30,11 +30,11 @@
 					foreach ($vars['admins'] as $row) {
 						echo '
                         <tr>
-                            <td>' . $row['id'] . '</td>
-                            <td>' . $row['login'] . '</td>
-                            <td>' . $row['name'] . '</td>
-                            <td>' . _snippet('active', [$row['id'], 'admin', $row['active']]) . '</td>
-                            <td>' . _snippet('actions', [$row['id'], 'admin', ['duplicate', 'delete']]) . '</td>
+                            <td>' . $row->id . '</td>
+                            <td>' . $row->login . '</td>
+                            <td>' . $row->getRelatedValue('admin_group.name') . '</td>
+                            <td>' . _snippet('active', [$row->id, 'admin', $row->active]) . '</td>
+                            <td>' . _snippet('actions', [$row->id, 'admin', ['duplicate', 'delete']]) . '</td>
                         </tr>';
 					}
 					?>

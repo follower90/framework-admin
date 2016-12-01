@@ -2,7 +2,7 @@
 
 namespace Admin\Api;
 
-use \Core\Orm;
+use Core\Orm;
 
 class Page extends \Core\Api
 {

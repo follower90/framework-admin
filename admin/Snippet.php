@@ -34,8 +34,8 @@ class Snippet
 				});
 			</script>', [
 			ucfirst($path),
-			Utils::translate('Are you sure you want to delete this item?'),
-			Utils::translate('Are you sure you want to duplicate this item?')
+			i18n('Are you sure you want to delete this item?'),
+			i18n('Are you sure you want to duplicate this item?')
 		]);
 
 		return $view . $scripts;
@@ -56,11 +56,11 @@ class Snippet
 
 		if (in_array('duplicate', $actions)) {
 			$html .= View::renderString('<li><a id="duplicate_item" href="/admin/{1}/duplicate/{2}">{3}</a></li>',
-				[$path, $id, Utils::translate('Duplicate')]);
+				[$path, $id, i18n('Duplicate')]);
 		}
 		if (in_array('delete', $actions)) {
 			$html .= View::renderString('<li><a id="delete_item" href="/admin/{1}/delete/{2}">{3}</a></li>',
-				[$path, $id, Utils::translate('Delete')]);
+				[$path, $id, i18n('Delete')]);
 		}
 
 		$html .= View::renderString('</ul></div>');

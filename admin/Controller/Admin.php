@@ -2,9 +2,9 @@
 
 namespace Admin\Controller;
 
-use \Core\View\Paging;
-use \Core\Orm;
-use \Core\Router;
+use Core\View\Paging;
+use Core\Orm;
+use Core\Router;
 
 class Admin extends Controller
 {
@@ -18,7 +18,7 @@ class Admin extends Controller
 		]);
 
 		$data['paging'] = $paging->getPaging();
-		$data['admins'] = $paging->getObjects();
+		$data['admins'] = $paging->getObjects(true);
 
 		$data['content'] = $this->view->render('templates/modules/admin/index.phtml', $data);
 
@@ -27,14 +27,18 @@ class Admin extends Controller
 
 	public function methodNew()
 	{
-		$data['content'] = $this->view->render('templates/modules/admin/add.phtml');
+		$data['groups'] = Orm::find('Admin_Group')->getHashMap('id', 'name');
+		$data['content'] = $this->view->render('templates/modules/admin/add.phtml', $data);
 		return $this->render($data);
 	}
 
 	public function methodEdit($args)
 	{
 		$admin = Orm::load('Admin', $args['edit']);
-		$data['content'] = $this->view->render('templates/modules/admin/edit.phtml', ['admin' => $admin->getValues()]);
+		$data['content'] = $this->view->render('templates/modules/admin/edit.phtml', [
+			'admin' => $admin->getValues(),
+			'groups' => Orm::find('Admin_Group')->getHashMap('id', 'name')
+		]);
 		return $this->render($data);
 	}
 
