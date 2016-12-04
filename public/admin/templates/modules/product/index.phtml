@@ -30,7 +30,7 @@
 					</thead>
 					<tbody>
 					<?php
-					foreach ($vars['products']->getCollection() as $row) {
+					foreach ($vars['products'] as $row) {
 						echo '
                         <tr>
                             <td>' . $row->id . '</td>

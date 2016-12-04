@@ -41,6 +41,7 @@ class Page extends Controller
 
 	public function methodSave($args)
 	{
+		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
 			$page = Orm::load('Page', $args['id']);
 		} else {

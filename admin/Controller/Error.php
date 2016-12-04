@@ -13,6 +13,6 @@ class Error extends Controller
 		];
 
 		header("HTTP/1.0 404 Not Found");
-		return $this->view->render('templates/404.phtml', $data);
+		return $this->renderPage('templates/404.phtml', $data);
 	}
 }

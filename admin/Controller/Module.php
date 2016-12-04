@@ -6,35 +6,35 @@ use Core\View\Paging;
 use Core\Orm;
 use Core\Router;
 
-class Infoblock extends Controller
+class Module extends Controller
 {
 	public function methodIndex($args)
 	{
 		$data = [];
 
-		$paging = Paging::create('InfoBlock', [
-			'page_size' => 10,
+		$paging = Paging::create('Module', [
+			'page_size' => 20,
 			'current_page' => empty($args['page']) ? 1 : (int)$args['page']
 		]);
 
 		$data['paging'] = $paging->getPaging();
-		$data['pages'] = $paging->getObjects();
+		$data['modules'] = $paging->getObjects();
 
-		$data['content'] = $this->view->render('templates/modules/infoblock/index.phtml', $data);
+		$data['content'] = $this->view->render('templates/modules/module/index.phtml', $data);
 
 		return $this->render($data);
 	}
 
 	public function methodNew()
 	{
-		$data['content'] = $this->view->render('templates/modules/infoblock/add.phtml', []);
+		$data['content'] = $this->view->render('templates/modules/module/add.phtml', []);
 		return $this->render($data);
 	}
 
 	public function methodEdit($args)
 	{
-		$data['page'] = Orm::load('InfoBlock', $args['edit'])->getValues();
-		$data['content'] = $this->view->render('templates/modules/infoblock/edit.phtml', $data);
+		$data['module'] = Orm::load('Module', $args['edit'])->getValues();
+		$data['content'] = $this->view->render('templates/modules/module/edit.phtml', $data);
 
 		return $this->render($data);
 	}
@@ -43,9 +43,9 @@ class Infoblock extends Controller
 	{
 		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
-			$page = Orm::load('InfoBlock', $args['id']);
+			$page = Orm::load('Module', $args['id']);
 		} else {
-			$page = Orm::create('InfoBlock');
+			$page = Orm::create('Module');
 		}
 
 		$page->setValues($args);
@@ -55,31 +55,31 @@ class Infoblock extends Controller
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$this->view->addNotice('error', $e->getMessage());
 			if ($page->isNew()) {
-				Router::redirect('/admin/infoblock/new');
+				Router::redirect('/admin/module/new');
 			}
 		}
 
-		Router::redirect('/admin/infoblock/edit/' . $page->getId());
+		Router::redirect('/admin/module/edit/' . $page->getId());
 	}
 
 	public function methodDuplicate($args)
 	{
-		$page = Orm::load('InfoBlock', $args['duplicate']);
+		$page = Orm::load('Module', $args['duplicate']);
 		$data = $page->getValues();
 		unset($data['id']);
 
-		$newPage = Orm::create('InfoBlock');
+		$newPage = Orm::create('Module');
 		$newPage->setValues($data);
 		Orm::save($newPage);
 
-		Router::redirect('/admin/infoblock/');
+		Router::redirect('/admin/module/');
 	}
 
 	public function methodDelete($args)
 	{
-		$page = Orm::load('InfoBlock', $args['delete']);
+		$page = Orm::load('Module', $args['delete']);
 
 		Orm::delete($page);
-		Router::redirect('/admin/infoblock/');
+		Router::redirect('/admin/module/');
 	}
 }

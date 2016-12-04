@@ -41,6 +41,7 @@ class Setting extends Controller
 
 	public function methodSave($args)
 	{
+		$this->checkWritePermissions();
 		$setting = \Admin\Object\Setting::put($args['key'], $args['value']);
 		Router::redirect('/admin/setting/edit/' . $setting->getId());
 	}

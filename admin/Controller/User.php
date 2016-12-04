@@ -45,6 +45,7 @@ class User extends Controller
 
 	public function methodSave($args)
 	{
+		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
 			$user = Orm::load('User', $args['id']);
 			$info = Orm::findOne('User_Info', ['userId'], [$user->getId()]);

@@ -11,5 +11,6 @@ class Admin
 
 		// Aliases
 		\Core\Router::alias('pages', 'Page');
+		\Core\Router::register(['/^\/404$/', 'GET'], 'Error', 'index');
 	}
 }

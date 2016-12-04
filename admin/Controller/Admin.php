@@ -44,6 +44,8 @@ class Admin extends Controller
 
 	public function methodSave($args)
 	{
+		$this->checkWritePermissions();
+
 		if (!empty($args['id'])) {
 			$page = Orm::load('Admin', $args['id']);
 		} else {

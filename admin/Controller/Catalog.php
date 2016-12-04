@@ -41,6 +41,7 @@ class Catalog extends Controller
 
 	public function methodSave($args)
 	{
+		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
 			$catalog = Orm::load('Catalog', $args['id']);
 		} else {

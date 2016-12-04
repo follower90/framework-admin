@@ -5,7 +5,7 @@
 		<span class="icon-bar"></span>
 		<span class="icon-bar"></span>
 	</button>
-	<a class="navbar-brand" href="#"><? __('Dashboard') ?></a>
+	<a class="navbar-brand" href="/admin/"><? __('Dashboard') ?></a>
 </div>
 
 <ul class="nav navbar-top-links navbar-right">
@@ -27,8 +27,10 @@
 			<i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
 		</a>
 		<ul class="dropdown-menu dropdown-user">
-			<li><a href="/admin/admin/edit/<?php echo $vars['user']->getId(); ?>"><i class="fa fa-user fa-fw"></i> <? __('User Profile'); ?></a>
-			</li>
+			<?php if ($vars['user']) { ?>
+				<li><a href="/admin/admin/edit/<?php echo $vars['user']->getId(); ?>"><i class="fa fa-user fa-fw"></i> <? __('User Profile'); ?></a>
+				</li>
+			<?php } ?>
 			<li><a href="#"><i class="fa fa-gear fa-fw"></i> <? __('Settings'); ?></a>
 			</li>
 			<li class="divider"></li>

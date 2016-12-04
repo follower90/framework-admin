@@ -55,6 +55,7 @@ class Mail_template extends Controller
 
 	public function methodSave($args)
 	{
+		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
 			$template = Orm::load('MailTemplate', $args['id']);
 		} else {

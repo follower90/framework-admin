@@ -42,6 +42,7 @@ class Menu extends Controller
 
 	public function methodSave($args)
 	{
+		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
 			$menu = Orm::load('Menu', $args['id']);
 		} else {

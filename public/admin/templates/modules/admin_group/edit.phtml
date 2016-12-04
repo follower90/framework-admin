@@ -14,6 +14,51 @@
 				<label><? __('Name') ?></label>
 				<input class="form-control" name="name" value="<?= $vars['group']['name']; ?>"/>
 			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="form-group">
+						<label><? __('Modules') ?></label>
+						<div class="dataTable_wrapper">
+							<div class="dataTables_wrapper">
+								<div class="row">
+									<div class="col-lg-12">
+										<table class="table table-bordered dataTable">
+											<thead>
+											<tr>
+												<th>ID</th>
+												<th><? __('Name') ?></th>
+												<th><? __('Url') ?></th>
+												<th><? __('Permissions') ?></th>
+											</tr>
+											</thead>
+											<tbody>
+											<?php foreach ($vars['modules'] as $var) { ?>
+												<tr>
+													<td><?= $var['id']; ?></td>
+													<td><?= $var['name']; ?></td>
+													<td><?= $var['url']; ?></td>
+													<td>
+														<select class="form-control" name="type[<?= $var['id']; ?>]">
+															<?php
+															foreach ($vars['permissions'] as $id => $name) {
+																$selected = ($var['permission'] == $id) ? 'selected' : '';
+																echo '<option ' . $selected . ' value="' . $id . '">' . $name . '</option>';
+															}
+															?>
+														</select>
+													</td>
+												</tr>
+											<?php } ?>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
 			<div class="form-group">
 				<input type="submit" class="btn btn-default" value="<? __('Save') ?>"/>
 				<input type="button" class="btn btn-cancel" onclick="location.href='/admin/admin_group';" value="<? __('Cancel') ?>"/>

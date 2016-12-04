@@ -50,6 +50,7 @@ class Translation extends Controller
 
 	public function methodSave($args)
 	{
+		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
 			$translation = Orm::load('Translation', $args['id']);
 		} else {

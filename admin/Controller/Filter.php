@@ -42,6 +42,7 @@ class Filter extends Controller
 
 	public function methodSave($args)
 	{
+		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
 			$filter = Orm::load('FilterSet', $args['id']);
 		} else {

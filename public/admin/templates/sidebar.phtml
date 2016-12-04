@@ -1,54 +1,12 @@
 <div class="navbar-default sidebar" role="navigation">
 	<div class="sidebar-nav navbar-collapse">
 		<ul class="nav" id="side-menu">
-			<li>
-				<a href="/admin/"><i class="fa fa-dashboard fa-fw"></i> <? __('Dashboard') ?></a>
-			</li>
-			<li>
-				<a href="/admin/menu"><i class="fa fa-th-list fa-fw"></i> <? __('Menu') ?></a>
-			</li>
-			<li>
-				<a href="/admin/page"><i class="fa fa-th fa-fw"></i> <? __('Pages') ?></a>
-			</li>
-			<li>
-				<a href="/admin/infoblock"><i class="fa fa-info fa-fw"></i> <? __('Infoblocks') ?></a>
-			</li>
-			<li>
-				<a href="/admin/mail_template"><i class="fa fa-send fa-fw"></i> <? __('Mail templates') ?></a>
-			</li>
-			<li>
-				<a href="/admin/admin"><i class="fa fa-exclamation-circle fa-fw"></i> <? __('Administrators') ?></a>
-			</li>
-			<li>
-				<a href="/admin/admin_group"><i class="fa fa-group fa-fw"></i> <? __('Administrator groups') ?></a>
-			</li>
-			<li>
-				<a href="/admin/catalog"><i class="fa fa-folder-open fa-fw"></i> <? __('Catalog') ?></a>
-			</li>
-			<li>
-				<a href="/admin/product"><i class="fa fa-edit fa-fw"></i> <? __('Products') ?></a>
-			</li>
-			<li>
-				<a href="/admin/filter"><i class="fa fa-filter fa-fw"></i> <? __('Filters') ?></a>
-			</li>
-			<li>
-				<a href="/admin/order"><i class="fa fa-shopping-cart fa-fw"></i> <? __('Orders') ?></a>
-			</li>
-			<li>
-				<a href="/admin/database"><i class="fa fa-database fa-fw"></i> <? __('Database') ?></a>
-			</li>
-			<li>
-				<a href="/admin/translation"><i class="fa fa-language fa-fw"></i> <? __('Translation') ?></a>
-			</li>
-			<li>
-				<a href="/admin/user"><i class="fa fa-user fa-fw"></i> <? __('Users') ?></a>
-			</li>
-			<li>
-				<a href="/admin/meta"><i class="fa fa-tags fa-fw"></i> <? __('Meta data') ?></a>
-			</li>
-			<li>
-				<a href="/admin/setting"><i class="fa fa-dashboard fa-fw"></i> <? __('Settings') ?></a>
-			</li>
+			<?php foreach ($vars['modules'] as $module) { ?>
+				<li>
+					<a href="/admin/<?= $module['url']; ?>">
+						<i class="fa fa-fw <?= $module['icon']; ?>"></i> <?= $module['name']; ?></a>
+				</li>
+			<?php } ?>
 		</ul>
 	</div>
 </div>

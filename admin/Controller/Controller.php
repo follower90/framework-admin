@@ -15,6 +15,7 @@ class Controller extends \Core\Controller
 	public function __construct()
 	{
 		parent::__construct();
+		$this->checkReadPermissions();
 		$this->prepareResources();
 
 		$this->view->setDefaultPath('public/admin');
@@ -25,6 +26,7 @@ class Controller extends \Core\Controller
 	{
 		$this->_data = array_merge($this->_data, $data);
 		$this->_data['user'] = $this->user;
+		$this->_data['modules'] = \Admin\Service\Module::getAvailableModules()->getData();
 		$this->_data['languages'] = Config::getAvailableLanguages();
 
 		if (!$this->user) {
@@ -38,10 +40,23 @@ class Controller extends \Core\Controller
 		return $this->view->render('templates/base.phtml', $this->_data);
 	}
 
+	protected function checkReadPermissions()
+	{
+		if (!\Admin\Service\Module::isAvailableFor(\Admin\Object\Admin_Group_Permission::VIEW)) {
+			$this->render404();
+		}
+	}
+
+	protected function checkWritePermissions()
+	{
+		if (!\Admin\Service\Module::isAvailableFor(\Admin\Object\Admin_Group_Permission::MANAGE)) {
+			$this->render404();
+		}
+	}
+
 	public function renderPage($template, $data = [])
 	{
 		$this->prepareResources();
-
 		$this->_data = array_merge($this->_data, $data);
 		return $this->view->render($template, $this->_data);
 	}
@@ -79,5 +94,10 @@ class Controller extends \Core\Controller
 
 		$this->_styles = array_merge($this->_styles, $paths);
 		$this->_data['styles'] = $this->_styles;
+	}
+
+	public function render404()
+	{
+		Router::redirect('/admin/404', Router::NOT_FOUND_404);
 	}
 }

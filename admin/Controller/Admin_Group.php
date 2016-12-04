@@ -27,13 +27,23 @@ class Admin_group extends Controller
 
 	public function methodNew()
 	{
-		$data['content'] = $this->view->render('templates/modules/admin_group/add.phtml', []);
+		$data['modules'] = Orm::find('Module')->getData();
+		$data['permissions'] = \Admin\Object\Admin_Group_Permission::getPermissionsMap();
+
+		$data['content'] = $this->view->render('templates/modules/admin_group/add.phtml', $data);
 		return $this->render($data);
 	}
 
 	public function methodEdit($args)
 	{
 		$data['group'] = Orm::load('Admin_Group', $args['edit'])->getValues();
+		$data['modules'] = Orm::find('Module')->getData();
+		$data['permissions'] = \Admin\Object\Admin_Group_Permission::getPermissionsMap();
+
+		foreach ($data['modules'] as &$m) {
+			$groupPermission = Orm::findOne('Admin_Group_Permission', ['groupId', 'moduleId'], [$data['group']['id'], $m['id']]);
+			$m['permission'] = $groupPermission ? $groupPermission->getValue('permission') : 0;
+		}
 		$data['content'] = $this->view->render('templates/modules/admin_group/edit.phtml', $data);
 
 		return $this->render($data);
@@ -41,6 +51,7 @@ class Admin_group extends Controller
 
 	public function methodSave($args)
 	{
+		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
 			$group = Orm::load('Admin_Group', $args['id']);
 		} else {
@@ -51,6 +62,8 @@ class Admin_group extends Controller
 
 		try {
 			Orm::save($group);
+			\Admin\Service\Admin_Group_Permission::updatePermissions($group->getId(), $args['type']);
+
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$this->view->addNotice('error', $e->getMessage());
 			if ($group->isNew()) {

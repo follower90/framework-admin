@@ -44,6 +44,7 @@ class Order extends Controller
 
 	public function methodSave($args)
 	{
+		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
 			$order = Orm::load('Order', $args['id']);
 		} else {
