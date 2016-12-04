@@ -25,9 +25,6 @@ class Controller extends \Core\Controller
 	public function render($data = [])
 	{
 		$this->_data = array_merge($this->_data, $data);
-		$this->_data['user'] = $this->user;
-		$this->_data['modules'] = \Admin\Service\Module::getAvailableModules()->getData();
-		$this->_data['languages'] = Config::getAvailableLanguages();
 
 		if (!$this->user) {
 			if (Router::get('uri') != '/admin/login') {
@@ -36,6 +33,10 @@ class Controller extends \Core\Controller
 
 			return $this->view->render('templates/login.phtml', $this->_data);
 		}
+
+		$this->_data['user'] = $this->user;
+		$this->_data['modules'] = \Admin\Service\Module::getAvailableModules()->getData();
+		$this->_data['languages'] = Config::getAvailableLanguages();
 
 		return $this->view->render('templates/base.phtml', $this->_data);
 	}

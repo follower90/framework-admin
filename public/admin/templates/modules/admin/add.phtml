@@ -13,11 +13,11 @@
 			</div>
 			<div class="form-group">
 				<label><? __('Login') ?></label>
-				<input class="form-control" name="url" value=""/>
+				<input class="form-control" name="login" value=""/>
 			</div>
 			<div class="form-group">
 				<label><? __('Group') ?></label>
-				<select class="form-control" name="type">
+				<select class="form-control" name="groupId">
 					<?php
 					foreach ($vars['groups'] as $id => $name) {
 						echo '<option ' . $selected . ' value="' . $id . '">' . $name . '</option>';

@@ -38,7 +38,7 @@ class Module
 	public static function isAvailableFor($permissionTypeId)
 	{
 		$admin = App::get()->getUser();
-		if (!static::detect()) {
+		if (!$admin || !static::detect()) {
 			return true;
 		}
 

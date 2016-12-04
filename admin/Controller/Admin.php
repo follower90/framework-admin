@@ -47,15 +47,22 @@ class Admin extends Controller
 		$this->checkWritePermissions();
 
 		if (!empty($args['id'])) {
-			$page = Orm::load('Admin', $args['id']);
+			$admin = Orm::load('Admin', $args['id']);
 		} else {
-			$page = Orm::create('Admin');
+			$admin = Orm::create('Admin');
 		}
 
-		$page->setValues($args);
-		Orm::save($page);
+		$password = trim($args['password']);
+		if ($password) {
+			$admin->setValue('password', \Admin\Object\Admin::hashPassword($password));
+		}
 
-		Router::redirect('/admin/admin/edit/' . $page->getId());
+		unset($args['password']);
+		$admin->setValues($args);
+
+		Orm::save($admin);
+
+		Router::redirect('/admin/admin/edit/' . $admin->getId());
 	}
 
 	public function methodDuplicate($args)

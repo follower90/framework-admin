@@ -28,11 +28,9 @@
 		</a>
 		<ul class="dropdown-menu dropdown-user">
 			<?php if ($vars['user']) { ?>
-				<li><a href="/admin/admin/edit/<?php echo $vars['user']->getId(); ?>"><i class="fa fa-user fa-fw"></i> <? __('User Profile'); ?></a>
+				<li><a><i class="fa fa-user fa-fw"></i> <?=$vars['user']->getValue('name');?></a>
 				</li>
 			<?php } ?>
-			<li><a href="#"><i class="fa fa-gear fa-fw"></i> <? __('Settings'); ?></a>
-			</li>
 			<li class="divider"></li>
 			<li><a href="/admin/logout"><i class="fa fa-sign-out fa-fw"></i> <? __('Logout') ?></a>
 			</li>
