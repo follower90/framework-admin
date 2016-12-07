@@ -9,6 +9,7 @@ class Api extends \Core\EntryPoint
 	public function init()
 	{
 		\Admin\Utils::setLanguage();
+		\Admin\Utils::setCurrency();
 		$this->setLib('\App\Api');
 
 		$app = new App($this);

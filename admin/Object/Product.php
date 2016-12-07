@@ -3,6 +3,7 @@
 namespace Admin\Object;
 
 use Core\Database\PDO;
+use Core\Orm;
 
 class Product extends \Core\Object
 {
@@ -70,6 +71,7 @@ class Product extends \Core\Object
 	{
 		$data = parent::getValues();
 		$data['photo_id'] = $this->getPhotoResourceId();
+
 		return $data;
 	}
 

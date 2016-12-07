@@ -4,6 +4,6 @@
 	<br/>
 	<a href="/product/<?= $product['url']; ?>"><img src="/api.php?method=Resource.get&id=<?=$product['photo_id'];?>" /></a>
 	<br/>
-	<p class="text-muted"> <?= $product['price']; ?> <? __('UAH') ?></p>
+	<p class="text-muted"><?= \App\Service\Product::viewPrice($product['price']); ?></p>
 	<br/>
 </div>

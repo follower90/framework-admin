@@ -28,11 +28,9 @@
 					<li><a href="/user/register"><? __('Register') ?></a></li>
 				<?php } ?>
 
-				<?php foreach ($vars['languages'] as $key => $lang) { ?>
-					<li class="<?php echo $this->isCurrentLanguage($key) ? 'active' : ''; ?>">
-						<a href="/lang/?switch=<?= $key; ?>"><?= strtoupper($key); ?></a>
-					</li>
-				<?php } ?>
+				<?php include 'common/language_switcher.phtml'; ?>
+				<?php include 'common/currency_switcher.phtml'; ?>
+
 			</ul>
 		</div>
 	</div>

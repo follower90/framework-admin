@@ -1,0 +1,5 @@
+<?php foreach ($vars['currencies'] as $row) { ?>
+	<li class="<?php echo $this->isCurrentCurrency($row['id']) ? 'active' : ''; ?>">
+		<a href="/currency/?switch=<?= $row['id']; ?>"><?= $row['name']; ?></a>
+	</li>
+<?php } ?>

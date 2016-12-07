@@ -37,10 +37,10 @@
 							<input type="number" min="1" step="1" name="count[]" class="cart-num-<?= $item['id']; ?>" value="<?= $item['count']; ?>">
 						</td>
 						<td>
-							<?= number_format($item['product']['price'], 2); ?>
+							<?= \App\Service\Product::viewPrice($item['product']['price']); ?>
 						</td>
 						<td>
-							<?= number_format($item['product']['price'] * $item['count'], 2); ?>
+							<?= \App\Service\Product::viewPrice($item['product']['price'] * $item['count']); ?>
 						</td>
 						<td>
 							<a href="/cart/remove/<?= $item['id']; ?>"><? __('remove') ?></a>
@@ -49,7 +49,7 @@
 				<?php } ?>
 				<tr>
 					<td colspan="5"></td>
-					<td><?= number_format($vars['total'], 2); ?></td>
+					<td><?= \App\Service\Product::viewPrice($vars['total']); ?></td>
 					<td><button class="btn btn-info"><? __('recalculate') ?></button></td>
 				</tr>
 				</tbody>

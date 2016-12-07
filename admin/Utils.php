@@ -36,6 +36,15 @@ class Utils
 		}
 	}
 
+	public static function setCurrency()
+	{
+		if ($id = Cookie::get('site_currency')) {
+			Config::set('site.currency', $id);
+		} else {
+			Config::set('site.currency', Orm::findOne('Currency')->getId());
+		}
+	}
+
 	private static function loadFromCache($key, $type)
 	{
 		$translation = File::get('/translations_cache.json');

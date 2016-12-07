@@ -1,0 +1,44 @@
+<div class="row">
+	<div class="col-lg-12">
+		<h3 class="page-header"><? __('Edit currency') ?> - <?=$vars['currency']['name'];?></h3>
+	</div>
+</div>
+
+<?php echo $this->getNotices(); ?>
+
+<div class="row">
+	<div class="col-lg-12">
+		<form role="form" action="/admin/currency/save">
+			<input type="hidden" name="id" value="<?= $vars['currency']['id']; ?>"/>
+			<div class="form-group">
+				<label><? __('Symbol') ?></label>
+				<input class="form-control" name="symbol" value="<?= $vars['currency']['symbol']; ?>"/>
+			</div>
+			<div class="form-group">
+				<label><? __('Symbol position') ?></label>
+				<?php ?>
+				<select class="form-control" name="position">
+					<option value="1" <?php echo $vars['currency']['position'] == 1 ? 'selected' : '' ;?> ><? __('Left');?></option>
+					<option value="2" <?php echo $vars['currency']['position'] == 2 ? 'selected' : '' ;?>><? __('Right');?></option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label><? __('Name') ?></label>
+				<input class="form-control" name="name" value="<?= $vars['currency']['name']; ?>"/>
+			</div>
+			<div class="form-group">
+				<label><? __('Rate') ?></label>
+				<input class="form-control" name="rate" value="<?= $vars['currency']['rate']; ?>"/>
+			</div>
+			<div class="form-group">
+				<label><? __('Basic') ?></label>
+				<input type="checkbox" class="form-control" name="basic" <?php echo $vars['currency']['basic'] == 1 ? 'checked' : ''; ?> />
+			</div>
+			<div class="form-group">
+				<input type="submit" class="btn btn-success" value="<? __('Save') ?>"/>
+				<input type="button" class="btn btn-primary" onclick="location.href='/admin/currency';" value="<? __('Cancel') ?>"/>
+			</div>
+		</form>
+	</div>
+</div>
+

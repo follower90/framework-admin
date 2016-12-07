@@ -10,6 +10,8 @@ class Site extends \Core\EntryPoint
 	public function init()
 	{
 		\Admin\Utils::setLanguage();
+		\Admin\Utils::setCurrency();
+
 		\App\Routes\App::register();
 
 		$this->setLib('\App\Controller');

@@ -1,0 +1,5 @@
+<?php foreach ($vars['languages'] as $key => $lang) { ?>
+	<li class="<?php echo $this->isCurrentLanguage($key) ? 'active' : ''; ?>">
+		<a href="/lang/?switch=<?= $key; ?>"><?= strtoupper($key); ?></a>
+	</li>
+<?php } ?>

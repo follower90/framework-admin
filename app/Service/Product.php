@@ -114,4 +114,24 @@ class Product
 
 		return $filterSets;
 	}
+
+	public static function viewPrice($basicPrice)
+	{
+		$currencies = Orm::find('Currency');
+
+		$currency = $currencies->stream()->filter(function ($obj) {
+			return $obj->getId() == \Core\Config::get('site.currency');
+		})->findFirst();
+
+		$basicCurrency = $currencies->stream()->filter(function ($obj) {
+			return $obj->getValue('basic') == 1;
+		})->findFirst();
+
+		$price = number_format($basicPrice / $basicCurrency->getValue('rate') * $currency->getValue('rate'), 2);
+
+		return
+			$currency->getValue('position') == \Admin\Object\Currency::SYMBOL_RIGHT
+				? $price . ' ' . $currency->getValue('symbol')
+				: $currency->getValue('symbol') . ' ' . $price;
+	}
 }
