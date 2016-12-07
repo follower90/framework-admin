@@ -36,12 +36,12 @@ class Utils
 		}
 	}
 
-	public static function setCurrency()
+	public static function setCurrency($name)
 	{
 		if ($id = Cookie::get('site_currency')) {
 			Config::set('site.currency', $id);
 		} else {
-			Config::set('site.currency', Orm::findOne('Currency')->getId());
+			Config::set('site.currency', Orm::findOne('Currency', ['lang.name'], [$name])->getId());
 		}
 	}
 

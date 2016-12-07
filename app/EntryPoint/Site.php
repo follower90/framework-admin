@@ -10,7 +10,7 @@ class Site extends \Core\EntryPoint
 	public function init()
 	{
 		\Admin\Utils::setLanguage();
-		\Admin\Utils::setCurrency();
+		\Admin\Utils::setCurrency('UAH');
 
 		\App\Routes\App::register();
 
