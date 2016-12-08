@@ -72,6 +72,7 @@ class Currency extends Controller
 
 	public function methodDuplicate($args)
 	{
+		$this->checkWritePermissions();
 		$page = Orm::load('Currency', $args['duplicate']);
 		$data = $page->getValues();
 		unset($data['id']);
@@ -85,6 +86,7 @@ class Currency extends Controller
 
 	public function methodDelete($args)
 	{
+		$this->checkWritePermissions();
 		$currency = Orm::load('Currency', $args['delete']);
 		Orm::delete($currency);
 		Router::redirect('/admin/currency/');

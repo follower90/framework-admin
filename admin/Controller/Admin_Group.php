@@ -76,6 +76,7 @@ class Admin_group extends Controller
 
 	public function methodDuplicate($args)
 	{
+		$this->checkWritePermissions();
 		$group = Orm::load('Admin_Group', $args['duplicate']);
 		$data = $group->getValues();
 		unset($data['id']);
@@ -89,6 +90,7 @@ class Admin_group extends Controller
 
 	public function methodDelete($args)
 	{
+		$this->checkWritePermissions();
 		$group = Orm::load('Admin_Group', $args['delete']);
 
 		Orm::delete($group);

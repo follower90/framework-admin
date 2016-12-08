@@ -100,13 +100,18 @@ class Product extends Controller
 
 	public function methodDuplicate($args)
 	{
+		$this->checkWritePermissions();
 		$product = Orm::load('Product', $args['duplicate']);
 		$data = $product->getValues();
 		unset($data['id']);
 
 		$newProduct = Orm::create('product');
 		$newProduct->setValues($data);
+		$newProduct->setValue('url', $product->getValue('url') .'_1');
 		Orm::save($newProduct);
+
+		$newProduct->setCatalog($product->getCatalogId());
+		$newProduct->setFilters($product->getFilters()->getValues('id'));
 
 		Router::redirect('/admin/product/');
 	}

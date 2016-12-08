@@ -64,6 +64,7 @@ class Infoblock extends Controller
 
 	public function methodDuplicate($args)
 	{
+		$this->checkWritePermissions();
 		$page = Orm::load('InfoBlock', $args['duplicate']);
 		$data = $page->getValues();
 		unset($data['id']);
@@ -77,6 +78,7 @@ class Infoblock extends Controller
 
 	public function methodDelete($args)
 	{
+		$this->checkWritePermissions();
 		$page = Orm::load('InfoBlock', $args['delete']);
 
 		Orm::delete($page);

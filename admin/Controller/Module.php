@@ -64,6 +64,7 @@ class Module extends Controller
 
 	public function methodDuplicate($args)
 	{
+		$this->checkWritePermissions();
 		$page = Orm::load('Module', $args['duplicate']);
 		$data = $page->getValues();
 		unset($data['id']);
@@ -77,6 +78,7 @@ class Module extends Controller
 
 	public function methodDelete($args)
 	{
+		$this->checkWritePermissions();
 		$page = Orm::load('Module', $args['delete']);
 
 		Orm::delete($page);

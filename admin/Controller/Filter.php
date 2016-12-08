@@ -65,6 +65,7 @@ class Filter extends Controller
 
 	public function methodSavefilters($args)
 	{
+		$this->checkWritePermissions();
 		$filterSet = Orm::load('FilterSet', $args['set_id']);
 
 		$ids = [];
@@ -92,6 +93,7 @@ class Filter extends Controller
 
 	public function methodDuplicate($args)
 	{
+		$this->checkWritePermissions();
 		$page = Orm::load('FilterSet', $args['duplicate']);
 		$data = $page->getValues();
 		unset($data['id']);
@@ -105,6 +107,7 @@ class Filter extends Controller
 
 	public function methodDelete($args)
 	{
+		$this->checkWritePermissions();
 		$page = Orm::load('FilterSet', $args['delete']);
 
 		Orm::delete($page);

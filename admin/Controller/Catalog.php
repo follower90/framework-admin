@@ -64,6 +64,7 @@ class Catalog extends Controller
 
 	public function methodDuplicate($args)
 	{
+		$this->checkWritePermissions();
 		$page = Orm::load('Catalog', $args['duplicate']);
 		$data = $page->getValues();
 		unset($data['id']);
@@ -77,6 +78,7 @@ class Catalog extends Controller
 
 	public function methodDelete($args)
 	{
+		$this->checkWritePermissions();
 		$page = Orm::load('Catalog', $args['delete']);
 
 		Orm::delete($page);

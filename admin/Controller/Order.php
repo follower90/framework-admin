@@ -67,6 +67,7 @@ class Order extends Controller
 
 	public function methodDuplicate($args)
 	{
+		$this->checkWritePermissions();
 		$page = Orm::load('Order', $args['duplicate']);
 		$data = $page->getValues();
 		unset($data['id']);
@@ -80,6 +81,7 @@ class Order extends Controller
 
 	public function methodDelete($args)
 	{
+		$this->checkWritePermissions();
 		$order = Orm::load('Order', $args['delete']);
 		$orderProducts = Orm::find('Order_Product', ['orderId'], [$args['delete']])->getCollection();
 

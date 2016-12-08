@@ -73,6 +73,7 @@ class Translation extends Controller
 
 	public function methodDuplicate($args)
 	{
+		$this->checkWritePermissions();
 		$page = Orm::load('Translation', $args['duplicate']);
 		$data = $page->getValues();
 		unset($data['id']);
@@ -86,9 +87,10 @@ class Translation extends Controller
 
 	public function methodDelete($args)
 	{
-		$page = Orm::load('Translation', $args['delete']);
+		$this->checkWritePermissions();
+		$translation = Orm::load('Translation', $args['delete']);
 
-		Orm::delete($page);
+		Orm::delete($translation);
 		Router::redirect('/admin/translation/');
 	}
 

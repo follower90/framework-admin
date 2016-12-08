@@ -1,0 +1,34 @@
+<div class="row">
+	<div class="col-lg-12">
+		<h3 class="page-header"><? __('Add new meta') ?></h3>
+	</div>
+</div>
+
+<?php echo $this->getNotices(); ?>
+
+<div class="row">
+	<div class="col-lg-12">
+		<form role="form" action="/admin/meta/save">
+			<div class="form-group">
+				<label>Url</label>
+				<input class="form-control" name="url" value="" />
+			</div>
+			<div class="form-group">
+				<label>Title</label>
+				<input class="form-control" name="title" value="" />
+			</div>
+			<div class="form-group">
+				<label>Keywords</label>
+				<input class="form-control" name="keywords" value="" />
+			</div>
+			<div class="form-group">
+				<label>Description</label>
+				<input class="form-control" name="description" value="" />
+			</div>
+			<div class="form-group">
+				<input type="submit" class="btn btn-success" value="<? __('Save') ?>"/>
+				<input type="button" class="btn btn-primary" onclick="location.href='/admin/meta';" value="<? __('Cancel') ?>"/>
+			</div>
+		</form>
+	</div>
+</div>

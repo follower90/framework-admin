@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\Meta;
 use Core\Config;
 use Core\Router;
 
@@ -24,6 +25,7 @@ class Controller extends \Core\Controller
 		$data['user'] = $this->user;
 		$data['languages'] = Config::getAvailableLanguages();
 		$data['currencies'] = \Core\Orm::find('Currency')->getData();
+		$data['meta'] = Meta::getData();
 
 		$data['main_menu'] = \Core\Orm::find('Menu', ['active'], [1])->getData();
 
