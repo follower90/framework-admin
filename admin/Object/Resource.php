@@ -21,6 +21,11 @@ class Resource extends \Core\Object
 					'default' => '',
 					'null' => false,
 				],
+				'size' => [
+					'type' => 'int',
+					'default' => 0,
+					'null' => false,
+				],
 				'name' => [
 					'type' => 'varchar',
 					'default' => '',
@@ -53,5 +58,21 @@ class Resource extends \Core\Object
 	public function getPath()
 	{
 		return $this->getStoragePath() . $this->getValue('src');
+	}
+
+	public static function createResourceFromUpload($uploadedFile, $path, $storageId = 1)
+	{
+		\Core\Library\File::saveUploadedFile($uploadedFile['tmp_name'], $path);
+
+		$resource = new \Admin\Object\Resource([
+			'src' => $path,
+			'storageId' => $storageId,
+			'size' => $uploadedFile['size'],
+			'name' => $uploadedFile['name'],
+		]);
+
+		$resource->save();
+
+		return $resource;
 	}
 }

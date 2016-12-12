@@ -1,0 +1,19 @@
+<div class="row">
+	<div class="col-lg-12">
+		<?php echo $vars['breadcrumbs']; ?>
+	</div>
+</div>
+
+<h1><? __('Photos'); ?></h1>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="row">
+			<div class="col-lg-12">
+				<?php foreach ($vars['albums'] as $row) { ?>
+					<a href="/photos/<?=$row['url'];?>"><?=$row['name'];?></a> <br/>
+				<?php } ?>
+			</div>
+		</div>
+	</div>
+</div>

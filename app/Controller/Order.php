@@ -8,6 +8,8 @@ class Order extends Controller
 	{
 		$data = [];
 		$orders = \Core\Orm::find('Order', ['userId'], [\Core\App::getUser()->getId()])->getData();
+
+		$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => i18n('Orders')]]);
 		$data['content'] = $this->view->render('/templates/orders.phtml', ['orders' => $orders]);
 		return $this->render($data);
 	}

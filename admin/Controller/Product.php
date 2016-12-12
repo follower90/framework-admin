@@ -105,7 +105,7 @@ class Product extends Controller
 		$data = $product->getValues();
 		unset($data['id']);
 
-		$newProduct = Orm::create('product');
+		$newProduct = Orm::create('Product');
 		$newProduct->setValues($data);
 		$newProduct->setValue('url', $product->getValue('url') .'_1');
 		Orm::save($newProduct);

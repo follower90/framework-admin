@@ -1,0 +1,111 @@
+<div class="row">
+	<div class="col-lg-12">
+		<h3 class="page-header"><? __('Edit album') ?> - <?= $vars['album']['name']; ?></h3>
+	</div>
+</div>
+
+<?php echo $this->getNotices(); ?>
+
+<div>
+
+	<!-- Nav tabs -->
+	<ul class="nav nav-tabs" role="tablist">
+		<li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab"><? __('Information') ;?></a></li>
+		<li role="presentation"><a href="#filters" aria-controls="filters" role="tab" data-toggle="tab"><? __('Photos') ;?></a></li>
+	</ul>
+
+	<!-- Tab panes -->
+	<div class="tab-content">
+		<div role="tabpanel" class="tab-pane active" id="info">
+			<div class="row">
+				<div class="col-lg-12">
+					<form role="form" action="/admin/photos/save">
+						<input type="hidden" name="id" value="<?= $vars['album']['id']; ?>"/>
+						<div class="form-group">
+							<label><? __('Name') ?></label>
+							<input class="form-control" name="name" value="<?= $vars['album']['name']; ?>"/>
+						</div>
+						<div class="form-group">
+							<label><? __('Url') ?></label>
+							<input class="form-control" name="url" value="<?= $vars['album']['url']; ?>"/>
+						</div>
+						<div class="form-group">
+							<label><? __('Description') ?></label>
+							<textarea id="editor-1" class="form-control" name="text"><?= $vars['album']['description']; ?></textarea>
+							<script>CKEDITOR.replace('editor-1');</script>
+						</div>
+						<div class="form-group">
+							<input type="submit" class="btn btn-success" value="<? __('Save') ?>"/>
+							<input type="button" class="btn btn-primary" onclick="location.href='/admin/photos';" value="<? __('Cancel') ?>"/>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div role="tabpanel" class="tab-pane" id="filters">
+
+			<div class="dataTables_wrapper">
+				<form role="form" action="/admin/photos/savephotos">
+					<input type="hidden" name="id" value="<?= $vars['album']['id']; ?>"/>
+
+					<div id="myDropzone" class="fzone">
+						<div class="dz-message" data-dz-message><span><? __('Drop photos here') ?></span></div>
+					</div>
+					<div id="uploaded-files"></div>
+
+					<script>
+						$(document).ready(function () {
+							$("#myDropzone").dropzone({
+								url: "/admin/api.php?method=Photo_Album.upload",
+								paramName: 'file',
+								maxFilesize: 10,
+								addRemoveLinks: true,
+								dictRemoveFile: '<? __('удалить') ?>',
+								dictCancelUpload: '<? __('отмена') ?>',
+								acceptedFiles: 'image/*',
+
+								init: function () {
+									var thisDropzone = this;
+
+									$.post('/admin/api.php?method=Photo_Album.photos', {id: <?=$vars['album']['id'];?>}, function (data) {
+										$.each(data.response, function (key, value) {
+											var mockFile = {
+												name: value.name,
+												size: value.size,
+												height: 120,
+												width: 120
+											};
+											thisDropzone.options.addedfile.call(thisDropzone, mockFile);
+											thisDropzone.options.thumbnail.call(thisDropzone, mockFile, value.src);
+											thisDropzone.emit("complete", mockFile);
+										});
+									});
+
+									this.on('removedfile', function (file) {
+										$.post('/admin/api.php?method=Photo_Album.removePhoto', {
+											id: <?=$vars['album']['id'];?>,
+											filename: file.name
+										});
+									});
+
+									this.on('sending', function (file, xhr, formData) {
+										formData.append('id', <?=$vars['album']['id'];?>);
+									});
+								}
+							});
+						});
+
+					</script>
+
+					<div class="form-group">
+						<input type="submit" class="btn btn-success" value="<? __('Save') ?>"/>
+						<input type="button" class="btn btn-primary" onclick="location.href='/admin/photos';"
+							   value="<? __('Cancel') ?>"/>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>
+

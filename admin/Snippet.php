@@ -6,34 +6,37 @@ use \Core\View;
 
 class Snippet
 {
-	public static function active($id, $path, $state)
+	public static function active($id, $path, $state, $field='active')
 	{
 		$view = View::renderString(
-			'<input class="switcher" data-id="{1}" type="checkbox" name="active" {2} />',
+			'<input class="switcher" data-id="{1}" type="checkbox" name="' . $field . '" {2} />',
 			[$id, $state ? 'checked' : '']
 		);
+
+		$pathChunks = explode('_', $path);
+		$path = implode('_', array_map(function($p) { return ucfirst($p); }, $pathChunks));
 
 		$scripts = View::renderString(
 			'<script>
 					$(\'.switcher\').bootstrapSwitch({
 					size: "mini",
 					onSwitchChange: function (event, state) {
-					$.ajax(\'/admin/api.php?method={1}.active\', {
+					$.ajax(\'/admin/api.php?method={1}.' . $field . '\', {
 							method: \'post\',
-							data: {id: $(this).attr(\'data-id\'), active: state ? 1 : 0}
+							data: {id: $(this).attr(\'data-id\'), ' . $field . ': state ? 1 : 0}
 						});
 					}
 				});
 
-				$(\'#delete_item\').on(\'click\', function() {
+				$(\'.delete_item\').on(\'click\', function() {
 					return confirm(\'{2}\');
 				});
 
-				$(\'#duplicate_item\').on(\'click\', function() {
+				$(\'.duplicate_item\').on(\'click\', function() {
 					return confirm(\'{3}\');
 				});
 			</script>', [
-			ucfirst($path),
+			$path,
 			i18n('Are you sure you want to delete this item?'),
 			i18n('Are you sure you want to duplicate this item?')
 		]);
@@ -55,11 +58,11 @@ class Snippet
 		);
 
 		if (in_array('duplicate', $actions)) {
-			$html .= View::renderString('<li><a id="duplicate_item" href="/admin/{1}/duplicate/{2}">{3}</a></li>',
+			$html .= View::renderString('<li><a class="duplicate_item" href="/admin/{1}/duplicate/{2}">{3}</a></li>',
 				[$path, $id, i18n('Duplicate')]);
 		}
 		if (in_array('delete', $actions)) {
-			$html .= View::renderString('<li><a id="delete_item" href="/admin/{1}/delete/{2}">{3}</a></li>',
+			$html .= View::renderString('<li><a class="delete_item" href="/admin/{1}/delete/{2}">{3}</a></li>',
 				[$path, $id, i18n('Delete')]);
 		}
 

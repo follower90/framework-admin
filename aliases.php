@@ -5,5 +5,5 @@ function i18n($args) {
 }
 
 function __($args) {
-	echo  i18n($args);
+	echo i18n($args);
 }
