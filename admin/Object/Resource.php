@@ -26,11 +26,6 @@ class Resource extends \Core\Object
 					'default' => 0,
 					'null' => false,
 				],
-				'name' => [
-					'type' => 'varchar',
-					'default' => '',
-					'null' => false,
-				],
 				'storageId' => [
 					'type' => 'tinyint',
 					'default' => 1,
