@@ -26,11 +26,11 @@
 						<th><? __('Actions') ?></th>
 					</tr>
 					</thead>
-					<tbody>
+					<tbody ondrag="console.log(1);">
 					<?php
 					foreach ($vars['menu'] as $menu) {
 						echo '
-                        <tr>
+                        <tr draggable="true">
                             <td>' . $menu->id . '</td>
                             <td>' . $menu->name . '</td>
                             <td>' . $menu->url . '</td>

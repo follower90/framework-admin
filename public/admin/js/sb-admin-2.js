@@ -4,7 +4,7 @@ $(function () {
 		width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
 		if (width < 768) {
 			$('div.navbar-collapse').addClass('collapse');
-			topOffset = 100; // 2-row-menu
+			topOffset = 100;
 		} else {
 			$('div.navbar-collapse').removeClass('collapse');
 		}
@@ -17,9 +17,9 @@ $(function () {
 		}
 	});
 
-	var url = window.location;
+	var url = window.location.href;
 	var element = $('ul.nav a').filter(function () {
-		return this.href == url || url.href.indexOf(this.href) == 0;
+		return url == this.href || url.indexOf(this.href + '/') == 0;
 	}).addClass('active').parent().parent().addClass('in').parent();
 	if (element.is('li')) {
 		element.addClass('active');

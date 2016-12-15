@@ -32,13 +32,20 @@ composer install
 ./builder schema:migrate 'app'
 ```
 
-### Run
+### Run with built-in PHP server
 
 Setup host as usual website on your local Apache/Nginx
 Or just run this command in cms folder using built-in PHP web server.
 
 ```
 php -S localhost:4000
+```
+
+### Run with Docker
+
+```
+docker build -t cms .
+docker run -v "$PWD":/var/www/cms -p 4000:80 -p 3333:3306 cms
 ```
 
 Try http://localhost:4000/ to access web-site

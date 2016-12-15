@@ -11,15 +11,18 @@ class Catalog extends Controller
 	public function methodIndex($args)
 	{
 		$data = [];
+		$parentId = $args['parent'] ? (int)$args['parent'] : null;
 
 		$paging = Paging::create('Catalog', [
 			'page_size' => 10,
-			'current_page' => empty($args['page']) ? 1 : (int)$args['page']
+			'current_page' => empty($args['page']) ? 1 : (int)$args['page'],
+			'params' => [['parent'], [$parentId]]
 		]);
 
 		$data['paging'] = $paging->getPaging();
 		$data['catalogs'] = $paging->getObjects();
-
+		$data['all'] = Orm::find('Catalog', ['active'], [1])->getData();
+		$data['current'] = $parentId;
 		$data['content'] = $this->view->render('templates/modules/catalog/index.phtml', $data);
 
 		return $this->render($data);
@@ -27,14 +30,16 @@ class Catalog extends Controller
 
 	public function methodNew()
 	{
-		$data['content'] = $this->view->render('templates/modules/catalog/add.phtml');
+		$all = Orm::find('Catalog', ['active'], [1])->getData();
+		$data['content'] = $this->view->render('templates/modules/catalog/add.phtml', ['all' => $all]);
 		return $this->render($data);
 	}
 
 	public function methodEdit($args)
 	{
 		$catalog = Orm::load('Catalog', $args['edit'])->getValues();
-		$data['content'] = $this->view->render('templates/modules/catalog/edit.phtml', ['catalog' => $catalog]);
+		$all = Orm::find('Catalog', ['active', '!id'], [1, $args['edit']])->getData();
+		$data['content'] = $this->view->render('templates/modules/catalog/edit.phtml', ['catalog' => $catalog, 'all' => $all]);
 
 		return $this->render($data);
 	}

@@ -46,8 +46,12 @@ class Photo_Album extends \Core\Api
 
 	public function methodPhotos($args)
 	{
-		$resourceIds = Orm::find('Photo', ['albumId'], [$args['id']])->getValues('resourceId');
-		$data = Orm::find('Resource', ['id'], [$resourceIds])->getData();
+		$photos = Orm::find('Photo', ['albumId'], [$args['id']]);
+		$data = Orm::find('Resource', ['id'], [$photos->getValues('resourceId')])->getData();
+
+		foreach ($data as &$item) {
+			$item['name'] = $photos->findFirstBy('resourceId', $item['id'])->getValue('name');
+		}
 		return $data;
 	}
 
