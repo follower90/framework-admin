@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header"><? __('Edit album') ?> - <?= $vars['album']['name']; ?></h3>
+		<h3 class="page-header"><?= __('Edit album') ?> - <?= $vars['album']['name']; ?></h3>
 	</div>
 </div>
 
@@ -10,8 +10,8 @@
 
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs" role="tablist">
-		<li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab"><? __('Information') ;?></a></li>
-		<li role="presentation"><a href="#filters" aria-controls="filters" role="tab" data-toggle="tab"><? __('Photos') ;?></a></li>
+		<li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab"><?= __('Information') ;?></a></li>
+		<li role="presentation"><a href="#filters" aria-controls="filters" role="tab" data-toggle="tab"><?= __('Photos') ;?></a></li>
 	</ul>
 
 	<!-- Tab panes -->
@@ -22,21 +22,21 @@
 					<form role="form" action="/admin/photos/save">
 						<input type="hidden" name="id" value="<?= $vars['album']['id']; ?>"/>
 						<div class="form-group">
-							<label><? __('Name') ?></label>
+							<label><?= __('Name') ?></label>
 							<input class="form-control" name="name" value="<?= $vars['album']['name']; ?>"/>
 						</div>
 						<div class="form-group">
-							<label><? __('Url') ?></label>
+							<label><?= __('Url') ?></label>
 							<input class="form-control" name="url" value="<?= $vars['album']['url']; ?>"/>
 						</div>
 						<div class="form-group">
-							<label><? __('Description') ?></label>
+							<label><?= __('Description') ?></label>
 							<textarea id="editor-1" class="form-control" name="text"><?= $vars['album']['description']; ?></textarea>
 							<script>CKEDITOR.replace('editor-1');</script>
 						</div>
 						<div class="form-group">
-							<input type="submit" class="btn btn-success" value="<? __('Save') ?>"/>
-							<input type="button" class="btn btn-primary" onclick="location.href='/admin/photos';" value="<? __('Cancel') ?>"/>
+							<input type="submit" class="btn btn-success" value="<?= __('Save') ?>"/>
+							<input type="button" class="btn btn-primary" onclick="location.href='/admin/photos';" value="<?= __('Cancel') ?>"/>
 						</div>
 					</form>
 				</div>
@@ -49,7 +49,7 @@
 					<input type="hidden" name="id" value="<?= $vars['album']['id']; ?>"/>
 
 					<div id="myDropzone" class="fzone">
-						<div class="dz-message" data-dz-message><span><? __('Drop photos here') ?></span></div>
+						<div class="dz-message" data-dz-message><span><?= __('Drop photos here') ?></span></div>
 					</div>
 					<div id="uploaded-files"></div>
 
@@ -60,8 +60,8 @@
 								paramName: 'file',
 								maxFilesize: 10,
 								addRemoveLinks: true,
-								dictRemoveFile: '<? __('удалить') ?>',
-								dictCancelUpload: '<? __('отмена') ?>',
+								dictRemoveFile: '<?= __('удалить') ?>',
+								dictCancelUpload: '<?= __('отмена') ?>',
 								acceptedFiles: 'image/*',
 
 								init: function () {
@@ -98,9 +98,9 @@
 					</script>
 
 					<div class="form-group">
-						<input type="submit" class="btn btn-success" value="<? __('Save') ?>"/>
+						<input type="submit" class="btn btn-success" value="<?= __('Save') ?>"/>
 						<input type="button" class="btn btn-primary" onclick="location.href='/admin/photos';"
-							   value="<? __('Cancel') ?>"/>
+							   value="<?= __('Cancel') ?>"/>
 					</div>
 				</form>
 			</div>

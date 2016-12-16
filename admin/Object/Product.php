@@ -9,6 +9,10 @@ class Product extends \Core\Object
 {
 	protected static $_config;
 
+	const STATUS_UNAVAILABLE = 0;
+	const STATUS_AVAILABLE = 1;
+	const STATUS_PREORDER = 2;
+
 	public function getConfig()
 	{
 		if (empty(self::$_config)) {
@@ -42,6 +46,11 @@ class Product extends \Core\Object
 					'default' => 1,
 					'null' => false,
 				],
+				'status' => [
+					'type' => 'tinyint',
+					'default' => 1,
+					'null' => false,
+				],
 			]);
 
 			\Core\Orm::registerRelation(
@@ -66,13 +75,43 @@ class Product extends \Core\Object
 		return self::$_config;
 	}
 
+	public function validate()
+	{
+		if (trim($this->getValue('name')) === '') {
+			$this->setError('Name is required');
+		}
+
+		if (trim($this->getValue('url')) === '') {
+			$this->setError('URL is required');
+		} else {
+			$count = Orm::count('Product', ['url'], [$this->getValue('url')]);
+			if (($this->isNew() && $count == 1) || $count > 2) {
+				$this->setError('URL already exists');
+			}
+		}
+
+		$errors = $this->getErrors();
+		return empty($errors);
+	}
 
 	public function getValues()
 	{
 		$data = parent::getValues();
 		$data['photo_id'] = $this->getPhotoResourceId();
+		$data['status_text'] = $this->getStatus();
 
 		return $data;
+	}
+
+	public function getStatus()
+	{
+		$statusMap = [
+			0 => __('Not available'),
+			1 => __('Availabe'),
+			2 => __('Pre-order'),
+		];
+
+		return $statusMap[$this->getValue('status')];
 	}
 
 	public function setCatalog($id)

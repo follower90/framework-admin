@@ -36,11 +36,11 @@ class Photos extends Controller
 	private function getBreadcrumbs($albumId = null)
 	{
 		$data = [
-			['url' => '/photos/', 'name' => i18n('Photos')]
+			['url' => '/photos/', 'name' => __('Photos')]
 		];
 
 		if (!$albumId) {
-			array_push($data, ['name' => i18n('All')]);
+			array_push($data, ['name' => __('All')]);
 		} else {
 			$photoAlbum = Orm::load('Photo_Album', $albumId);
 			array_push($data, ['name' => $photoAlbum->getValue('name')]);

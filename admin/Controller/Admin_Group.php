@@ -6,7 +6,7 @@ use Core\View\Paging;
 use Core\Orm;
 use Core\Router;
 
-class Admin_group extends Controller
+class Admin_Group extends Controller
 {
 	public function methodIndex($args)
 	{

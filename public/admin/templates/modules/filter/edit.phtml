@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header"><? __('Edit filter set') ?> - <?= $vars['filter']['name']; ?></h3>
+		<h3 class="page-header"><?= __('Edit filter set') ?> - <?= $vars['filter']['name']; ?></h3>
 	</div>
 </div>
 
@@ -8,9 +8,9 @@
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
 	<li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab"
-											  data-toggle="tab"><? __('Information'); ?></a></li>
+											  data-toggle="tab"><?= __('Information'); ?></a></li>
 	<li role="presentation"><a href="#filters" aria-controls="filters" role="tab"
-							   data-toggle="tab"><? __('Filters'); ?></a></li>
+							   data-toggle="tab"><?= __('Filters'); ?></a></li>
 </ul>
 
 <!-- Tab panes -->
@@ -22,23 +22,23 @@
 				<form role="form" action="/admin/filter/save">
 					<input type="hidden" name="id" value="<?= $vars['filter']['id']; ?>"/>
 					<div class="form-group">
-						<label><? __('Name') ?></label>
+						<label><?= __('Name') ?></label>
 						<input class="form-control" name="name" value="<?= $vars['filter']['name']; ?>"/>
 					</div>
 					<div class="form-group">
-						<label><? __('Alias') ?></label>
+						<label><?= __('Alias') ?></label>
 						<input class="form-control" name="url" value="<?= $vars['filter']['alias']; ?>"/>
 					</div>
 					<div class="form-group">
-						<label><? __('Text') ?></label>
+						<label><?= __('Text') ?></label>
 						<textarea id="editor-1" class="form-control"
 								  name="info"><?= $vars['filter']['info']; ?></textarea>
 						<script>CKEDITOR.replace('editor-1');</script>
 					</div>
 					<div class="form-group">
-						<input type="submit" class="btn btn-success" value="<? __('Save') ?>"/>
+						<input type="submit" class="btn btn-success" value="<?= __('Save') ?>"/>
 						<input type="button" class="btn btn-primary" onclick="location.href='/admin/filter';"
-							   value="<? __('Cancel') ?>"/>
+							   value="<?= __('Cancel') ?>"/>
 					</div>
 				</form>
 			</div>
@@ -49,7 +49,7 @@
 		<div class="row">
 			<div class="col-lg-6">
 				<button class="btn btn-primary"
-						onclick="addFilter();"><? __('Add new filter') ?></button>
+						onclick="addFilter();"><?= __('Add new filter') ?></button>
 			</div>
 		</div>
 
@@ -63,8 +63,8 @@
 							<thead>
 							<tr>
 								<th>ID</th>
-								<th><? __('Name') ?></th>
-								<th><? __('Actions') ?></th>
+								<th><?= __('Name') ?></th>
+								<th><?= __('Actions') ?></th>
 							</tr>
 							</thead>
 							<tbody>
@@ -74,7 +74,7 @@
 							<tr>
 								<td>' . $row['id'] . '<input type="hidden" name="id[]" class="form-control" value="' . $row['id'] . '"/></td>
 								<td><input name="name[]" class="form-control" value="' . $row['name'] . '"/></td>
-								<td><a class="remove-filter" href="#">' . i18n('Remove') . '</a></td>
+								<td><a class="remove-filter" href="#">' . __('Remove') . '</a></td>
 							</tr>';
 							}
 							?>
@@ -85,9 +85,9 @@
 			</div>
 
 			<div class="form-group">
-				<input type="submit" class="btn btn-success" value="<? __('Save') ?>"/>
+				<input type="submit" class="btn btn-success" value="<?= __('Save') ?>"/>
 				<input type="button" class="btn btn-primary" onclick="location.href='/admin/filter';"
-					   value="<? __('Cancel') ?>"/>
+					   value="<?= __('Cancel') ?>"/>
 			</div>
 
 		</form>
@@ -109,7 +109,7 @@
 			.append('<tr>' +
 				'<td><input type="hidden" name="id[]" /></td>' +
 				'<td><input name="name[]" class="form-control" /></td>' +
-				'<td><a class="remove-filter" href="#"><? __('Remove') ?></a></td>' +
+				'<td><a class="remove-filter" href="#"><?= __('Remove') ?></a></td>' +
 				'</tr>'
 			);
 	}

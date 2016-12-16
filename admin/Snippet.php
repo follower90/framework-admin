@@ -6,7 +6,7 @@ use \Core\View;
 
 class Snippet
 {
-	public static function active($id, $path, $state, $field='active')
+	public static function active($id, $path, $state, $field = 'active')
 	{
 		$view = View::renderString(
 			'<input class="switcher" data-id="{1}" type="checkbox" name="' . $field . '" {2} />',
@@ -14,7 +14,9 @@ class Snippet
 		);
 
 		$pathChunks = explode('_', $path);
-		$path = implode('_', array_map(function($p) { return ucfirst($p); }, $pathChunks));
+		$path = implode('_', array_map(function ($p) {
+			return ucfirst($p);
+		}, $pathChunks));
 
 		$scripts = View::renderString(
 			'<script>
@@ -28,17 +30,19 @@ class Snippet
 					}
 				});
 
-				$(\'.delete_item\').on(\'click\', function() {
-					return confirm(\'{2}\');
-				});
-
-				$(\'.duplicate_item\').on(\'click\', function() {
-					return confirm(\'{3}\');
+				$(document).ready(function() {
+					$(\'.delete_item_' . $id . '\').on(\'click\', function() {
+						return confirm(\'{2}\');
+					});
+	
+					$(\'.duplicate_item_' . $id . '\').on(\'click\', function() {
+						return confirm(\'{3}\');
+					});
 				});
 			</script>', [
 			$path,
-			i18n('Are you sure you want to delete this item?'),
-			i18n('Are you sure you want to duplicate this item?')
+			__('Are you sure you want to delete this item?'),
+			__('Are you sure you want to duplicate this item?')
 		]);
 
 		return $view . $scripts;
@@ -58,12 +62,12 @@ class Snippet
 		);
 
 		if (in_array('duplicate', $actions)) {
-			$html .= View::renderString('<li><a class="duplicate_item" href="/admin/{1}/duplicate/{2}">{3}</a></li>',
-				[$path, $id, i18n('Duplicate')]);
+			$html .= View::renderString('<li><a class="duplicate_item_' . $id . '" href="/admin/{1}/duplicate/{2}">{3}</a></li>',
+				[$path, $id, __('Duplicate')]);
 		}
 		if (in_array('delete', $actions)) {
-			$html .= View::renderString('<li><a class="delete_item" href="/admin/{1}/delete/{2}">{3}</a></li>',
-				[$path, $id, i18n('Delete')]);
+			$html .= View::renderString('<li><a class="delete_item_' . $id . '" href="/admin/{1}/delete/{2}">{3}</a></li>',
+				[$path, $id, __('Delete')]);
 		}
 
 		$html .= View::renderString('</ul></div>');

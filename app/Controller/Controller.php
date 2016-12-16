@@ -27,7 +27,7 @@ class Controller extends \Core\Controller
 		$data['currencies'] = \Core\Orm::find('Currency')->getData();
 		$data['meta'] = Meta::getData();
 
-		$data['main_menu'] = \Core\Orm::find('Menu', ['active'], [1])->getData();
+		$data['main_menu'] = \Core\Orm::find('Menu', ['active'], [1], ['sort' => ['sort', 'desc']])->getData();
 
 		$this->_data = array_merge($this->_data, $data);
 		return $this->view->render('templates/base.phtml', $this->_data);
@@ -57,7 +57,7 @@ class Controller extends \Core\Controller
 
 	protected function renderBreadCrumbs($data = [])
 	{
-		$result = '<li><a href="/">'. i18n('Main').'</a></li>';
+		$result = '<li><a href="/">'. __('Main').'</a></li>';
 
 		if (sizeof($data) > 0) {
 			$last = array_pop($data);

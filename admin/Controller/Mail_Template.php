@@ -6,7 +6,7 @@ use Core\View\Paging;
 use Core\Orm;
 use Core\Router;
 
-class Mail_template extends Controller
+class Mail_Template extends Controller
 {
 	public function methodIndex($args)
 	{

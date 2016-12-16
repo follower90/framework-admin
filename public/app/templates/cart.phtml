@@ -1,6 +1,6 @@
 <div class="row" xmlns="http://www.w3.org/1999/html">
 	<div class="col-lg-12">
-		<h3 class="page-header"><? __('Cart') ?></h3>
+		<h3 class="page-header"><?= __('Cart') ?></h3>
 	</div>
 </div>
 
@@ -11,12 +11,12 @@
 				<thead>
 				<tr>
 					<th>#</th>
-					<th><? __('Photo') ?></th>
-					<th><? __('Name') ?></th>
-					<th><? __('Count') ?></th>
-					<th><? __('Price') ?></th>
-					<th><? __('Sum') ?></th>
-					<th><? __('Actions') ?></th>
+					<th><?= __('Photo') ?></th>
+					<th><?= __('Name') ?></th>
+					<th><?= __('Count') ?></th>
+					<th><?= __('Price') ?></th>
+					<th><?= __('Sum') ?></th>
+					<th><?= __('Actions') ?></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -31,7 +31,7 @@
 							<img height="50" src="/api.php?method=Resource.get&id=<?= $item['product']['photo_id']; ?>" />
 						</td>
 						<td>
-							<?= $item['product']['name']; ?>
+							<a href="/product/view/<?= $item['product']['url']; ?>"><?= $item['product']['name']; ?></a>
 						</td>
 						<td>
 							<input type="number" min="1" step="1" name="count[]" class="cart-num-<?= $item['id']; ?>" value="<?= $item['count']; ?>">
@@ -43,14 +43,14 @@
 							<?= \App\Service\Product::viewPrice($item['product']['price'] * $item['count']); ?>
 						</td>
 						<td>
-							<a href="/cart/remove/<?= $item['id']; ?>"><? __('remove') ?></a>
+							<a href="/cart/remove/<?= $item['id']; ?>"><?= __('remove') ?></a>
 						</td>
 					</tr>
 				<?php } ?>
 				<tr>
 					<td colspan="5"></td>
 					<td><?= \App\Service\Product::viewPrice($vars['total']); ?></td>
-					<td><button class="btn btn-info"><? __('recalculate') ?></button></td>
+					<td><button class="btn btn-info"><?= __('recalculate') ?></button></td>
 				</tr>
 				</tbody>
 			</table>
@@ -58,41 +58,13 @@
 
 		<div class="row">
 			<div class="col-lg-12">
-				<h3 class="page-header"><? __('Order') ?></h3>
+				<h3 class="page-header"><?= __('Order') ?></h3>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col-lg-4">
-				<form role="form" action="/cart/order">
-					<div class="form-group">
-						<label><? __('First name') ?></label>
-						<input class="form-control" name="firstName" value="<?=$vars['userinfo']['firstName'];?>"/>
-					</div>
-					<div class="form-group">
-						<label><? __('Last name') ?></label>
-						<input class="form-control" name="lastName" value="<?=$vars['userinfo']['lastName'];?>"/>
-					</div>
-					<div class="form-group">
-						<label><? __('E-Mail') ?></label>
-						<input class="form-control" name="email" value="<?=$vars['userinfo']['email'];?>"/>
-					</div>
-					<div class="form-group">
-						<label><? __('Phone') ?></label>
-						<input class="form-control" name="phone" value="<?=$vars['userinfo']['phone'];?>"/>
-					</div>
-					<div class="form-group">
-						<label><? __('Address') ?></label>
-						<input class="form-control" name="address" value="<?=$vars['userinfo']['address'];?>"/>
-					</div>
-					<div class="form-group">
-						<label><? __('Comment') ?></label>
-						<textarea class="form-control" name="comment"></textarea>
-					</div>
-					<div class="form-group">
-						<input type="submit" class="btn btn-success" value="<? __('Order') ?>"/>
-					</div>
-				</form>
+				<?php include 'order_form.phtml'; ?>
 			</div>
 		</div>
 	</div>

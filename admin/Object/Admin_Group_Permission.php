@@ -40,9 +40,9 @@ class Admin_Group_Permission extends \Core\Object
 	public static function getPermissionsMap()
 	{
 		return [
-			static::DENY => i18n('Deny'),
-			static::VIEW => i18n('View'),
-			static::MANAGE => i18n('Manage'),
+			static::DENY => __('Deny'),
+			static::VIEW => __('View'),
+			static::MANAGE => __('Manage'),
 		];
 	}
 }

@@ -76,16 +76,18 @@ class Product extends Controller
 		}
 
 		$product->setValues($args);
-		$product->setCatalog($args['catalog_id']);
 
 		try {
 			Orm::save($product);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
-			$this->view->addNotice('error', $e->getMessage());
+			$errors = explode("___", $e->getMessage());
+			array_map(function($error) { $this->view->addNotice('error', $error); }, $errors);
 			if ($product->isNew()) {
 				Router::redirect('/admin/product/new');
 			}
 		}
+
+		$product->setCatalog($args['catalog_id']);
 
 		Router::redirect('/admin/product/edit/' . $product->getId());
 	}

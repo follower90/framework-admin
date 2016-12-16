@@ -1,9 +1,9 @@
 <div class="row">
 	<div class="col-lg-12">
 		<div class="dataTables_info">
-			<?__('Showing');?>
+			<?= __('Showing') ?>
 			<?=$this->paging->firstItemOnPage();?> - <?=$this->paging->lastItemOnPage();?>
-			<?__('of');?> <?=$vars['total'];?> <?__('entries');?>
+			<?= __('of') ?> <?=$vars['total'];?> <?= __('entries') ?>
 		</div>
 	</div>
 </div>
@@ -18,7 +18,7 @@
 
 						<li class="paginate_button previous" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous">
 							<a href="?page=<?=$vars['previous'];?>">
-								<?__('Previous page');?>
+								<?= __('Previous page') ?>
 							</a>
 						</li>
 
@@ -40,7 +40,7 @@
 
 						<li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next">
 							<a href="?page=<?=$vars['next'];?>">
-								<?__('Next page');?>
+								<?= __('Next page') ?>
 							</a>
 						</li>
 

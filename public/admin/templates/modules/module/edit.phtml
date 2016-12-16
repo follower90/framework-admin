@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header"><? __('Edit module') ?> - <?=$vars['module']['name'];?></h3>
+		<h3 class="page-header"><?= __('Edit module') ?> - <?=$vars['module']['name'];?></h3>
 	</div>
 </div>
 
@@ -11,25 +11,25 @@
 		<form role="form" action="/admin/module/save">
 			<input type="hidden" name="id" value="<?= $vars['module']['id']; ?>"/>
 			<div class="form-group">
-				<label><? __('Name') ?></label>
+				<label><?= __('Name') ?></label>
 				<input class="form-control" name="name" value="<?= $vars['module']['name']; ?>"/>
 			</div>
 			<div class="form-group">
-				<label><? __('Icon') ?> (<i id="icon-preview" class="fa fa-fw <?= $vars['module']['icon']; ?>"></i>) </label>
+				<label><?= __('Icon') ?> (<i id="icon-preview" class="fa fa-fw <?= $vars['module']['icon']; ?>"></i>) </label>
 				<input class="form-control icon-bind" name="icon" value="<?= $vars['module']['icon']; ?>"/>
 			</div>
 			<div class="form-group">
-				<label><? __('Url') ?></label>
+				<label><?= __('Url') ?></label>
 				<input class="form-control" name="url" value="<?= $vars['module']['url']; ?>"/>
 			</div>
 			<div class="form-group">
-				<label><? __('Description') ?></label>
+				<label><?= __('Description') ?></label>
 				<textarea id="editor-1" class="form-control" name="description"><?= $vars['module']['description']; ?></textarea>
 				<script>CKEDITOR.replace('editor-1');</script>
 			</div>
 			<div class="form-group">
-				<input type="submit" class="btn btn-default" value="<? __('Save') ?>"/>
-				<input type="button" class="btn btn-cancel" onclick="location.href='/admin/module';" value="<? __('Cancel') ?>"/>
+				<input type="submit" class="btn btn-default" value="<?= __('Save') ?>"/>
+				<input type="button" class="btn btn-cancel" onclick="location.href='/admin/module';" value="<?= __('Cancel') ?>"/>
 			</div>
 		</form>
 	</div>

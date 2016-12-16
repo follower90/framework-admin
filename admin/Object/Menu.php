@@ -32,6 +32,16 @@ class Menu extends \Core\Object
 					'default' => 1,
 					'null' => false,
 				],
+				'parent' => [
+					'type' => 'int',
+					'default' => 0,
+					'null' => false,
+				],
+				'sort' => [
+					'type' => 'int',
+					'default' => 0,
+					'null' => false,
+				],
 				'active' => [
 					'type' => 'tinyint',
 					'default' => 1,

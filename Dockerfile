@@ -9,7 +9,6 @@ CMD export DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get -y install apache2 libapache2-mod-php5 php5-mysql pwgen php-apc php5-mcrypt php5-curl libssl-dev links
 RUN apt-get -q -y install mysql-server
 
-
 ## Configure mysql
 RUN service mysql start \
     && echo "create database admin" | mysql -uroot \

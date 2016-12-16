@@ -48,6 +48,10 @@ class Page extends Controller
 			$page = Orm::create('Page');
 		}
 
+		if (empty($args['url'])) {
+			$args['url'] = \Core\Library\String::translit($args['name']);
+		}
+
 		$page->setValues($args);
 
 		try {

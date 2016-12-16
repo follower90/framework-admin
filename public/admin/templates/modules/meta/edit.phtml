@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header"><? __('Edit meta') ?> - <?=$vars['meta']['url'];?></h3>
+		<h3 class="page-header"><?= __('Edit meta') ?> - <?=$vars['meta']['url'];?></h3>
 	</div>
 </div>
 
@@ -8,7 +8,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<form role="form" action="/admin/setting/save">
+		<form role="form" action="/admin/meta/save">
 			<input type="hidden" name="id" value="<?= $vars['meta']['id']; ?>" />
 			<div class="form-group">
 				<label>Url</label>
@@ -27,8 +27,8 @@
 				<input class="form-control" name="description" value="<?= $vars['meta']['description']; ?>" />
 			</div>
 			<div class="form-group">
-				<input type="submit" class="btn btn-success" value="<? __('Save') ?>"/>
-				<input type="button" class="btn btn-primary" onclick="location.href='/admin/meta';" value="<? __('Cancel') ?>"/>
+				<input type="submit" class="btn btn-success" value="<?= __('Save') ?>"/>
+				<input type="button" class="btn btn-primary" onclick="location.href='/admin/meta';" value="<?= __('Cancel') ?>"/>
 			</div>
 		</form>
 	</div>

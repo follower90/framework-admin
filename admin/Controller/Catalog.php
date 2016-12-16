@@ -53,6 +53,10 @@ class Catalog extends Controller
 			$catalog = Orm::create('Catalog');
 		}
 
+		if (empty($args['url'])) {
+			$args['url'] = \Core\Library\String::translit($args['name']);
+		}
+
 		$catalog->setValues($args);
 
 		try {

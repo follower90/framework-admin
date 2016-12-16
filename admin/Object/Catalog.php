@@ -59,11 +59,20 @@ class Catalog extends \Core\Object
 
 	public function validate()
 	{
-		if (trim($this->getValue('url')) === '') {
-			$this->setError('URL is required');
-			return false;
+		if (trim($this->getValue('name')) === '') {
+			$this->setError('Name is required');
 		}
 
-		return true;
+		if (trim($this->getValue('url')) === '') {
+			$this->setError('URL is required');
+		} else {
+			$count = \Core\Orm::count('Catalog', ['url'], [$this->getValue('url')]);
+			if (($this->isNew() && $count == 1) || $count > 2) {
+				$this->setError('URL already exists');
+			}
+		}
+
+		$errors = $this->getErrors();
+		return empty($errors);
 	}
 }

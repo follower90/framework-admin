@@ -43,11 +43,11 @@ class Catalog extends Controller
 	private function getBreadcrumbs($catalogId = null)
 	{
 		$data = [
-			['url' => '/catalog/', 'name' => i18n('Catalog')]
+			['url' => '/catalog/', 'name' => __('Catalog')]
 		];
 
 		if (!$catalogId) {
-			array_push($data, ['name' => i18n('All')]);
+			array_push($data, ['name' => __('All')]);
 		} else {
 			$catalog = Orm::load('Catalog', $catalogId);
 			array_push($data, ['name' => $catalog->getValue('name')]);

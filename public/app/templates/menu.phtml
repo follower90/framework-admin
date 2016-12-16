@@ -12,6 +12,7 @@
 		<div class="nav navbar-top-links navbar-collapse">
 			<ul class="nav navbar-nav ">
 				<?php foreach ($vars['main_menu'] as $row) { ?>
+
 					<? $active = (\Core\Router::get('uri') == $row['url']) ? 'class="active"' : '';?>
 					<li <?=$active;?>><a href="<?=$row['url'];?>"><?=$row['name'];?></a></li>
 				<?php } ?>
@@ -22,10 +23,10 @@
 
 				<?php if ($vars['user']) { ?>
 					<li><a href="/user/profile"><?= $vars['user']->login; ?></a></li>
-					<li><a href="/user/logout"><? __('Logout') ?></a></li>
+					<li><a href="/user/logout"><?= __('Logout') ?></a></li>
 				<?php } else { ?>
-					<li><a href="/user/login"><? __('Sign in') ?></a></li>
-					<li><a href="/user/register"><? __('Register') ?></a></li>
+					<li><a href="/user/login"><?= __('Sign in') ?></a></li>
+					<li><a href="/user/register"><?= __('Register') ?></a></li>
 				<?php } ?>
 
 				<?php include 'common/language_switcher.phtml'; ?>

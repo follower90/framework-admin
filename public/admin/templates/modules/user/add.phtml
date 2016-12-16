@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header"><? __('Add new user') ?></h3>
+		<h3 class="page-header"><?= __('Add new user') ?></h3>
 	</div>
 </div>
 
@@ -10,16 +10,16 @@
 	<div class="col-lg-12">
 		<form role="form" action="/admin/user/save">
 			<div class="form-group">
-				<label><? __('Login') ?></label>
+				<label><?= __('Login') ?></label>
 				<input class="form-control" name="login" value=""/>
 			</div>
 			<div class="form-group">
-				<label><? __('Password') ?></label>
+				<label><?= __('Password') ?></label>
 				<input class="form-control" name="password" value=""/>
 			</div>
 			<div class="form-group">
-				<input type="submit" class="btn btn-success" value="<? __('Save') ?>"/>
-				<input type="button" class="btn btn-primary" onclick="location.href='/admin/user';" value="<? __('Cancel') ?>"/>
+				<input type="submit" class="btn btn-success" value="<?= __('Save') ?>"/>
+				<input type="button" class="btn btn-primary" onclick="location.href='/admin/user';" value="<?= __('Cancel') ?>"/>
 			</div>
 		</form>
 	</div>

@@ -1,13 +1,13 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header"><? __('Currency') ?></h1>
+		<h1 class="page-header"><?= __('Currency') ?></h1>
 	</div>
 </div>
 
 <div class="row">
 	<div class="col-lg-6">
 		<button class="btn btn-primary"
-				onclick="location.href='/admin/currency/new'"><? __('Add new currency') ?></button>
+				onclick="location.href='/admin/currency/new'"><?= __('Add new currency') ?></button>
 	</div>
 </div>
 
@@ -20,11 +20,11 @@
 					<thead>
 					<tr>
 						<th>ID</th>
-						<th><? __('Symbol') ?></th>
-						<th><? __('Name') ?></th>
-						<th><? __('Rate') ?></th>
-						<th><? __('Basic') ?></th>
-						<th><? __('Actions') ?></th>
+						<th><?= __('Symbol') ?></th>
+						<th><?= __('Name') ?></th>
+						<th><?= __('Rate') ?></th>
+						<th><?= __('Basic') ?></th>
+						<th><?= __('Actions') ?></th>
 					</tr>
 					</thead>
 					<tbody>
@@ -36,7 +36,7 @@
                             <td>' . $row['symbol'] . '</td>
                             <td>' . $row['name'] . '</td>
                             <td>' . $row['rate'] . '</td>
-                            <td>' . ($row['basic'] ? i18n('Yes') : i18n('No')) . '</td>
+                            <td>' . ($row['basic'] ? __('Yes') : __('No')) . '</td>
                             <td>' . _snippet('actions', [$row['id'], 'currency', ['duplicate', 'delete']]) . '</td>
                         </tr>';
 					}

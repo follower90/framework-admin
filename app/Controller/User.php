@@ -16,11 +16,14 @@ class User extends Controller
 	{
 		if ($args['login'] && $args['password']) {
 			$this->authorize($args['login'], $args['password']);
-			\Core\Router::redirect('/');
+
+			if ($this->user) {
+				\Core\Router::redirect('/');
+			}
 		}
 
 		$data['content'] = $this->view->render('templates/user/login.phtml');
-		$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => i18n('Authorization')]]);
+		$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => __('Authorization')]]);
 		return $this->render($data);
 	}
 
@@ -71,7 +74,7 @@ class User extends Controller
 		} else {
 			$data['content'] = $this->view->render('templates/user/register.phtml');
 
-			$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => i18n('Registration')]]);
+			$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => __('Registration')]]);
 			return $this->render($data);
 		}
 	}
@@ -107,7 +110,7 @@ class User extends Controller
 		}
 
 		$data['content'] = $this->view->render('templates/user/profile.phtml', ['user' => $user->getValues()]);
-		$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => i18n('Profile')]]);
+		$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => __('Profile')]]);
 		return $this->render($data);
 	}
 

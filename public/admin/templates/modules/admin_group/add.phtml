@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header"><? __('Add group') ?></h3>
+		<h3 class="page-header"><?= __('Add group') ?></h3>
 	</div>
 </div>
 
@@ -10,13 +10,13 @@
 	<div class="col-lg-12">
 		<form role="form" action="/admin/admin_group/save">
 			<div class="form-group">
-				<label><? __('Name') ?></label>
+				<label><?= __('Name') ?></label>
 				<input class="form-control" name="name" value=""/>
 			</div>
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="form-group">
-						<label><? __('Modules') ?></label>
+						<label><?= __('Modules') ?></label>
 						<div class="dataTable_wrapper">
 							<div class="dataTables_wrapper">
 								<div class="row">
@@ -25,9 +25,9 @@
 											<thead>
 											<tr>
 												<th>ID</th>
-												<th><? __('Name') ?></th>
-												<th><? __('Url') ?></th>
-												<th><? __('Permissions') ?></th>
+												<th><?= __('Name') ?></th>
+												<th><?= __('Url') ?></th>
+												<th><?= __('Permissions') ?></th>
 											</tr>
 											</thead>
 											<tbody>
@@ -58,8 +58,8 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<input type="submit" class="btn btn-success" value="<? __('Save') ?>"/>
-				<input type="button" class="btn btn-primary" onclick="location.href='/admin/admin_group';" value="<? __('Cancel') ?>"/>
+				<input type="submit" class="btn btn-success" value="<?= __('Save') ?>"/>
+				<input type="button" class="btn btn-primary" onclick="location.href='/admin/admin_group';" value="<?= __('Cancel') ?>"/>
 			</div>
 		</form>
 	</div>

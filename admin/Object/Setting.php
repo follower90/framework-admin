@@ -38,7 +38,7 @@ class Setting extends \Core\Object
 	{
 		$object = \Core\Orm::findOne('Setting', ['key'], [$key]);
 		if (!$object) {
-			$object = new self();
+			$object = new Setting();
 			$object->setValue('key', $key);
 		}
 

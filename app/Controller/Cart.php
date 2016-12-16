@@ -22,8 +22,11 @@ class Cart extends Controller
 			'userinfo' => $this->user ? Orm::findOne('User_Info', ['userId'], $this->user->getId())->getValues() : []
 		];
 
+		$data['delivery_types'] = Orm::find('Delivery_Type')->getData();
+		$data['payment_types'] = Orm::find('Payment_Type')->getData();
+
 		$data['content'] = $this->view->render('templates/cart.phtml', $data);
-		$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => i18n('Cart')]]);
+		$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => __('Cart')]]);
 		return $this->render($data);
 	}
 
@@ -56,6 +59,8 @@ class Cart extends Controller
 			'email' => $args['email'],
 			'phone' => $args['phone'],
 			'address' => $args['address'],
+			'payment' => Orm::load('Payment_Type', $args['payment'])->getValue('name'),
+			'delivery' => Orm::load('Delivery_Type', $args['delivery'])->getValue('name'),
 			'comment' => $args['comment']
 		]);
 
@@ -79,7 +84,6 @@ class Cart extends Controller
 		}
 
 		$siteName = \Admin\Object\Setting::get('sitename');
-		$userInfo = $this->user->getValues();
 
 		$mailTemplate = \Admin\Object\MailTemplate::get('new_order');
 		$body = $this->view->renderInlineTemplate(
@@ -88,11 +92,11 @@ class Cart extends Controller
 				'products' => \Core\Orm::find('Order_Product',['orderId'],[$order->getId()])->getData(),
 				'order' => $order->getValues(),
 				'site' => $siteName,
-				'name' => $userInfo['info']['firstName'] .' '. $userInfo['info']['lastName'],
+				'name' => $args['firstName'] .' '. $args['lastName'],
 			]
 		);
 
-		\App\Service\Mail::send($userInfo['info']['email'], $siteName .' - ' . $mailTemplate->getValue('subject'), $body);
+		\App\Service\Mail::send($args['email'], $siteName .' - ' . $mailTemplate->getValue('subject'), $body);
 
 		\App\Service\Cart::clear();
 		Router::redirect('/cart/ordersent');
