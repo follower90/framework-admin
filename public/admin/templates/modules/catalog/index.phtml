@@ -20,11 +20,19 @@
 				<label><?= __('Parent catalog') ?></label>
 				<select name="parent" class="form-control" onchange="submit();">
 					<option value="0">-</option>
-					<?php foreach ($vars['all'] as $row) {
-						$selected = ($row['id'] == $vars['current']) ? 'selected' : '';
-					?>
-						<option <?=$selected;?> value="<?=$row['id'];?>"><?=$row['name'];?></option>
-					<?php } ?>
+					<?php foreach ($vars['all'] as $l1) {
+						if (!$l1['parent']) {
+							$selected = ($l1['id'] == $vars['current']) ? 'selected' : '';
+							echo '<option ' . $selected . '  value="' . $l1['id'] . '">' . $l1['name'] . '</option>';
+
+							foreach ($vars['all'] as $l2) {
+								if ($l2['parent'] == $l1['id']) {
+									$selected = ($l2['id'] == $vars['current']) ? 'selected' : '';
+									echo '<option ' . $selected . '  value="' . $l2['id'] . '"> - ' . $l2['name'] . '</option>';
+								}
+							}
+						}
+					 } ?>
 				</select>
 			</div>
 		</form>

@@ -11,7 +11,7 @@ class Catalog extends Controller
 	public function methodIndex($args)
 	{
 		$data = [];
-		$parentId = $args['parent'] ? (int)$args['parent'] : null;
+		$parentId = $args['parent'] ? (int)$args['parent'] : 0;
 
 		$paging = Paging::create('Catalog', [
 			'page_size' => 10,

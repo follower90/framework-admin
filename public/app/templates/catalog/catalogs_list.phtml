@@ -10,8 +10,17 @@
 	<div class="col-lg-12">
 		<div class="row">
 			<div class="col-lg-12">
-				<?php foreach ($vars['catalogs'] as $row) { ?>
-					<a href="/catalog/view/<?=$row['url'];?>"><?=$row['name'];?></a> <br/>
+				<?php foreach ($vars['catalogs'] as $l1) {
+					if (!$l1['parent']) {
+						echo '<a href="/catalog/view/'. $l1['url'].'">'.$l1['name'] .'</a> <br/>';
+
+						foreach ($vars['catalogs'] as $l2) {
+							if ($l2['parent'] == $l1['id']) {
+								echo '-- <a href="/catalog/view/'. $l2['url'].'">'.$l2['name'] .'</a> <br/>';
+							}
+						}
+					}
+				?>
 				<?php } ?>
 			</div>
 		</div>

@@ -50,6 +50,12 @@ class Catalog extends Controller
 			array_push($data, ['name' => __('All')]);
 		} else {
 			$catalog = Orm::load('Catalog', $catalogId);
+
+			if ($catalog->getValue('parent')) {
+				$catalog2 = Orm::load('Catalog', $catalog->getValue('parent'));
+				array_push($data, ['url' => '/catalog/view/' . $catalog2->getValue('url'), 'name' => $catalog2->getValue('name')]);
+			}
+
 			array_push($data, ['name' => $catalog->getValue('name')]);
 		}
 

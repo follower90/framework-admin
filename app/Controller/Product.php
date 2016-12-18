@@ -15,6 +15,7 @@ class Product extends Controller
 		$data = [
 			'product' => $product->getValues(),
 			'userinfo' => $this->user ? Orm::findOne('User_Info', ['userId'], $this->user->getId())->getValues() : [],
+			'breadcrumbs' => $this->getBreadcrumbs($product),
 			'delivery_types' =>Orm::find('Delivery_Type')->getData(),
 			'payment_types' =>  Orm::find('Payment_Type')->getData()
 		];
@@ -70,5 +71,31 @@ class Product extends Controller
 
 		\App\Service\Mail::send($args['email'], $siteName .' - ' . $mailTemplate->getValue('subject'), $body);
 		\Core\Router::redirect('/cart/ordersent');
+	}
+
+	private function getBreadcrumbs($product)
+	{
+		$catalogId = $product->getCatalogId();
+
+		$data = [
+			['url' => '/catalog/', 'name' => __('Catalog')]
+		];
+
+		if (!$catalogId) {
+			array_push($data, ['name' => __('All')]);
+		} else {
+			$catalog = Orm::load('Catalog', $catalogId);
+
+			if ($catalog->getValue('parent')) {
+				$catalog2 = Orm::load('Catalog', $catalog->getValue('parent'));
+				array_push($data, ['url' => '/catalog/view/' . $catalog2->getValue('url'), 'name' => $catalog2->getValue('name')]);
+			}
+
+			array_push($data, ['url' => '/catalog/view/' . $catalog->getValue('url'), 'name' => $catalog->getValue('name')]);
+		}
+
+		array_push($data, ['name' => $product->getValue('name')]);
+
+		return $this->renderBreadCrumbs($data);
 	}
 }
