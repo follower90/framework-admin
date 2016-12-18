@@ -2,6 +2,7 @@
 
 namespace Admin\Controller;
 
+use Admin\Object\Setting;
 use Core\Library\String;
 use Core\View\Paging;
 use Core\Orm;
@@ -46,8 +47,8 @@ class Product extends Controller
 			$filter['group'] = Orm::load('FilterSet', $filter['filterSetId'])->getValue('name');
 		}
 		$data['edit_photo'] = $this->view->render('templates/common/image_crop.phtml', [
-			'width' => 180,
-			'height' => 180,
+			'width' => Setting::get('product_image_width'),
+			'height' => Setting::get('product_image_height'),
 			'entity' => 'product',
 			'photo' => $product->getPhotoResourceId(),
 			'id' => $data['product']['id']

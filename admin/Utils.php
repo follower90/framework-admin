@@ -45,6 +45,11 @@ class Utils
 		}
 	}
 
+	public static function getBasicCurrency()
+	{
+		return Orm::findOne('Currency', ['basic'], [1]);
+	}
+
 	private static function loadFromCache($key, $type)
 	{
 		$translation = File::get('/translations_cache.json');

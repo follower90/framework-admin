@@ -97,8 +97,8 @@ class Cart extends Controller
 		);
 
 		\App\Service\Mail::send($args['email'], $siteName .' - ' . $mailTemplate->getValue('subject'), $body);
-
 		\App\Service\Cart::clear();
+
 		Router::redirect('/cart/ordersent');
 	}
 

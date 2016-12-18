@@ -4,10 +4,10 @@ namespace Admin\Object;
 
 abstract class Object_Resource extends \Core\Object
 {
-	protected static $_config;
-
 	const TYPE_PHOTO = 1;
 	const TYPE_PHOTO_ORIG = 2;
+
+	protected static $_config;
 
 	public function getConfig()
 	{

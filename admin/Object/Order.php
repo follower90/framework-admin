@@ -19,7 +19,7 @@ class Order extends \Core\Object
 				'userId' => [
 					'type' => 'int',
 					'default' => null,
-					'null' => false,
+					'null' => true,
 				],
 				'firstName' => [
 					'type' => 'varchar',
