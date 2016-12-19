@@ -16,4 +16,18 @@ class Menu extends \Core\Api
 		return ['success' => true];
 	}
 
+	public function methodSort($args)
+	{
+		$order = $args['ids'];
+		$max = count($args['ids']);
+
+		foreach ($order as $id) {
+			$menuItem = Orm::load('Menu', $id);
+			$menuItem->setValue('sort', --$max);
+			$menuItem->save();
+		}
+
+		return ['success' => true];
+	}
+
 }

@@ -70,6 +70,7 @@ class Controller extends \Core\Controller
 			'/css/sb-admin-2.css',
 			'/css/font-awesome.min.css',
 			'/css/selectize.bootstrap3.css',
+			'/css/styles.css',
 		]);
 
 		$this->addJavaScriptPath([
@@ -79,6 +80,8 @@ class Controller extends \Core\Controller
 			'/js/sb-admin-2.js',
 			'/js/plugin/ckeditor/ckeditor.js',
 			'/js/selectize.min.js',
+			'/js/jquery-sortable.js',
+			'/js/scripts.js'
 		]);
 	}
 

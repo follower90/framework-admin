@@ -15,7 +15,7 @@
 	<div class="dataTables_wrapper">
 		<div class="row">
 			<div class="col-lg-12">
-				<table class="table table-bordered dataTable">
+				<table data-entity="Menu" class="table table-sortable table-bordered dataTable">
 					<thead>
 					<tr>
 						<th>ID</th>
@@ -26,11 +26,11 @@
 						<th><?= __('Actions') ?></th>
 					</tr>
 					</thead>
-					<tbody ondrag="console.log(1);">
+					<tbody>
 					<?php
 					foreach ($vars['menu'] as $menu) {
 						echo '
-                        <tr draggable="true">
+                        <tr data-id="' . $menu->id . '">
                             <td>' . $menu->id . '</td>
                             <td>' . $menu->name . '</td>
                             <td>' . $menu->url . '</td>

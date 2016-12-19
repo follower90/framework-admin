@@ -14,7 +14,8 @@ class Menu extends Controller
 
 		$paging = Paging::create('Menu', [
 			'page_size' => 10,
-			'current_page' => empty($args['page']) ? 1 : (int)$args['page']
+			'current_page' => empty($args['page']) ? 1 : (int)$args['page'],
+			'order' => ['sort', 'desc']
 		]);
 
 		$data['paging'] = $paging->getPaging();
