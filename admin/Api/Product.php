@@ -2,7 +2,7 @@
 
 namespace Admin\Api;
 
-use Admin\Object\Product_Resource;
+use Admin\Object\Object_Resource;
 use Core\Library\File;
 use Core\App;
 
@@ -26,11 +26,11 @@ class Product extends \Core\Api
 		$tmpOriginal = App::get()->getAppPath() . '/tmp/' . $args['original'];
 		File::put('/storage/product/' . $args['id'] . '/' . $args['original'], file_get_contents($tmpOriginal));
 
-		Product_Resource::removeSources($args['id'], Product_Resource::TYPE_PHOTO_ORIG);
-		Product_Resource::saveResource($args['id'], Product_Resource::TYPE_PHOTO_ORIG, $args['original']);
+		Object_Resource::removeResources($args['id'], 'product', Object_Resource::TYPE_PHOTO_ORIG);
+		Object_Resource::saveResource($args['id'], 'product', Object_Resource::TYPE_PHOTO_ORIG, $args['original']);
 
 		File::put('/storage/product/' . $args['id'] . '/' . 'photo.jpg', $data);
-		Product_Resource::saveResource($args['id'], Product_Resource::TYPE_PHOTO, 'photo.jpg');
+		Object_Resource::saveResource($args['id'], 'product', Object_Resource::TYPE_PHOTO, 'photo.jpg');
 		return ['success' => true];
 	}
 }

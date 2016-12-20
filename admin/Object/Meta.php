@@ -42,6 +42,11 @@ class Meta extends \Core\Object
 					'type' => 'tinyint',
 					'default' => 1,
 					'null' => false,
+				],
+				'moduleId' => [
+					'type' => 'int',
+					'default' => 0,
+					'null' => false,
 				]
 			]);
 		}

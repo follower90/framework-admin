@@ -64,12 +64,6 @@ class Product extends \Core\Object
 				['class' => 'Product'],
 				['class' => 'Filter']
 			);
-
-			\Core\Orm::registerRelation(
-				['type' => 'has_many', 'alias' => 'resources', 'table' => 'Product_Resource'],
-				['class' => 'Product', 'field' => 'id'],
-				['class' => 'Product_Resource', 'field' => 'productId']
-			);
 		}
 
 		return self::$_config;
@@ -150,7 +144,7 @@ class Product extends \Core\Object
 
 	public function getResourceIds($type)
 	{
-		$resources = $this->getRelated('resources');
+		$resources = $this->resources();
 		$photo = $resources->stream()->filter(function ($o) use ($type) {
 			return $o->getValue('type') == $type;
 		})->findFirst();
@@ -160,11 +154,16 @@ class Product extends \Core\Object
 
 	public function getPhotoResourceId()
 	{
-		$resources = $this->getRelated('resources');
+		$resources = $this->resources();
 		$photo = $resources->stream()->filter(function ($o) {
-			return $o->getValue('type') == Product_Resource::TYPE_PHOTO;
+			return $o->getValue('type') == Object_Resource::TYPE_PHOTO;
 		})->findFirst();
 
 		return $photo ? $photo->getValue('resourceId') : 0;
+	}
+
+	public function resources()
+	{
+		return Orm::find('Object_Resource', ['objectType', 'objectId'], ['product', $this->getId()]);
 	}
 }

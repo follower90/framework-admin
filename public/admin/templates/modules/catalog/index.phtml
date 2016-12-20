@@ -19,7 +19,7 @@
 			<div class="form-group">
 				<label><?= __('Parent catalog') ?></label>
 				<select name="parent" class="form-control" onchange="submit();">
-					<option value="0">-</option>
+					<option value="0"><?= __('Root catalog'); ?></option>
 					<?php foreach ($vars['all'] as $l1) {
 						if (!$l1['parent']) {
 							$selected = ($l1['id'] == $vars['current']) ? 'selected' : '';
@@ -28,6 +28,14 @@
 							foreach ($vars['all'] as $l2) {
 								if ($l2['parent'] == $l1['id']) {
 									$selected = ($l2['id'] == $vars['current']) ? 'selected' : '';
+
+									foreach ($vars['all'] as $l3) {
+										if ($l3['parent'] == $l2['id']) {
+											$selected = ($l3['id'] == $vars['current']) ? 'selected' : '';
+											echo '<option ' . $selected . '  value="' . $l3['id'] . '"> - ' . $l3['name'] . '</option>';
+										}
+									}
+
 									echo '<option ' . $selected . '  value="' . $l2['id'] . '"> - ' . $l2['name'] . '</option>';
 								}
 							}
