@@ -14,11 +14,13 @@ class App
 		Router::register(['/^\/404$/', 'GET'], 'Error', 'index');
 
 		Router::register(['/^\/catalog$/', 'GET'], 'Catalog', 'index', ['url']);
+		Router::register(['/^\/blog$/', 'GET'], 'Blog', 'index', ['url']);
 		Router::register(['/^\/photos$/', 'GET'], 'Photos', 'index', ['url']);
 		Router::register(['/^\/cart$/', 'GET'], 'Cart', 'index', ['url']);
 		Router::register(['/^\/order$/', 'GET'], 'Order', 'index', ['url']);
 		Router::register(['/^\/user$/', 'GET'], 'User', 'index', ['url']);
 
+		Router::register(['/^\/blog\/view\/(.*)$/', 'GET'], 'Blog', 'index', ['url']);
 		Router::register(['/^\/photos\/view\/(.*)$/', 'GET'], 'Photos', 'index', ['url']);
 		Router::register(['/^\/catalog\/view\/(.*)$/', 'GET'], 'Catalog', 'index', ['url']);
 		Router::register(['/^\/product\/view\/(.*)$/', 'GET'], 'Product', 'index', ['url']);

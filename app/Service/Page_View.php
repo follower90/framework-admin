@@ -43,6 +43,8 @@ class Page_View
 
 			$pageViewIp->save();
 		}
+
+		return static::get($id, $type);
 	}
 
 	public static function get($id, $type)
