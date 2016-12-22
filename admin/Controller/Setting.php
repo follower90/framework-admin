@@ -66,6 +66,6 @@ class Setting extends Controller
 		$page = Orm::load('Setting', $args['delete']);
 
 		Orm::delete($page);
-		Router::redirect('/admin/setting/');
+		$this->back();
 	}
 }

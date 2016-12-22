@@ -84,6 +84,6 @@ class Menu extends Controller
 		$page = Orm::load('Menu', $args['delete']);
 
 		Orm::delete($page);
-		Router::redirect('/admin/menu/');
+		$this->back();
 	}
 }

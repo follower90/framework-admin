@@ -94,6 +94,6 @@ class Admin_Group extends Controller
 		$group = Orm::load('Admin_Group', $args['delete']);
 
 		Orm::delete($group);
-		Router::redirect('/admin/admin_group/');
+		$this->back();
 	}
 }

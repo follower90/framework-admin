@@ -33,8 +33,14 @@ class Page extends Controller
 
 	public function methodEdit($args)
 	{
-		$data['page'] = Orm::load('Page', $args['edit'])->getValues();
-		$data['content'] = $this->view->render('templates/modules/pages/edit.phtml', $data);
+		$page = Orm::load('Page', $args['edit']);
+		$meta = \Admin\Service\Meta::getData($page->getValue('url'));
+
+		$data['content'] = $this->view->render('templates/modules/pages/edit.phtml', [
+			'moduleId' => \Admin\Service\Module::detect()->getId(),
+			'page' => $page->getValues(),
+			'meta' => $meta
+		]);
 
 		return $this->render($data);
 	}
@@ -86,6 +92,6 @@ class Page extends Controller
 		$page = Orm::load('Page', $args['delete']);
 
 		Orm::delete($page);
-		Router::redirect('/admin/page/');
+		$this->back();
 	}
 }

@@ -89,6 +89,6 @@ class Currency extends Controller
 		$this->checkWritePermissions();
 		$currency = Orm::load('Currency', $args['delete']);
 		Orm::delete($currency);
-		Router::redirect('/admin/currency/');
+		$this->back();
 	}
 }

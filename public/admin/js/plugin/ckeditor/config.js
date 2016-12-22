@@ -7,4 +7,9 @@ CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
+	config.extraPlugins = 'filebrowser';
+
 };
+
+CKEDITOR.config.filebrowserBrowseUrl = '/admin/browse.php';
+CKEDITOR.config.filebrowserUploadUrl = '/upload.php';

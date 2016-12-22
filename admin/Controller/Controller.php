@@ -79,6 +79,7 @@ class Controller extends \Core\Controller
 			'/js/bootstrap-switch.min.js',
 			'/js/sb-admin-2.js',
 			'/js/plugin/ckeditor/ckeditor.js',
+			'/js/plugin/ckeditor/config.js',
 			'/js/selectize.min.js',
 			'/js/jquery-sortable.js',
 			'/js/scripts.js'
@@ -103,5 +104,9 @@ class Controller extends \Core\Controller
 	public function render404()
 	{
 		Router::redirect('/admin/404', Router::NOT_FOUND_404);
+	}
+
+	public function back() {
+		Router::redirect(Router::get('referer'));
 	}
 }

@@ -82,6 +82,6 @@ class Infoblock extends Controller
 		$page = Orm::load('InfoBlock', $args['delete']);
 
 		Orm::delete($page);
-		Router::redirect('/admin/infoblock/');
+		$this->back();
 	}
 }

@@ -91,6 +91,6 @@ class Catalog extends Controller
 		$page = Orm::load('Catalog', $args['delete']);
 
 		Orm::delete($page);
-		Router::redirect('/admin/catalog/');
+		$this->back();
 	}
 }

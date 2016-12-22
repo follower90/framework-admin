@@ -15,6 +15,18 @@
 				<input class="form-control" name="url" value="<?= $vars['meta']['url']; ?>" />
 			</div>
 			<div class="form-group">
+				<label><?= __('Module') ?></label>
+				<select class="form-control" name="moduleId">
+					<option value="0"> - </option>
+					<?php
+					foreach ($vars['modules'] as $id => $name) {
+						$selected = ($vars['meta']['moduleId'] == $id) ? 'selected' : '';
+						echo '<option ' . $selected . ' value="' . $id . '">' . $name . '</option>';
+					}
+					?>
+				</select>
+			</div>
+			<div class="form-group">
 				<label>Title</label>
 				<input class="form-control" name="title" value="<?= $vars['meta']['title']; ?>" />
 			</div>

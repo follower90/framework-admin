@@ -86,6 +86,6 @@ class Blog extends Controller
 		$page = Orm::load('Blog', $args['delete']);
 
 		Orm::delete($page);
-		Router::redirect('/admin/blog/');
+		$this->back();
 	}
 }

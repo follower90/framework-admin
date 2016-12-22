@@ -30,6 +30,8 @@ class Meta
 
 		if (!$tags) {
 			$module = static::_detectModule();
+
+			if (!$module) $module = Orm::load('Module', 2); //page module HACK
 			if ($module) {
 				$tags = Orm::findOne('Meta', ['url', 'moduleId'], [static::_lastUrlPart(), $module->getId()]);
 			}

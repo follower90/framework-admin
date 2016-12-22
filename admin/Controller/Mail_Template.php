@@ -97,6 +97,6 @@ class Mail_Template extends Controller
 		$page = Orm::load('MailTemplate', $args['delete']);
 
 		Orm::delete($page);
-		Router::redirect('/admin/mail_template/');
+		$this->back();
 	}
 }

@@ -82,6 +82,6 @@ class Delivery_Type extends Controller
 		$page = Orm::load('Delivery_Type', $args['delete']);
 
 		Orm::delete($page);
-		Router::redirect('/admin/delivery_type/');
+		$this->back();
 	}
 }

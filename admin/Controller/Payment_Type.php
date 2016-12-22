@@ -82,6 +82,6 @@ class Payment_Type extends Controller
 		$page = Orm::load('Payment_Type', $args['delete']);
 
 		Orm::delete($page);
-		Router::redirect('/admin/payment_type/');
+		$this->back();
 	}
 }

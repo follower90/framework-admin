@@ -91,7 +91,7 @@ class Translation extends Controller
 		$translation = Orm::load('Translation', $args['delete']);
 
 		Orm::delete($translation);
-		Router::redirect('/admin/translation/');
+		$this->back();
 	}
 
 	public function methodCache()
@@ -113,6 +113,6 @@ class Translation extends Controller
 		}
 
 		File::put('/translations_cache.json', json_encode($data));
-		Router::redirect('/admin/translation/');
+		$this->back();
 	}
 }

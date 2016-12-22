@@ -90,6 +90,6 @@ class Order extends Controller
 		}
 
 		Orm::delete($order);
-		Router::redirect('/admin/order/');
+		$this->back();
 	}
 }

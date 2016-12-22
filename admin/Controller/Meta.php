@@ -27,14 +27,22 @@ class Meta extends Controller
 
 	public function methodNew()
 	{
-		$data['content'] = $this->view->render('templates/modules/meta/add.phtml');
+		$modules = \Admin\Service\Module::getAvailableModules()->getHashMap('id', 'name');
+		$data['content'] = $this->view->render('templates/modules/meta/add.phtml', [
+			'modules' => $modules
+		]);
 		return $this->render($data);
 	}
 
 	public function methodEdit($args)
 	{
 		$meta = Orm::load('Meta', $args['edit'])->getValues();
-		$data['content'] = $this->view->render('templates/modules/meta/edit.phtml', ['meta' => $meta]);
+		$modules = \Admin\Service\Module::getAvailableModules()->getHashMap('id', 'name');
+
+		$data['content'] = $this->view->render('templates/modules/meta/edit.phtml', [
+			'meta' => $meta,
+			'modules' => $modules
+		]);
 
 		return $this->render($data);
 	}
@@ -81,6 +89,21 @@ class Meta extends Controller
 		$page = Orm::load('Meta', $args['delete']);
 
 		Orm::delete($page);
-		Router::redirect('/admin/meta/');
+		$this->back();
+	}
+
+	public function methodUpdate($args)
+	{
+		$meta = Orm::create('Meta');
+		$meta->setValues([
+			'moduleId' => $args['moduleId'],
+			'url' => $args['url'],
+			'title' => $args['title'],
+			'keywords' => $args['keywords'],
+			'description' => $args['description'],
+		]);
+
+		$meta->save();
+		$this->back();
 	}
 }

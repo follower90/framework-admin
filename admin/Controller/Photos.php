@@ -93,6 +93,6 @@ class Photos extends Controller
 		$page = Orm::load('Photo_Album', $args['delete']);
 
 		Orm::delete($page);
-		Router::redirect('/admin/photos/');
+		$this->back();
 	}
 }

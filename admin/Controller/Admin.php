@@ -85,6 +85,6 @@ class Admin extends Controller
 		$page = Orm::load('Admin', $args['delete']);
 
 		Orm::delete($page);
-		Router::redirect('/admin/admin/');
+		$this->back();
 	}
 }

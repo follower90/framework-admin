@@ -111,6 +111,6 @@ class Filter extends Controller
 		$page = Orm::load('FilterSet', $args['delete']);
 
 		Orm::delete($page);
-		Router::redirect('/admin/filter/');
+		$this->back();
 	}
 }

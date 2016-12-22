@@ -100,6 +100,6 @@ class User extends Controller
 		Orm::delete($user);
 		Orm::delete($userInfo);
 
-		Router::redirect('/admin/user/');
+		$this->back();
 	}
 }

@@ -82,6 +82,6 @@ class Module extends Controller
 		$page = Orm::load('Module', $args['delete']);
 
 		Orm::delete($page);
-		Router::redirect('/admin/module/');
+		$this->back();
 	}
 }

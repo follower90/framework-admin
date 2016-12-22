@@ -124,6 +124,6 @@ class Product extends Controller
 		$page = Orm::load('Product', $args['delete']);
 
 		Orm::delete($page);
-		Router::redirect('/admin/product/');
+		$this->back();
 	}
 }
