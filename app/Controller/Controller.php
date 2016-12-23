@@ -74,7 +74,7 @@ class Controller extends \Core\Controller
 	protected function addJavaScriptPath($paths = [])
 	{
 		if (!is_array($paths)) $paths = [$paths];
-		$this->_scripts = array_merge($paths, $this->_scripts);
+		$this->_scripts = array_merge($this->_scripts, $paths);
 		$this->_data['scripts'] = $this->_scripts;
 	}
 
@@ -88,5 +88,9 @@ class Controller extends \Core\Controller
 	public function render404()
 	{
 		Router::redirect('/404', Router::NOT_FOUND_404);
+	}
+
+	public function back() {
+		Router::redirect(Router::get('referer'));
 	}
 }

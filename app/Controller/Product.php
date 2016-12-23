@@ -14,11 +14,14 @@ class Product extends Controller
 
 		$data = [
 			'product' => $product->getValues(),
+			'comments' => \App\Service\Comments::load('Product', $product->getId())->getComments()->getData(),
 			'userinfo' => $this->user ? Orm::findOne('User_Info', ['userId'], $this->user->getId())->getValues() : [],
 			'breadcrumbs' => $this->getBreadcrumbs($product),
 			'delivery_types' =>Orm::find('Delivery_Type')->getData(),
 			'payment_types' =>  Orm::find('Payment_Type')->getData()
 		];
+
+		$this->addJavaScriptPath(['/js/comments.js']);
 
 		return $this->render([
 			'content' => $this->view->render('templates/product_in.phtml', $data)

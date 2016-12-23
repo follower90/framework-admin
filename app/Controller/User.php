@@ -17,9 +17,7 @@ class User extends Controller
 		if ($args['login'] && $args['password']) {
 			$this->authorize($args['login'], $args['password']);
 
-			if ($this->user) {
-				\Core\Router::redirect('/');
-			}
+			if ($this->user) $this->back();
 		}
 
 		$data['content'] = $this->view->render('templates/user/login.phtml');
