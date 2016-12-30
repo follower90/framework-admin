@@ -8,7 +8,7 @@ class Order extends \Core\Object
 
 	const STATUS_NEW = 1;
 	const STATUS_PROCESS = 2;
-	const STATUS_FINISHED = 3;
+	const STATUS_FINISHED = 999;
 
 	public function getConfig()
 	{
@@ -37,6 +37,11 @@ class Order extends \Core\Object
 					'null' => false,
 				],
 				'phone' => [
+					'type' => 'varchar',
+					'default' => '',
+					'null' => false,
+				],
+				'city' => [
 					'type' => 'varchar',
 					'default' => '',
 					'null' => false,
@@ -86,5 +91,21 @@ class Order extends \Core\Object
 		);
 
 		return self::$_config;
+	}
+
+	public function getValues()
+	{
+		$values = parent::getValues();
+		$values['status_text'] = static::getStatusMap()[$values['status']];
+		return $values;
+	}
+
+	public static function getStatusMap()
+	{
+		return [
+			1 => __('New'),
+			2 => __('In progress'),
+			999 => __('Finished')
+		];
 	}
 }

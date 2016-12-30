@@ -8,8 +8,7 @@ use Core\Library\File;
 class Object_Resource extends \Core\Object
 {
 	const TYPE_PHOTO = 1;
-	const TYPE_PHOTO_ORIG = 2;
-	const TYPE_PHOTO_ADITIONAL = 3;
+	const TYPE_PHOTO_ORIGINAL = 2;
 
 	protected static $_config;
 
@@ -45,19 +44,24 @@ class Object_Resource extends \Core\Object
 		return self::$_config;
 	}
 
+	public function remove()
+	{
+		$resource = Orm::load('Resource', $this->getValue('resourceId'));
+
+		if ($resource) {
+			File::delete(\Core\App::get()->getAppPath() . $resource->getValue('src'));
+			Orm::delete($resource);
+		}
+
+		Orm::delete($this);
+	}
+
 	public static function removeResources($objectId, $objectType, $type)
 	{
 		$existingResources = Orm::find('Object_Resource', ['objectType', 'objectId', 'type'], [$objectId, $objectType, $type]);
 		if ($existingResources->getCount() > 0) {
 			foreach ($existingResources->getCollection() as $obj) {
-				$resource = Orm::load('Resource', $obj->getValue('resourceId'));
-
-				if ($resource) {
-					File::delete(\Core\App::get()->getAppPath() . $resource->getValue('src'));
-					Orm::delete($resource);
-				}
-
-				Orm::delete($obj);
+				$obj->remove();
 			}
 		}
 	}
@@ -92,5 +96,4 @@ class Object_Resource extends \Core\Object
 
 		$objectResource->save();
 	}
-
 }

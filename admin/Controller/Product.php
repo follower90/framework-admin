@@ -2,6 +2,7 @@
 
 namespace Admin\Controller;
 
+use Admin\Object\Object_Resource;
 use Admin\Object\Setting;
 use Core\Library\String;
 use Core\View\Paging;
@@ -39,6 +40,7 @@ class Product extends Controller
 		$product = Orm::load('Product', $args['edit']);
 		$data['product'] = $product->getValues();
 		$data['product']['catalog_id'] = $product->getCatalogId();
+		$data['statuses'] = \Admin\Object\Product::getStatusMap();
 
 		$data['filters'] = Orm::find('Filter')->getData();
 		$data['set_filters'] = $product->getFilters()->getValues('id');
@@ -46,19 +48,23 @@ class Product extends Controller
 		foreach ($data['filters'] as &$filter) {
 			$filter['group'] = Orm::load('FilterSet', $filter['filterSetId'])->getValue('name');
 		}
+
 		$data['edit_photo'] = $this->view->render('templates/common/image_crop.phtml', [
 			'width' => Setting::get('product_image_width'),
 			'height' => Setting::get('product_image_height'),
 			'entity' => 'product',
-			'photo' => $product->getPhotoResourceId(),
-			'id' => $data['product']['id']
+			'id' => $data['product']['id'],
+			'photo' => [
+				1 => $product->getPhotoResourceId(Object_Resource::TYPE_PHOTO, 1),
+				2 => $product->getPhotoResourceId(Object_Resource::TYPE_PHOTO, 2),
+			]
 		]);
 
 		$data['catalogs'] = Orm::find('Catalog', ['active'], [1])->getHashMap('id', 'name');
 		$data['content'] = $this->view->render('templates/modules/product/edit.phtml', $data);
 
-		$this->addCssPath(['/css/cropper.min.css']);
-		$this->addJavaScriptPath(['/js/cropper.min.js']);
+		$this->addCssPath(['/css/cropper.min.css', '/css/dropzone.css']);
+		$this->addJavaScriptPath(['/js/cropper.min.js', '/js/dropzone.js']);
 
 		return $this->render($data);
 	}
@@ -121,9 +127,8 @@ class Product extends Controller
 
 	public function methodDelete($args)
 	{
-		$page = Orm::load('Product', $args['delete']);
-
-		Orm::delete($page);
+		$product = Orm::load('Product', $args['delete']);
+		Orm::delete($product);
 		$this->back();
 	}
 }

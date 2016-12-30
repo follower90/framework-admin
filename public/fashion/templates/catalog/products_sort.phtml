@@ -1,0 +1,38 @@
+<div class="product-filter">
+	<div class="row">
+		<div class="col-md-5">
+			<div class="display">
+				<a href="?view=list" class="<?=(isset($vars['args']['view']) && $vars['args']['view'] == 'list') ? 'active' : '';?>">
+					<i class="fa fa-th-list" title="<?= __('List View');?>"></i>
+				</a>
+				<a href="?view=grid" class="<?=(isset($vars['args']['view']) && $vars['args']['view'] == 'list') ? '' : 'active';?>">
+					<i class="fa fa-th" title="<?= __('Grid View');?>"></i>
+				</a>
+			</div>
+		</div>
+		<div class="col-md-3 text-right">
+			<label class="control-label"><?= __('Sorting') ?></label>
+		</div>
+		<div class="col-md-4 text-right">
+			<select class="form-control" name="sort" id="products-sort">
+				<option <?= ($vars['sort'] == '') ? 'selected' : '' ?> value=""><?= __('default') ?></option>
+				<option <?= ($vars['sort'] == 'price:asc') ? 'selected' : '' ?> value="price:asc"><?= __('from lower price') ?></option>
+				<option <?= ($vars['sort'] == 'price:desc') ? 'selected' : '' ?> value="price:desc"><?= __('from higher price') ?></option>
+			</select>
+		</div>
+
+		<?php
+
+		/*<div class="col-md-1 text-right">
+			<label class="control-label"><?= __('Show') ?></label>
+		</div>
+		<div class="col-md-2 text-right">
+			<select class="form-control" name="onpage" id="products-onpage">
+				<option value="10">10</option>
+				<option value="20">20</option>
+				<option value="50" selected="selected">50</option>
+			</select>
+		</div>*/
+		?>
+	</div>
+</div>

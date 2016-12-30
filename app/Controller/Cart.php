@@ -24,9 +24,10 @@ class Cart extends Controller
 
 		$data['delivery_types'] = Orm::find('Delivery_Type')->getData();
 		$data['payment_types'] = Orm::find('Payment_Type')->getData();
+		$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => __('Cart')]]);
 
 		$data['content'] = $this->view->render('templates/cart.phtml', $data);
-		$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => __('Cart')]]);
+
 		return $this->render($data);
 	}
 
@@ -42,8 +43,9 @@ class Cart extends Controller
 	{
 		$i = 0;
 		foreach ($args['id'] as $id) {
-			\App\Service\Cart::update($id, $args['count'][$i]);
+			\App\Service\Cart::update($id, $args['count'][$i++]);
 		}
+
 		return $this->methodIndex();
 	}
 
@@ -58,6 +60,7 @@ class Cart extends Controller
 			'lastName' => $args['lastName'],
 			'email' => $args['email'],
 			'phone' => $args['phone'],
+			'city' => $args['city'],
 			'address' => $args['address'],
 			'payment' => Orm::load('Payment_Type', $args['payment'])->getValue('name'),
 			'delivery' => Orm::load('Delivery_Type', $args['delivery'])->getValue('name'),

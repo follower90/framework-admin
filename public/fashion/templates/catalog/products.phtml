@@ -1,0 +1,14 @@
+<div class="row">
+	<?php
+	$i = 0;
+
+	foreach ($vars['products'] as $product) {
+		if (isset($vars['args']['view']) && $vars['args']['view'] == 'list') {
+			include 'product-list.phtml';
+		} else {
+			if ($i++ % 3 === 0) echo '</div><div class="row">';
+			include 'product-grid.phtml';
+		}
+	}
+	?>
+</div>

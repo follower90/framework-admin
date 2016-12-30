@@ -1,0 +1,80 @@
+<div class="row">
+	<div class="col-lg-12">
+		<?php echo $vars['breadcrumbs']; ?>
+	</div>
+</div>
+
+<h2 class="main-heading text-center">
+	<?= __('Cart') ?>
+</h2>
+
+<div class="table-responsive shopping-cart-table">
+	<form type="post" action="/cart/recalculate">
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<td class="text-center"><?= __('Photo') ?></td>
+				<td class="text-center"><?= __('Name') ?></td>
+				<td class="text-center"><?= __('Count') ?></td>
+				<td class="text-center"><?= __('Price') ?></td>
+				<td class="text-center"><?= __('Sum') ?></td>
+				<td class="text-center"><?= __('Actions') ?></td>
+			</tr>
+			</thead>
+			<tbody>
+			<?php $counter = 1; ?>
+			<?php foreach ($vars['cart'] as $item) { ?>
+				<tr>
+					<td class="text-center">
+						<input type="hidden" name="id[]" value="<?= $item['id']; ?>"/>
+						<a href="/product/view/<?= $item['product']['url']; ?>">
+							<img height="100" src="/api.php?method=Resource.get&id=<?= $item['product']['photo_id']; ?>"/>
+						</a>
+					</td>
+					<td class="text-center">
+						<a href="/product/view/<?= $item['product']['url']; ?>"><?= $item['product']['name']; ?></a>
+					</td>
+					<td class="text-center">
+						<div class="input-group btn-block">
+							<input type="number" min="1" step="1" name="count[]"
+								   class="form-control cart-num-<?= $item['id']; ?>" value="<?= $item['count']; ?>"/>
+						</div>
+					</td>
+					<td class="text-center">
+						<?= \App\Service\Product::viewPrice($item['product']['price']); ?>
+					</td>
+					<td class="text-center">
+						<?= \App\Service\Product::viewPrice($item['product']['price'] * $item['count']); ?>
+					</td>
+					<td class="text-center">
+						<button title="<?= __('recalculate') ?>" class="btn btn-default tool-tip">
+							<i class="fa fa-refresh"></i>
+						</button>
+						<a href="/cart/remove/<?= $item['id']; ?>" type="button" title="<?= __('remove') ?>"
+						   class="btn btn-default tool-tip">
+							<i class="fa fa-times-circle"></i>
+						</a>
+					</td>
+				</tr>
+			<?php } ?>
+			</tbody>
+			<tfoot>
+			<tr>
+				<td colspan="5" class="text-right">
+					<strong><?= __('Total'); ?> :</strong>
+				</td>
+				<td colspan="2" class="text-left">
+					<?= \App\Service\Product::viewPrice($vars['total']); ?>
+				</td>
+			</tr>
+			</tfoot>
+		</table>
+	</form>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+		<h3 class="page-header"><?= __('Order') ?></h3>
+	</div>
+</div>
+<?php include 'order_form.phtml'; ?>

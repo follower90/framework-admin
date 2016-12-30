@@ -1,0 +1,80 @@
+<div class="slider">
+	<div class="container">
+		<div id="main-carousel" class="carousel slide" data-ride="carousel">
+			<div class="carousel-inner">
+				<?php
+				$active = true;
+				foreach ($vars['slides'] as $slide) {
+					?>
+					<div class="item <?= $active ? 'active' : ''; ?>">
+						<img src="/api.php?method=Resource.get&id=<?= $slide['photo_id']; ?>"
+							 alt="<?= $slide['name']; ?>" class="img-responsive"/>
+					</div>
+					<?php
+					$active = false;
+				} ?>
+			</div>
+
+			<a class="left carousel-control" href="#main-carousel" role="button" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+			</a>
+			<a class="right carousel-control" href="#main-carousel" role="button" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right"></span>
+			</a>
+
+		</div>
+	</div>
+</div>
+
+<div class="col3-banners">
+	<div class="container">
+		<ul class="row list-unstyled">
+			<li class="col-sm-4">
+				<img src="/public/fashion/images/banners/3col-banner1.jpg" alt="banners" class="img-responsive"/>
+			</li>
+			<li class="col-sm-4">
+				<img src="/public/fashion/images/banners/3col-banner2.jpg" alt="banners" class="img-responsive"/>
+			</li>
+			<li class="col-sm-4">
+				<img src="/public/fashion/images/banners/3col-banner3.jpg" alt="banners" class="img-responsive"/>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<section class="products-list">
+	<div class="container">
+		<h2 class="product-head"><?= __('Latest Products'); ?></h2>
+		<div class="row">
+			<?php
+			foreach ($vars['latest'] as $product) {
+				include 'index/product.phtml';
+			} ?>
+		</div>
+	</div>
+</section>
+
+<div class="col2-banners">
+	<div class="container">
+		<ul class="row list-unstyled">
+			<li class="col-sm-8">
+				<img src="/public/fashion/images/banners/2col-banner1.jpg" alt="banners" class="img-responsive"/>
+			</li>
+			<li class="col-sm-4">
+				<img src="/public/fashion/images/banners/2col-banner2.jpg" alt="banners" class="img-responsive"/>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<section class="products-list">
+	<div class="container">
+		<h2 class="product-head"><?= __('Featured Products');?></h2>
+		<div class="row">
+			<?php
+			foreach ($vars['featured'] as $product) {
+				include 'index/product.phtml';
+			} ?>
+		</div>
+	</div>
+</section>

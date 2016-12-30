@@ -1,0 +1,38 @@
+<nav id="main-menu" class="navbar" role="navigation">
+	<div class="navbar-header">
+		<button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse"
+				data-target=".navbar-cat-collapse">
+			<span class="sr-only">Toggle Navigation</span>
+			<i class="fa fa-bars"></i>
+		</button>
+	</div>
+
+	<div class="collapse navbar-collapse navbar-cat-collapse">
+		<ul class="nav navbar-nav">
+
+			<?php foreach ($vars['catalogs'] as $l1) {
+				if (!$l1['parent']) {
+					$subLevel = '';
+					foreach ($vars['catalogs'] as $l2) {
+						if ($l2['parent'] == $l1['id']) {
+							$subLevel .= '<li><a tabindex="-1" href="/catalog/view/' . $l2['url'] . '">' . $l2['name'] . '</a></li>';
+						}
+					}
+
+					if ($subLevel) {
+						echo '<li class="dropdown">
+							<a href="/catalog/view/' . $l1['url'] . '" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="10" >' . $l1['name'] . '</a>';
+
+						echo '<ul class="dropdown-menu" role="menu">' . $subLevel . '</ul>';
+					} else {
+						echo '<li><a href="/catalog/view/' . $l1['url'] . '" >' . $l1['name'] . '</a>';
+					}
+
+					echo '<li>';
+				}
+				?>
+			<?php } ?>
+
+		</ul>
+	</div>
+</nav>

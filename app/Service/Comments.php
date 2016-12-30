@@ -42,6 +42,8 @@ class Comments
 			'parentId' => $replyToCommentId,
 			'text' => $text
 		]);
+
+		var_dump($comment->getValues());
 		$comment->save();
 	}
 }

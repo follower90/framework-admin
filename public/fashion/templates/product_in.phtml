@@ -1,0 +1,83 @@
+<div class="row">
+	<div class="col-lg-12">
+		<?php echo $vars['breadcrumbs']; ?>
+	</div>
+</div>
+
+
+<div class="row product-info full">
+	<div class="col-sm-8 images-block">
+		<a href="/api.php?method=Resource.get&id=<?= $vars['photo1']; ?>">
+			<img src="/api.php?method=Resource.get&id=<?= $vars['photo1']; ?>"
+				 class="img-responsive thumbnail"/>
+		</a>
+		<a href="/api.php?method=Resource.get&id=<?= $vars['photo2']; ?>">
+			<img src="/api.php?method=Resource.get&id=<?= $vars['photo2']; ?>"
+				 class="img-responsive thumbnail"/>
+		</a>
+		<ul class="list-unstyled list-inline">
+			<?php foreach ($vars['photos'] as $photo) { ?>
+				<li class="col-md-4">
+					<a  href="/api.php?method=Resource.get&id=<?= $photo; ?>">
+						<img src="/api.php?method=Resource.get&id=<?= $photo; ?>" class="img-responsive thumbnail" />
+					</a>
+				</li>
+			<?php } ?>
+		</ul>
+	</div>
+	<div class="col-sm-4 product-details">
+		<div class="panel-smart">
+			<h2><?= $vars['product']['name']; ?></h2>
+			<hr/>
+
+			<ul class="list-unstyled manufacturer">
+				<li>
+					<span><?= __('Availability');?>:</span>
+					<strong class="label <?= ($vars['product']['status'] == 1) ? 'label-success' : 'label-danger'; ?>"><?= $vars['product']['status_text']; ?></strong>
+				</li>
+			</ul>
+
+			<hr/>
+
+			<div class="price">
+				<span class="price-head"><?= __('Price');?>:</span>
+				<span class="price-new"><?= \App\Service\Product::viewPrice($vars['product']['price']); ?></span>
+			</div>
+
+			<hr/>
+
+			<div class="options">
+				<h3><?= __('Description'); ?></h3>
+
+				<div class="form-group">
+					<p><?= htmlspecialchars_decode($vars['product']['text']); ?></p>
+				</div>
+
+				<div class="cart-button button-group">
+					<button type="button" class="btn btn-cart" onclick="addToCart(<?=$vars['product']['id'];?>);">
+						<?= __('Add to cart');?>
+						<i class="fa fa-shopping-cart"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="order-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel"><?= __('Quick order form') ?></h4>
+			</div>
+			<div class="modal-body">
+				<?php include 'quick_order_form.phtml' ;?>
+			</div>
+		</div>
+	</div>
+</div>

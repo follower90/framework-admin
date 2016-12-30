@@ -37,9 +37,27 @@ class Catalog extends Controller
 
 	public function methodEdit($args)
 	{
-		$catalog = Orm::load('Catalog', $args['edit'])->getValues();
+		$catalog = Orm::load('Catalog', $args['edit']);
 		$all = Orm::find('Catalog', ['active', '!id'], [1, $args['edit']])->getData();
-		$data['content'] = $this->view->render('templates/modules/catalog/edit.phtml', ['catalog' => $catalog, 'all' => $all]);
+
+		$data = [
+			'catalog' => $catalog->getValues(),
+			'all' => $all
+		];
+
+		$data['edit_photo'] = $this->view->render('templates/common/image_crop.phtml', [
+			'width' => \Admin\Object\Setting::get('catalog_image_width'),
+			'height' => \Admin\Object\Setting::get('catalog_image_height'),
+			'entity' => 'catalog',
+			'photo' => $catalog->getPhotoResourceId(),
+			'id' => $catalog->getId()
+		]);
+
+		$data['content'] = $this->view->render('templates/modules/catalog/edit.phtml', $data);
+
+		$this->addCssPath(['/css/cropper.min.css', '/css/dropzone.css']);
+		$this->addJavaScriptPath(['/js/cropper.min.js', '/js/dropzone.js']);
+
 
 		return $this->render($data);
 	}

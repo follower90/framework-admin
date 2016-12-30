@@ -1,0 +1,28 @@
+<div class="row">
+	<div class="col-lg-12">
+		<?php echo $vars['breadcrumbs']; ?>
+	</div>
+</div>
+
+<h1><?= $vars['album']['name']; ?></h1>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div id="photos-list">
+			<div class="col-lg-12">
+				<div class="row">
+					<?php
+					$i = 0;
+					foreach ($vars['photos'] as $photo) {
+						if ($i++ % 4 === 0) echo '</div><div class="row">';
+						echo '<img src="/api.php?method=Resource.get&id=' . $photo['resourceId'] . '" />';
+						echo '<br/>';
+						echo '<span>'. $photo['name'] .'</span>';
+					}
+					?>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>

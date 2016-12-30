@@ -42,9 +42,9 @@ class Meta
 		}
 
 		return $tags ? $tags->getValues() : [
-			'title' => '',
-			'keywords' => '',
-			'description' => ''
+			'title' => \Admin\Object\Setting::get('sitename'),
+			'keywords' => \Admin\Object\Setting::get('sitename'),
+			'description' => \Admin\Object\Setting::get('sitename'),
 		];
 	}
 }

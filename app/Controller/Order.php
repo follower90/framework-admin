@@ -2,15 +2,22 @@
 
 namespace App\Controller;
 
+use Core\Router;
+
 class Order extends Controller
 {
 	public function methodIndex()
 	{
 		$data = [];
+
+		if (!\Core\App::getUser()) {
+			Router::redirect('/user/login');
+		}
+
 		$orders = \Core\Orm::find('Order', ['userId'], [\Core\App::getUser()->getId()])->getData();
 
-		$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => __('Orders')]]);
-		$data['content'] = $this->view->render('/templates/orders.phtml', ['orders' => $orders]);
+		$breadcrumbs = $this->renderBreadCrumbs([['name' => __('Orders')]]);
+		$data['content'] = $this->view->render('/templates/orders.phtml', ['orders' => $orders, 'breadcrumbs' => $breadcrumbs]);
 		return $this->render($data);
 	}
 
@@ -21,7 +28,8 @@ class Order extends Controller
 
 		foreach ($products as &$item) {
 			if ($productExists = \Core\Orm::load('Product', $item['productId'])) {
-				$item['photo_id'] = $productExists->getPhotoResourceId();
+				$item['photo_id'] = $productExists->getValues()['photo_id'];
+				$item['url'] = $productExists->getValue('url');
 			}
 		}
 

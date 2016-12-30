@@ -15,6 +15,10 @@
 				<input class="form-control" name="name" value="<?= $vars['catalog']['name']; ?>"/>
 			</div>
 			<div class="form-group">
+				<label><?= __('Photo') ?></label>
+				<?=$vars['edit_photo'];?>
+			</div>
+			<div class="form-group">
 				<label><?= __('Parent catalog') ?></label>
 				<select name="parent" class="form-control">
 					<option value="0">-</option>

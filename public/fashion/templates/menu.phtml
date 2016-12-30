@@ -1,0 +1,35 @@
+<div class="header-top">
+	<div class="container">
+		<div class="col-sm-4 col-xs-12">
+			<div class="pull-left">
+				<?php include 'common/currency_switcher.phtml'; ?>
+				<?php include 'common/language_switcher.phtml'; ?>
+			</div>
+		</div>
+
+		<div class="col-sm-8 col-xs-12">
+			<div class="header-links">
+				<ul class="nav navbar-nav pull-right">
+					<?php foreach ($vars['main_menu'] as $row) { ?>
+						<li><a href="<?= $row['url']; ?>">
+								<i class="fa <?= $row['icon']; ?>"></i>
+								<span><?= $row['name']; ?></span></a></li>
+					<?php } ?>
+
+					<?php if ($vars['user']) { ?>
+						<li><a href="/user/profile">
+								<span><?= $vars['user']->login; ?></span></a></li>
+						<li><a href="/user/logout">
+								<i class="fa fa-unlock"></i><?= __('Logout') ?></span></a></li>
+					<?php } else { ?>
+						<li><a href="/user/login">
+								<i class="fa fa-lock"></i>
+								<span><?= __('Sign in') ?></span></a></li>
+						<li><a href="/user/register">
+								<i class="fa fa-unlock"></i><span><?= __('Register') ?></span></a></li>
+					<?php } ?>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

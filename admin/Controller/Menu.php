@@ -28,6 +28,7 @@ class Menu extends Controller
 
 	public function methodNew()
 	{
+		$data['all'] = Orm::find('Menu', ['active'], [1])->getData();
 		$data['content'] = $this->view->render('templates/modules/menu/add.phtml', ['types' => \Admin\Object\Menu::getTypesMap()]);
 		return $this->render($data);
 	}
@@ -35,6 +36,7 @@ class Menu extends Controller
 	public function methodEdit($args)
 	{
 		$data['menu'] = Orm::load('Menu', $args['edit'])->getValues();
+		$data['all'] = Orm::find('Menu', ['active'], [1])->getData();
 		$data['types'] = \Admin\Object\Menu::getTypesMap();
 		$data['content'] = $this->view->render('templates/modules/menu/edit.phtml', $data);
 

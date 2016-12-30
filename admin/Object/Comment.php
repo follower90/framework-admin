@@ -33,8 +33,8 @@ class Comment extends \Core\Object
 					'null' => false,
 				],
 				'text' => [
-					'type' => 'int',
-					'default' => 1,
+					'type' => 'text',
+					'default' => '',
 					'null' => false,
 				]
 			]);

@@ -20,6 +20,7 @@
 					<tr>
 						<th>ID</th>
 						<th><?= __('Date') ?></th>
+						<th><?= __('Status') ?></th>
 						<th><?= __('Sum') ?></th>
 						<th><?= __('Actions') ?></th>
 					</tr>
@@ -31,6 +32,7 @@
                         <tr>
                             <td>' . $row['id'] . '</td>
                             <td>' . $row['date'] . '</td>
+                            <td>' . $row['status_text'] . '</td>
                             <td>' . $row['sum'] . '</td>
                             <td>' . _snippet('actions', [$row['id'], 'order', ['duplicate', 'delete']]) . '</td>
                         </tr>';

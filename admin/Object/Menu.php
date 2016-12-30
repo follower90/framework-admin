@@ -27,6 +27,11 @@ class Menu extends \Core\Object
 					'default' => '',
 					'null' => false,
 				],
+				'icon' => [
+					'type' => 'varchar',
+					'default' => '',
+					'null' => false,
+				],
 				'type' => [
 					'type' => 'tinyint',
 					'default' => 1,

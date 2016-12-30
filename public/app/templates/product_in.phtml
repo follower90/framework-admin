@@ -20,7 +20,11 @@
 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#order-form"><?= __('Buy now') ?></button>
 </div>
 
-<?php include 'comments.phtml'; ?>
+<?php
+	$vars['comments_type'] = 'Product';
+	$vars['comments_type_id'] = $vars['product']['id'];
+	include 'comments.phtml';
+?>
 
 <!-- Modal -->
 <div class="modal fade" id="order-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

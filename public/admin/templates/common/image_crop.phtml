@@ -1,24 +1,31 @@
-<div class="state-crop" style="display: none;">
-	<img id="edit-photo" src=""/>
-	<button class="btn btn-default" type="button" id="crop" style="margin-top: 10px;"><?= __('Crop') ?></button>
-</div>
+<?php foreach ($vars['photo'] as $position => $photo) { ?>
 
-<div class="state-view">
-	<img id="result-photo" src="/api.php?method=Resource.get&id=<?= $vars['photo']; ?>" width="<?= $vars['width']; ?>"
-		 height="<?= $vars['height']; ?>"
-		 style="display:block; margin-bottom: 10px;"/>
-	<input type="file" id="edit-upload" class="form-control" name="photo" value=""/>
-</div>
+	<div class="state-crop num-<?=$position;?>" style="display: none;">
+		<img class="edit-photo num-<?=$position;?>" src=""/>
+		<button class="btn btn-default crop" data-num="<?=$position;?>" type="button" style="margin-top: 10px;"><?= __('Crop') ?></button>
+	</div>
+
+	<div class="state-view num-<?=$position;?>">
+		<img class="result-photo num-<?=$position;?>" src="/api.php?method=Resource.get&id=<?= $photo; ?>" width="<?= $vars['width']; ?>"
+			 height="<?= $vars['height']; ?>"
+			 style="display:block; margin-bottom: 10px;"/>
+		<input type="file" class="form-control edit-upload num-<?=$position;?>" data-num="<?=$position;?>" name="photo" value=""/>
+	</div>
+
+	<hr/>
+
+<?php } ?>
 
 <script>
-	var orig_filename = '';
-	var editor = $('#edit-photo');
+	var orig_filename;
 
-	$('#edit-upload').on('change', function () {
+	$('.edit-upload').on('change', function () {
 		var formData = new FormData();
 			formData.append('file', this.files[0]);
 
 		orig_filename = this.files[0].name;
+		var num = $(this).data('num');
+		var editor = $('.edit-photo.num-' + num);
 
 		$.ajax({
 			url: '/admin/api.php?method=File.upload',
@@ -27,8 +34,8 @@
 			processData: false,
 			contentType: false,
 			success: function (data) {
-				$('.state-view').hide();
-				$('.state-crop').show();
+				$('.state-view.num-' + num).hide();
+				$('.state-crop.num-' + num).show();
 
 				editor.attr('src', data.response.src);
 				editor.cropper({aspectRatio: <?=$vars['width'];?>/<?=$vars['height'];?>});
@@ -39,25 +46,27 @@
 		});
 	});
 
-	$('#crop').on('click', function () {
-		var result = $('#edit-photo').cropper('getCroppedCanvas', {
+	$('.crop').on('click', function () {
+		var num = $(this).data('num');
+		var result = $('.edit-photo.num-' + num).cropper('getCroppedCanvas', {
 			width: <?=$vars['width'];?>,
 			height: <?=$vars['height'];?>
 		});
 
 		var image = result.toDataURL('image/jpeg');
 
-		$('.state-crop').hide();
-		$('.state-view').show();
+		$('.state-crop.num-' + num).hide();
+		$('.state-view.num-' + num).show();
 
-		$('#result-photo').attr('src', image);
-		$('#edit-upload').val('');
+		$('.result-photo.num-' + num).attr('src', image);
+		$('.edit-upload.num-' + num).val('');
 
 		$.ajax({
 			url: '/admin/api.php?method=<?=ucfirst($vars['entity']);?>.uploadPhoto',
 			type: 'POST',
 			data: {
 				id: <?= $vars['id']; ?>,
+				position: num,
 				original: orig_filename,
 				type: '<?= \Admin\Object\Object_Resource::TYPE_PHOTO ?>',
 				file: image

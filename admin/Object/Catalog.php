@@ -57,6 +57,14 @@ class Catalog extends \Core\Object
 		return self::$_config;
 	}
 
+	public function getValues()
+	{
+		$data = parent::getValues();
+		$data['photo_id'] = $this->getPhotoResourceId();
+
+		return $data;
+	}
+
 	public function validate()
 	{
 		if (trim($this->getValue('name')) === '') {
@@ -74,5 +82,20 @@ class Catalog extends \Core\Object
 
 		$errors = $this->getErrors();
 		return empty($errors);
+	}
+
+	public function getPhotoResourceId()
+	{
+		$resources = $this->resources();
+		$photo = $resources->stream()->filter(function ($o) {
+			return $o->getValue('type') == Object_Resource::TYPE_PHOTO;
+		})->findFirst();
+
+		return $photo ? $photo->getValue('resourceId') : 0;
+	}
+
+	public function resources()
+	{
+		return \Core\Orm::find('Object_Resource', ['objectType', 'objectId'], ['catalog', $this->getId()]);
 	}
 }

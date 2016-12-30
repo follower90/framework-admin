@@ -1,0 +1,33 @@
+<div class="container">
+
+	<?php foreach ($vars['bottom_menu'] as $l1) { ?>
+
+		<?php if (!$l1['parent']) { ?>
+		<div class="col-md-2 col-sm-6">
+			<h5><?=$l1['name'];?></h5>
+			<ul>
+
+				<?php foreach ($vars['bottom_menu'] as $l2) { ?>
+					<?php if ($l2['parent'] == $l1['id']) { ?>
+						<li><a href="<?=$l2['url'];?>"><?=$l2['name'];?></a></li>
+					<?php } ?>
+				<?php } ?>
+			</ul>
+		</div>
+		<?php } ?>
+	<?php } ?>
+
+	<div class="col-md-4 col-sm-12 pull-right last">
+		<h5><?= __('Contact Us'); ?></h5>
+		<ul>
+			<li><?= \Admin\Object\Setting::get('sitename');?></li>
+
+			<li>
+				Email: <a href="#"><?= \Admin\Object\Setting::get('email');?></a>
+			</li>
+		</ul>
+		<h4 class="lead">
+			<?= __('Tel'); ?>: <span><?= \Admin\Object\Setting::get('phone');?></span>
+		</h4>
+	</div>
+</div>

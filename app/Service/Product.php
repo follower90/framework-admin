@@ -8,7 +8,7 @@ use Core\Orm;
 
 class Product
 {
-	public static function filterBy($catalogId = null, $filters = [], $sort = '')
+	public static function filterBy($catalogId = null, $filters = [], $sort = '', $where = [])
 	{
 		$db = PDO::getInstance();
 
@@ -49,6 +49,10 @@ class Product
 			} else {
 				$productFilters['id'] = $productIds;
 			}
+		}
+
+		if (!empty($where)) {
+			$productFilters = array_merge($productFilters, $where);
 		}
 
 		return Orm::find('Product', array_keys($productFilters), array_values($productFilters), $params);

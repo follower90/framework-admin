@@ -13,7 +13,8 @@ class Cart extends \Core\Api
 	public function methodCount()
 	{
 		$count = \App\Service\Cart::getCartCount();
-		return ['count' => $count];
+		$total = \App\Service\Cart::getTotal();
+		return ['count' => $count, 'total' => \App\Service\Product::viewPrice($total)];
 	}
 
 	public function methodUpdate($args)

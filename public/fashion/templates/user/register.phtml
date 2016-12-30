@@ -1,0 +1,106 @@
+<ol class="breadcrumb">
+	<li><a href="index.html">Home</a></li>
+	<li class="active">Register</li>
+</ol>
+
+<h2 class="main-heading text-center">
+	<?= __('Register') ?>
+</h2>
+
+<?php echo $this->getNotices(); ?>
+
+
+<section class="registration-area">
+	<div class="row">
+		<div class="col-sm-6">
+			<form role="form" method="post" action="/user/register" autocomplete="off">
+				<div class="panel panel-smart">
+					<div class="panel-heading">
+						<h3 class="panel-title"><?= __('User Information'); ?></h3>
+					</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<label><?= __('Login') ?></label>
+							<input class="form-control" name="login" value=""/>
+						</div>
+						<div class="form-group">
+							<label><?= __('E-Mail') ?></label>
+							<input class="form-control" name="info[email]" value=""/>
+						</div>
+						<div class="form-group">
+							<label><?= __('First name') ?></label>
+							<input class="form-control" name="info[firstName]" value=""/>
+						</div>
+						<div class="form-group">
+							<label><?= __('Last name') ?></label>
+							<input class="form-control" name="info[lastName]" value=""/>
+						</div>
+						<div class="form-group">
+							<label><?= __('Phone') ?></label>
+							<input class="form-control" name="info[phone]" value=""/>
+						</div>
+						<div class="form-group">
+							<label><?= __('Address') ?></label>
+							<input class="form-control" name="info[address]" value=""/>
+						</div>
+					</div>
+
+					<div class="panel-heading">
+						<h3 class="panel-title"><?= __('Password'); ?></h3>
+					</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<label><?= __('Password') ?></label>
+							<input class="form-control" name="password" value=""/>
+						</div>
+
+						<div class="form-group">
+							<label><?= __('Password repeat') ?></label>
+							<input class="form-control" name="password_repeat" value=""/>
+						</div>
+
+						<div class="form-group">
+							<input type="submit" class="btn btn-success" value="<?= __('Register') ?>"/>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-sm-6">
+			<div class="panel panel-smart">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						Conditions
+					</h3>
+				</div>
+				<div class="panel-body">
+					<p>
+						Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including  versions of Lorem Ipsum.
+					</p>
+					<ol>
+						<li>Lorem ipsum dolor sit amet</li>
+						<li>Consectetur adipiscing elit</li>
+						<li>Integer molestie lorem at massa</li>
+						<li>Facilisis in pretium nisl aliquet</li>
+						<li>Nulla volutpat aliquam velit</li>
+						<li>Faucibus porta lacus fringilla vel</li>
+						<li>Aenean sit amet erat nunc</li>
+						<li>Eget porttitor lorem</li>
+					</ol>
+					<p>
+						HTML Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris.
+					</p>
+					<p>
+						Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor. Ut ullamcorper, ligula eu tempor congue, eros est euismod turpis, id tincidunt sapien risus a quam. Maecenas fermentum consequat mi. Donec fermentum. Pellentesque malesuada nulla a mi. Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque.
+					</p>
+					<p>
+						Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat. Curabitur augue lorem, dapibus quis, laoreet et, pretium ac, nisi.
+					</p>
+					<p>
+						Aenean magna nisl, mollis quis, molestie eu, feugiat in, orci. In hac habitasse platea dictumst.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

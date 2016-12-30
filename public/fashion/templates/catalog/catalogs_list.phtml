@@ -1,0 +1,10 @@
+<div class="list-group">
+	<?php
+	foreach ($vars['catalogs'] as $l1) {
+		if (!$l1['parent']) {
+			echo '<a class="list-group-item" href="/catalog/view/' . $l1['url'] . '">
+									<i class="fa fa-chevron-right"></i>' . $l1['name'] . '</a>';
+		}
+	}
+	?>
+</div>

@@ -25,6 +25,11 @@ class Product extends \Core\Object
 						'default' => '',
 						'null' => false,
 					],
+					'text_m' => [
+						'type' => 'text',
+						'default' => '',
+						'null' => false,
+					],
 					'text' => [
 						'type' => 'text',
 						'default' => '',
@@ -91,21 +96,25 @@ class Product extends \Core\Object
 	public function getValues()
 	{
 		$data = parent::getValues();
-		$data['photo_id'] = $this->getPhotoResourceId();
-		$data['status_text'] = $this->getStatus();
+		$data['photo_id'] = $this->getPhotoResourceId(Object_Resource::TYPE_PHOTO, 1);
+		$data['photo_id2'] = $this->getPhotoResourceId(Object_Resource::TYPE_PHOTO, 2);
+		$data['status_text'] = static::getStatus($this->getValue('status'));
 
 		return $data;
 	}
 
-	public function getStatus()
+	public static function getStatus($id)
 	{
-		$statusMap = [
+		return static::getStatusMap()[$id];
+	}
+
+	public static function getStatusMap()
+	{
+		return [
 			0 => __('Not available'),
 			1 => __('Availabe'),
 			2 => __('Pre-order'),
 		];
-
-		return $statusMap[$this->getValue('status')];
 	}
 
 	public function setCatalog($id)
@@ -142,28 +151,40 @@ class Product extends \Core\Object
 		return null;
 	}
 
-	public function getResourceIds($type)
+	public function getResourceIds($type, $num)
 	{
 		$resources = $this->resources();
-		$photo = $resources->stream()->filter(function ($o) use ($type) {
-			return $o->getValue('type') == $type;
-		})->findFirst();
 
-		return $photo->getValues('resourceId');
+		$photoStream = $resources->stream()->filter(function ($o) use ($num, $type) {
+			return $o->getValue('type') == $type && $o->getValue('position') == $num;
+		})->find();
+
+		return new \Core\Collection($photoStream);
 	}
 
-	public function getPhotoResourceId()
+	public function getPhotoResourceId($type, $num = 1)
 	{
-		$resources = $this->resources();
-		$photo = $resources->stream()->filter(function ($o) {
-			return $o->getValue('type') == Object_Resource::TYPE_PHOTO;
-		})->findFirst();
+		$resources = $this->getResourceIds(Product_Resource::TYPE_PHOTO, $num);
+
+		$photo = Orm::findOne('Object_Resource',
+			['objectId', 'objectType', 'type'],
+			[$resources->getValues('id'), 'product_resource', $type]
+		);
 
 		return $photo ? $photo->getValue('resourceId') : 0;
 	}
 
 	public function resources()
 	{
-		return Orm::find('Object_Resource', ['objectType', 'objectId'], ['product', $this->getId()]);
+		return Orm::find('Product_Resource', ['productId'], [$this->getId()]);
+	}
+
+	public function beforeDelete()
+	{
+		$resources = Orm::find('Product_Resource', ['productId'], [$this->getId()]);
+
+		foreach ($resources as $productResource) {
+			$productResource->remove();
+		}
 	}
 }

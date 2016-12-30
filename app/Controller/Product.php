@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use Admin\Object\Object_Resource;
+use Admin\Object\Product_Resource;
+use Core\Object;
 use Core\Orm;
 
 class Product extends Controller
@@ -14,6 +17,9 @@ class Product extends Controller
 
 		$data = [
 			'product' => $product->getValues(),
+			'photo1' => $product->getPhotoResourceId(Object_Resource::TYPE_PHOTO_ORIGINAL, 1),
+			'photo2' => $product->getPhotoResourceId(Object_Resource::TYPE_PHOTO_ORIGINAL, 2),
+			//'photos' => $product->getResourceIds(Object_Resource::TYPE_PHOTO_ADITIONAL),
 			'comments' => \App\Service\Comments::load('Product', $product->getId())->getComments()->getData(),
 			'userinfo' => $this->user ? Orm::findOne('User_Info', ['userId'], $this->user->getId())->getValues() : [],
 			'breadcrumbs' => $this->getBreadcrumbs($product),

@@ -1,0 +1,13 @@
+<div class="btn-group">
+	<button class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+		<?=$vars['currency'];?>
+		<i class="fa fa-caret-down"></i>
+	</button>
+	<ul class="pull-left dropdown-menu">
+		<?php foreach ($vars['currencies'] as $row) { ?>
+			<li><a tabindex="-1" href="/currency/?switch=<?= $row['id']; ?>"><?= $row['name']; ?></a></li>
+		<?php } ?>
+	</ul>
+</div>
+
+

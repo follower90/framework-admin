@@ -1,0 +1,20 @@
+<div class="row">
+	<div class="col-lg-12">
+		<?php echo $vars['breadcrumbs']; ?>
+	</div>
+</div>
+
+<h1><?= __('Blog'); ?></h1>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="row">
+			<div class="col-lg-12">
+				<?php foreach ($vars['blogs'] as $blog) {
+					echo '<a href="/blog/view/' . $blog['url'] . '">' . $blog['name'] . '</a> <br/>';
+					?>
+				<?php } ?>
+			</div>
+		</div>
+	</div>
+</div>

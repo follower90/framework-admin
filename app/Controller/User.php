@@ -104,11 +104,14 @@ class User extends Controller
 	public function methodProfile()
 	{
 		if (!$user = \Core\App::get()->getUser()) {
-			$this->render404();
+			Router::redirect('/user/login');
 		}
 
-		$data['content'] = $this->view->render('templates/user/profile.phtml', ['user' => $user->getValues()]);
-		$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => __('Profile')]]);
+		$data['content'] = $this->view->render('templates/user/profile.phtml', [
+			'user' => $user->getValues(),
+			'breadcrumbs' => $this->renderBreadCrumbs([['name' => __('Profile')]])
+		]);
+		
 		return $this->render($data);
 	}
 

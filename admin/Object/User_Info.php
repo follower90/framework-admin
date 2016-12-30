@@ -37,6 +37,11 @@ class User_Info extends \Core\Object
 					'default' => '',
 					'null' => false,
 				],
+				'city' => [
+					'type' => 'varchar',
+					'default' => '',
+					'null' => false,
+				],
 				'address' => [
 					'type' => 'varchar',
 					'default' => '',
