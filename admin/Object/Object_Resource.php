@@ -95,5 +95,6 @@ class Object_Resource extends \Core\Object
 		]);
 
 		$objectResource->save();
+		return $resource->getId();
 	}
 }

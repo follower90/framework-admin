@@ -827,6 +827,13 @@ hr {
     padding-top: 10px;
 }
 
+.product-info .carousel-preview .item {
+    cursor: pointer;
+}
+.product-info .carousel-preview .item.active img {
+    background: #f2f2f2;
+}
+
 .product-info .images-block {
 }
 

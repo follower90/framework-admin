@@ -60,6 +60,17 @@ class Product extends Controller
 			]
 		]);
 
+		$additionalPhotos = Orm::find('Product_Resource', ['productId', 'type'], [$data['product']['id'], \Admin\Object\Product_Resource::TYPE_PHOTO_ADDITIONAL]);
+		$additinalPhotosObjectResources = Orm::find('Object_Resource', ['objectId', 'objectType', 'type'], [$additionalPhotos->getValues('id'), 'product_resource', Object_Resource::TYPE_PHOTO]);
+
+		$data['upload_more_photo'] = $this->view->render('templates/common/more_photo.phtml', [
+			'width' => Setting::get('product_image_width'),
+			'height' => Setting::get('product_image_height'),
+			'entity' => 'product',
+			'id' => $data['product']['id'],
+			'photo' => $additinalPhotosObjectResources->getValues('resourceId')
+		]);
+
 		$data['catalogs'] = Orm::find('Catalog', ['active'], [1])->getHashMap('id', 'name');
 		$data['content'] = $this->view->render('templates/modules/product/edit.phtml', $data);
 

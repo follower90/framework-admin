@@ -1,0 +1,111 @@
+<div class="additional-photo">
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<td><?= __('Photo'); ?></td>
+				<td><?= __('Actions'); ?></td>
+			</tr>
+		</thead>
+		<tbody>
+		<?php foreach ($vars['photo'] as $position => $photo) { ?>
+			<tr>
+				<td><img height="100" src="/api.php?method=Resource.get&id=<?= $photo; ?>" /></td>
+				<td><a class="remove" data-id="<?= $photo; ?>" href="#"><?= __('delete'); ?></a></td>
+			</tr>
+		<?php } ?>
+		</tbody>
+	</table>
+
+	<div id="upload-more">
+		<div class="state-crop" style="display: none;">
+			<img class="edit" src=""/>
+			<button class="btn btn-default crop-photo" type="button" style="margin-top: 10px;"><?= __('Crop') ?></button>
+		</div>
+
+		<div class="state-view">
+			<input type="file" class="form-control edit-upload" name="photo" value=""/>
+		</div>
+	</div>
+</div>
+
+<script>
+	var orig_filename;
+
+	$('.additional-photo').on('click', function (e) {
+		if ($(e.target).hasClass('remove')) {
+			var link = $(e.target);
+			$.ajax({
+				url: '/admin/api.php?method=<?=ucfirst($vars['entity']);?>.removeAdditionalPhoto',
+				type: 'POST',
+				data: {
+					id: link.data('id')
+				},
+				success: function () {
+					link.parent().parent().remove();
+				},
+				error: function () {
+				}
+			});
+		}
+	});
+
+	$('#upload-more input').on('change', function () {
+		var formData = new FormData();
+		formData.append('file', this.files[0]);
+
+		orig_filename = this.files[0].name;
+		var editor = $('#upload-more .edit');
+
+		$.ajax({
+			url: '/admin/api.php?method=File.upload',
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (data) {
+				$('#upload-more .state-view').hide();
+				$('#upload-more .state-crop').show();
+
+				editor.attr('src', data.response.src);
+				editor.cropper({aspectRatio: <?=$vars['width'];?>/<?=$vars['height'];?>});
+				editor.cropper('replace', data.response.src);
+			},
+			error: function () {
+			}
+		});
+	});
+
+	$('.crop-photo').on('click', function () {
+		var result = $('#upload-more .edit').cropper('getCroppedCanvas', {
+			width: <?=$vars['width'];?>,
+			height: <?=$vars['height'];?>
+		});
+
+		var image = result.toDataURL('image/jpeg');
+
+		$('#upload-more .state-view').show();
+		$('#upload-more .state-crop').hide();
+
+		$.ajax({
+			url: '/admin/api.php?method=<?=ucfirst($vars['entity']);?>.uploadAdditionalPhoto',
+			type: 'POST',
+			data: {
+				id: <?= $vars['id']; ?>,
+				original: orig_filename,
+				type: '<?= \Admin\Object\Product_Resource::TYPE_PHOTO_ADDITIONAL ?>',
+				file: image
+			},
+			success: function (data) {
+				var html = '<tr>' +
+					'<td><img height="100" src="/api.php?method=Resource.get&id=' + data.response.id + '?<?=time();?>" /></td>' +
+					'<td><a class="remove" data-id="' + data.response.id + '" href="#"><?= __('delete'); ?></a></td>' +
+					'</tr>';
+
+				$('.additional-photo table tbody').append(html);
+			},
+			error: function () {
+			}
+		});
+	});
+
+</script>
