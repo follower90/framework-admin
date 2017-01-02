@@ -17,7 +17,11 @@ class User extends Controller
 		if ($args['login'] && $args['password']) {
 			$this->authorize($args['login'], $args['password']);
 
-			if ($this->user) $this->back();
+			if ($this->user) {
+				Router::redirect('/');
+			} else {
+				$this->view->addNotice('error', __('Incorrect login or password'));
+			}
 		}
 
 		$data['content'] = $this->view->render('templates/user/login.phtml');
@@ -118,7 +122,7 @@ class User extends Controller
 	private function authorize($login, $password)
 	{
 		$authorizer = new \Admin\Authorize('User');
-		$authorizer->login($login, $password, function ($pass) {
+		$this->user = $authorizer->login($login, $password, function ($pass) {
 			return $this->hashFunc($pass);
 		});
 	}

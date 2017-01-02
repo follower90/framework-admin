@@ -1,0 +1,38 @@
+<div class="row">
+	<div class="col-lg-12">
+		<h3 class="page-header"><?= __('View message') ?> - <?= $vars['message']['subject']; ?></h3>
+	</div>
+</div>
+
+<?php echo $this->getNotices(); ?>
+
+
+<div class="row">
+	<div class="col-lg-12">
+		<form role="form">
+			<input type="hidden" name="id" value="<?= $vars['message']['id']; ?>"/>
+			<div class="form-group">
+				<label><?= __('Name') ?></label>
+				<input class="form-control" name="name" value="<?= $vars['message']['name']; ?>"/>
+			</div>
+			<div class="form-group">
+				<label><?= __('E-Mail') ?></label>
+				<input class="form-control" name="email"
+					   value="<?= $vars['message']['email']; ?>"/>
+			</div>
+			<div class="form-group">
+				<label><?= __('Subject') ?></label>
+				<input class="form-control" name="subject"
+					   value="<?= $vars['message']['subject']; ?>"/>
+			</div>
+			<div class="form-group">
+				<label><?= __('Message') ?></label>
+				<textarea class="form-control" name="body"><?= $vars['message']['body']; ?></textarea>
+			</div>
+
+			<div class="form-group">
+				<input type="button" class="btn btn-cancel" onclick="location.href='/admin/feedback';" value="<?= __('Cancel') ?>"/>
+			</div>
+		</form>
+	</div>
+</div>

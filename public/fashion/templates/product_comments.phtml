@@ -1,4 +1,14 @@
-<?php if (sizeof($vars['comments']) == 0) echo __('No comments yet').'<br/><br/>'; ?>
+<div class="row">
+	<div class="col-lg-12">
+		<?php echo $vars['breadcrumbs']; ?>
+	</div>
+</div>
+
+
+<h2 class="main-heading text-center">
+	<?= __('Comments'); ?>
+</h2>
+<h4 class="text-center"><?= __('for product') ?> <?=$vars['product']['name'];?></h4>
 
 <div class="col-lg-12 comments-list">
 	<div class="row">
@@ -7,13 +17,13 @@
 		foreach ($vars['comments'] as $comment) { ?>
 			<div class="row" data-id="<?=$comment['id'];?>">
 				<div class="col-lg-12">
-				<p>
-					<b><?= $comment['user']; ?></b>
-				</p>
-				<p>
-					<?= $comment['text']; ?>
-				</p>
-				<br/>
+					<p>
+						<b><?= $comment['user']; ?></b>
+					</p>
+					<p>
+						<?= $comment['text']; ?>
+					</p>
+					<br/>
 				</div>
 			</div>
 		<?php } ?>
@@ -45,6 +55,7 @@
 
 <script>
 	$(document).ready(function () {
-		Comments.initialize('<?=$vars['comments_type'];?>', <?=$vars['comments_type_id'];?>);
+		Comments.initialize('product', <?=$vars['product']['id'];?>);
 	});
 </script>
+

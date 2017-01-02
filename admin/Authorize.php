@@ -84,7 +84,11 @@ class Authorize
 			if ($remember) {
 				Cookie::set(strtolower($this->_entity) .'_oauth_hash', $this->_oauth_hash);
 			}
+
+			return $user;
 		}
+
+		return false;
 	}
 
 	/**

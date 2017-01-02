@@ -26,7 +26,9 @@ class App
 		Router::register(['/^\/photos\/view\/(.*)$/', 'GET'], 'Photos', 'index', ['url']);
 		Router::register(['/^\/catalog\/view\/(.*)$/', 'GET'], 'Catalog', 'index', ['url']);
 		Router::register(['/^\/catalog\/search\/?search=(.*)$/', 'GET'], 'Catalog', 'search', ['search']);
+
 		Router::register(['/^\/product\/view\/(.*)$/', 'GET'], 'Product', 'index', ['url']);
+		Router::register(['/^\/product\/comments\/(.*)$/', 'GET'], 'Product', 'comments', ['url']);
 
 		Router::register(['/^\/(\w+\d*)$/', 'GET'], 'Page', 'index', ['page']);
 	}

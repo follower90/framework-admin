@@ -18,17 +18,37 @@ class Product extends Controller
 		$data = [
 			'product' => $product->getValues(),
 			'photos' => array_merge($product->getPhotos(), $product->getAdditionalPhotos()),
-			'comments' => \App\Service\Comments::load('Product', $product->getId())->getComments()->getData(),
+			'comments' => \App\Service\Comments::load('Product', $product->getId())->getComments(3),
 			'userinfo' => $this->user ? Orm::findOne('User_Info', ['userId'], $this->user->getId())->getValues() : [],
 			'breadcrumbs' => $this->getBreadcrumbs($product),
 			'delivery_types' =>Orm::find('Delivery_Type')->getData(),
-			'payment_types' =>  Orm::find('Payment_Type')->getData()
+			'payment_types' =>  Orm::find('Payment_Type')->getData(),
+			'recommended' => Orm::find('Product', ['active'], [1], ['limit' => 4])->getData(),
 		];
 
 		$this->addJavaScriptPath(['/js/comments.js']);
 
 		return $this->render([
 			'content' => $this->view->render('templates/product_in.phtml', $data)
+		]);
+	}
+
+	public function methodComments($args)
+	{
+		if (!$args['url'] || !$product = \Admin\Object\Product::findBy(['url' => $args['url']])) {
+			$this->render404();
+		}
+
+		$data = [
+			'product' => $product->getValues(),
+			'comments' => \App\Service\Comments::load('Product', $product->getId())->getComments(),
+			'breadcrumbs' => $this->getBreadcrumbs($product, 'comments'),
+		];
+
+		$this->addJavaScriptPath(['/js/comments.js']);
+
+		return $this->render([
+			'content' => $this->view->render('templates/product_comments.phtml', $data)
 		]);
 	}
 
@@ -80,7 +100,7 @@ class Product extends Controller
 		\Core\Router::redirect('/cart/ordersent');
 	}
 
-	private function getBreadcrumbs($product)
+	private function getBreadcrumbs($product, $page = '')
 	{
 		$catalogId = $product->getCatalogId();
 
@@ -101,7 +121,12 @@ class Product extends Controller
 			array_push($data, ['url' => '/catalog/view/' . $catalog->getValue('url'), 'name' => $catalog->getValue('name')]);
 		}
 
-		array_push($data, ['name' => $product->getValue('name')]);
+		if ($page == 'comments') {
+			array_push($data, ['url' => '/product/view/' .  $product->getValue('url'), 'name' => $product->getValue('name')]);
+			array_push($data, ['name' => __('Comments')]);
+		} else {
+			array_push($data, ['name' => $product->getValue('name')]);
+		}
 
 		return $this->renderBreadCrumbs($data);
 	}

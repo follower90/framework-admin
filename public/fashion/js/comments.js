@@ -48,7 +48,8 @@ var Comments = {
 					text: value
 				}
 			}).then(function () {
-				$('.comment-text').val('');
+				//$('.comment-text').val('');
+				window.location.reload();
 			});
 		}
 	},

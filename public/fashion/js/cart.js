@@ -14,7 +14,12 @@ function addToCart(id) {
 		}
 	}).success(function () {
 		updateCartCount();
+		notifyAddToCart();
 	});
+}
+
+function notifyAddToCart() {
+	$('.cart-added').show().fadeOut(1500);
 }
 
 function removeFromCart(id) {

@@ -26,9 +26,20 @@ class Comments
 		$this->_id = $id;
 	}
 
-	public function getComments()
+	public function getComments($limit = false)
 	{
-		return Orm::find('Comment', ['entity', 'entityId'], [$this->_entity, $this->_id]);
+		$params = [];
+
+		if ($limit) {
+			$params = ['limit' => (int)$limit];
+		}
+
+		$data = Orm::find('Comment', ['entity', 'entityId'], [$this->_entity, $this->_id], $params)->getData();
+
+		return array_map(function(&$comment) {
+			$comment['user'] = Orm::load('User', $comment['userId'])->getValue('login');
+			return $comment;
+		}, $data);
 	}
 
 	public function addComment($text, $replyToCommentId = null)
@@ -43,7 +54,6 @@ class Comments
 			'text' => $text
 		]);
 
-		var_dump($comment->getValues());
 		$comment->save();
 	}
 }

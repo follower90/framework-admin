@@ -61,10 +61,31 @@
 						<?= __('Add to cart');?>
 						<i class="fa fa-shopping-cart"></i>
 					</button>
+					<span class="alert alert-success cart-added"><?= __('Added to cart'); ?></span>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
+
+
+<h3><?= __('Comments'); ?> <a href="/product/comments/<?=$vars['product']['url'];?>">(<?= __('view all'); ?>)</a></h3>
+<?php
+$vars['comments_type'] = 'Product';
+$vars['comments_type_id'] = $vars['product']['id'];
+include 'comments.phtml';
+?>
+
+<br/><br/>
+
+<hr/>
+<h3><?= __('Recommended products'); ?></h3>
+
+<div class="row">
+	<?php
+	foreach ($vars['recommended'] as $product) {
+		include 'index/product.phtml';
+	} ?>
 </div>
 
 

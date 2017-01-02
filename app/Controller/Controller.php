@@ -18,6 +18,7 @@ class Controller extends \Core\Controller
 		parent::__construct();
 		$this->prepareResources();
 
+		$this->view->setNoticeObject('\App\Notice');
 		$this->view->setDefaultPath('public/fashion');
 	}
 

@@ -834,6 +834,12 @@ hr {
     background: #f2f2f2;
 }
 
+.product-info .cart-added {
+    display: none;
+    padding: 9px;
+    margin-left: 15px;
+}
+
 .product-info .images-block {
 }
 
