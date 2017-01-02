@@ -17,6 +17,11 @@ class Comment extends \Core\Object
 					'default' => null,
 					'null' => false,
 				],
+				'date' => [
+					'type' => 'datetime',
+					'default' => 'CURRENT_TIMESTAMP',
+					'null' => false,
+				],
 				'parentId' => [
 					'type' => 'int',
 					'default' => null,
