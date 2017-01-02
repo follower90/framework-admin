@@ -71,14 +71,13 @@
 
 <h3><?= __('Comments'); ?> <a href="/product/comments/<?=$vars['product']['url'];?>">(<?= __('view all'); ?>)</a></h3>
 <?php
-$vars['comments_type'] = 'Product';
-$vars['comments_type_id'] = $vars['product']['id'];
-include 'comments.phtml';
+	$vars['comments_type'] = 'Product';
+	$vars['comments_type_id'] = $vars['product']['id'];
+	include 'comments.phtml';
 ?>
 
-<br/><br/>
+<div class="row"><br/></div>
 
-<hr/>
 <h3><?= __('Recommended products'); ?></h3>
 
 <div class="row">

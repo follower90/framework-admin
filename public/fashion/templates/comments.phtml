@@ -23,9 +23,10 @@
 <?php if (!\Core\App::get()->getUser()) { ?>
 	<div class="col-lg-12">
 		<div class="row">
-			<?= __('Authorization required for posting comments'); ?>:
+			<p class="text-info"><?= __('Authorization required for posting comments'); ?>:
+				&nbsp;
 			<a href="/user/login"><?= __('Login'); ?></a> |
-			<a href="/user/register"><?= __('Register'); ?></a>
+			<a href="/user/register"><?= __('Register'); ?></a></p>
 		</div>
 	</div>
 <?php } else { ?>
