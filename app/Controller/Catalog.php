@@ -8,10 +8,13 @@ class Catalog extends Controller
 {
 	public function methodIndex($args)
 	{
+		$catalogOnPage = 50;
+
 		$sort = isset($args['sort']) ? $args['sort'] : '';
 		$filters = isset($args['filters']) ? $args['filters'] : [];
+		$page = isset($args['page']) ? $args['page'] : 1;
 
-		if (!$args['url'] || $args['url'] === 'all') {
+		if (empty($args['url']) || $args['url'] === 'all') {
 			$catalogId = null;
 			$content = $this->view->render('templates/catalog/catalogs_list.phtml', [
 				'breadcrumbs' => $this->getBreadcrumbs(),
@@ -25,17 +28,19 @@ class Catalog extends Controller
 		}
 
 		$currentCatalog = Orm::load('Catalog', $catalogId);
-		$products = \App\Service\Product::filterBy($catalogId, $filters, $sort);
+		$products = \App\Service\Product::filterBy($catalogId, $filters, $sort, $page);
 
 		$content = $this->view->render('templates/catalog/catalog.phtml', [
 			'breadcrumbs' => $this->getBreadcrumbs($catalogId),
 			'catalogs' => \Admin\Object\Catalog::where(['active' => 1])->getData(),
 			'catalogId' => $catalogId,
-			'catalog' => $currentCatalog ? $currentCatalog->getValues() : [],
-			'filters' => \App\Service\Product::getAvailableFiltersDataForCatalog($catalogId, $products),
-			'products' => $products->getData(),
+			'catalog' => $currentCatalog ? $currentCatalog->getValues() : '',
+			'filters' => \App\Service\Product::getAvailableFiltersDataForCatalog($catalogId, $products['products_all']),
+			'products' => $products['products']->getData(),
+			'total' => $products['total'],
+			'onpage' => $catalogOnPage,
+			'page' => $page,
 			'checked_filters' => $filters,
-			'search' => $args['search'],
 			'args' => $args,
 			'sort' => $sort
 		]);
@@ -46,11 +51,15 @@ class Catalog extends Controller
 
 	public function methodSearch($args)
 	{
+		if (empty($args['search'])) {
+			return $this->methodIndex($args);
+		}
+
 		$sort = isset($args['sort']) ? $args['sort'] : '';
 		$filters = isset($args['filters']) ? $args['filters'] : [];
 		$catalogId = 0;
 
-		$products = \App\Service\Product::filterBy($catalogId, $filters, $sort, ['~lang.name' => '%' . $args['search'] . '%']);
+		$products = \App\Service\Product::filterBy($catalogId, $filters, $sort, [], ['~lang.name' => '%' . $args['search'] . '%']);
 
 		$content = $this->view->render('templates/catalog/catalog_search.phtml', [
 
@@ -58,7 +67,7 @@ class Catalog extends Controller
 			'catalogs' => \Admin\Object\Catalog::where(['active' => 1])->getData(),
 			'catalogId' => $catalogId,
 			'filters' => \App\Service\Product::getAvailableFiltersDataForCatalog($catalogId, $products),
-			'products' => $products->getData(),
+			'products' => $products['products']->getData(),
 			'checked_filters' => $filters,
 			'search' => $args['search'],
 			'args' => $args,

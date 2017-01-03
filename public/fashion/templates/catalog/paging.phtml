@@ -1,0 +1,16 @@
+<?php
+$pages = ceil($vars['total'] / $vars['onpage']);
+$current = isset($vars['page']) ? $vars['page'] : 1;
+?>
+
+<ul class="pagination">
+		<?php
+		if ($pages > 1) {
+			for ($i = 1; $i <= $pages; $i++) {
+
+				$active = ($current == $i) ? 'active' : '';
+				echo '<li class="' . $active . '"><a data-page="' . $i . '" href="#">' . $i . '</a></li>';
+			}
+		}
+	?>
+</ul>

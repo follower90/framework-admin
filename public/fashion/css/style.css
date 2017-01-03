@@ -1,10 +1,22 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
 body {
     background: #fff;
     color: #252a2f;
     font: 14px/22px 'Open Sans', Arial, Helvetica, sans-serif;
+    margin: 0 0 275px;
 }
 
-/* Standard Styles Starts */
+#footer-area {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 275px;
+    width: 100%;
+}
 
 a {
     color: #928b8b;

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Core\Orm;
+use Admin\Object\InfoBlock;
 use Core\Router;
 
 class User extends Controller
@@ -37,9 +38,24 @@ class User extends Controller
 		\Core\Router::redirect('/');
 	}
 
+	private function _validateRegistration($args)
+	{
+		$isValid = true;
+
+		if (empty($args['email']) || empty($vars['login']) || empty($args['password'])) {
+			$isValid = false;
+			$this->view->addNotice('error', __('Please fill the form'));
+		} elseif ($args['password'] != $args['password_repeat']) {
+			$isValid = false;
+			$this->view->addNotice('error', __('Passwords does not match'));
+		}
+
+		return $isValid;
+	}
+
 	public function methodRegister($args)
 	{
-		if ($args['login'] && $args['password']) {
+		if ($args['register'] && $this->_validateRegistration($args)) {
 			$user = \Admin\Object\User::create();
 			$info = Orm::create('User_Info');
 
@@ -73,12 +89,11 @@ class User extends Controller
 
 			return $this->methodRegistrationSuccess();
 
-		} else {
-			$data['content'] = $this->view->render('templates/user/register.phtml');
-
-			$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => __('Registration')]]);
-			return $this->render($data);
 		}
+
+		$data['content'] = $this->view->render('templates/user/register.phtml', ['text' => InfoBlock::get('register__text')]);
+		$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => __('Registration')]]);
+		return $this->render($data);
 	}
 
 	private function methodRegistrationSuccess()

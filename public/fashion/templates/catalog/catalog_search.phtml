@@ -19,8 +19,10 @@
 		<h3 class="side-heading"><?= __('All categories') ?></h3>
 		<?php include 'catalogs_list.phtml'; ?>
 
-		<h3 class="side-heading"><?= __('Filter') ?></h3>
-		<?php include 'products_filters.phtml'; ?>
+		<?php if ($vars['filters']) { ?>
+			<h3 class="side-heading"><?= __('Filter') ?></h3>
+			<?php include 'products_filters.phtml'; ?>
+		<?php } ?>
 	</div>
 </div>
 

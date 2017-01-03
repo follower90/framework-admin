@@ -14,7 +14,7 @@
 					<?= $comment['text']; ?>
 				</p>
 				<p class="text-muted small">
-					<?= date('d F Y', strtotime($comment['date'])); ?>
+					<?= _libDate::date_view($comment['date'], 'dd MM YY'); ?>
 				</p>
 				<br/>
 				</div>

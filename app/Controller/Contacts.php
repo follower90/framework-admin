@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 
+use Admin\Object\InfoBlock;
+
 class Contacts extends Controller
 {
 	public function methodIndex($args)
@@ -27,9 +29,9 @@ class Contacts extends Controller
 		}
 
 		$data = [
-			'address' => \Core\Orm::findOne('InfoBlock', ['alias'], ['contacts__address'])->getValue('text'),
-			'phone' => \Core\Orm::findOne('InfoBlock', ['alias'], ['contacts__phone'])->getValue('text'),
-			'email' => \Core\Orm::findOne('InfoBlock', ['alias'], ['contacts__email'])->getValue('text'),
+			'address' => InfoBlock::get('contacts__address'),
+			'phone' => InfoBlock::get('contacts__phone'),
+			'email' => InfoBlock::get('contacts__email'),
 		];
 
 		return $this->render([

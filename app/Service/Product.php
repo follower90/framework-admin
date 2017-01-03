@@ -8,10 +8,11 @@ use Core\Orm;
 
 class Product
 {
-	public static function filterBy($catalogId = null, $filters = [], $sort = '', $where = [])
+	public static function filterBy($catalogId = null, $filters = [], $sort = '', $page = 0, $where = [])
 	{
 		$db = PDO::getInstance();
 
+		$catalogOnPage = 50;
 		$productFilters = ['active' => 1];
 		$params = [];
 
@@ -55,7 +56,25 @@ class Product
 			$productFilters = array_merge($productFilters, $where);
 		}
 
-		return Orm::find('Product', array_keys($productFilters), array_values($productFilters), $params);
+		if ($page) {
+			$params['limit'] = $catalogOnPage;
+			$params['offset'] = ($page - 1) * $catalogOnPage;
+		}
+
+		$products = Orm::find('Product', array_keys($productFilters), array_values($productFilters), $params);
+
+		$result = [
+			'products' => $products,
+			'products_all' => $products,
+			'total' => count($products->getData())
+		];
+
+		if ($page) {
+			$result['products_all'] = Orm::find('Product', array_keys($productFilters), array_values($productFilters));
+			$result['total'] = Orm::count('Product', array_keys($productFilters), array_values($productFilters));
+		}
+
+		return $result;
 	}
 
 	public static function getAvailableFiltersDataForCatalog($catalogId, $products)

@@ -34,4 +34,10 @@ class InfoBlock extends \Core\Object
 
 		return self::$_config;
 	}
+
+	public static function get($key)
+	{
+		$object = \Core\Orm::findOne('InfoBlock', ['alias'], [$key]);
+		return $object ? $object->getValue('text') : false;
+	}
 }

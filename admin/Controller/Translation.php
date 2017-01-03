@@ -3,7 +3,7 @@
 namespace Admin\Controller;
 
 use Core\Config;
-use Core\View\Paging;
+use Admin\Paging;
 use Core\Library\File;
 use Core\Orm;
 use Core\Router;

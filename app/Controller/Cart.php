@@ -9,8 +9,10 @@ class Cart extends Controller
 {
 	public function methodIndex()
 	{
+		$breadcrumbs = $this->renderBreadCrumbs([['name' => __('Cart')]]);
+
 		if (\App\Service\Cart::getCartCount() == 0) {
-			$data['content'] = $this->view->render('templates/cart_empty.phtml');
+			$data['content'] = $this->view->render('templates/cart_empty.phtml', ['breadcrumbs' => $breadcrumbs]);
 			return $this->render($data);
 		}
 
@@ -19,12 +21,12 @@ class Cart extends Controller
 		$data = [
 			'cart' => $cart,
 			'total' => \App\Service\Cart::getTotal(),
-			'userinfo' => $this->user ? Orm::findOne('User_Info', ['userId'], $this->user->getId())->getValues() : []
+			'userinfo' => $this->user ? Orm::findOne('User_Info', ['userId'], $this->user->getId())->getValues() : [],
+			'breadcrumbs' => $breadcrumbs
 		];
 
 		$data['delivery_types'] = Orm::find('Delivery_Type')->getData();
 		$data['payment_types'] = Orm::find('Payment_Type')->getData();
-		$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => __('Cart')]]);
 
 		$data['content'] = $this->view->render('templates/cart.phtml', $data);
 
