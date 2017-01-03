@@ -157,4 +157,13 @@ class Product
 				? $price . ' ' . $currency->getValue('symbol')
 				: $currency->getValue('symbol') . ' ' . $price;
 	}
+
+	public static function getByProductCategory($category, $limit)
+	{
+		$db = PDO::getInstance();
+		$category = \Admin\Object\ProductCategory::findBy(['url' => $category]);
+		$filterProducts = $db->rows('select Product as id from Product__ProductCategory where ProductCategory=' . $category->getId() . ';');
+
+		return Orm::find('Product', ['active', 'id'], [1, array_column($filterProducts, 'id')], ['limit' => $limit]);
+	}
 }

@@ -65,6 +65,12 @@ class Product extends \Core\Object
 			);
 
 			\Core\Orm::registerRelation(
+				['type' => 'multiple', 'alias' => 'product_categories', 'table' => 'Product__ProductCategory'],
+				['class' => 'Product'],
+				['class' => 'ProductCategory']
+			);
+
+			\Core\Orm::registerRelation(
 				['type' => 'multiple', 'alias' => 'filters', 'table' => 'Product__Filter'],
 				['class' => 'Product'],
 				['class' => 'Filter']
@@ -123,6 +129,16 @@ class Product extends \Core\Object
 			$db = PDO::getInstance();
 			$db->query('delete from Product__Catalog where Product = ?', [$this->getId()]);
 			$db->query('insert into Product__Catalog set Product = ?, Catalog = ?', [$this->getId(), $id]);
+		}
+	}
+
+	public function setCategories($ids = [])
+	{
+		$db = PDO::getInstance();
+		$db->query('delete from Product__ProductCategory where Product = ?', [$this->getId()]);
+
+		foreach ($ids as $id) {
+			$db->query('insert into Product__ProductCategory set Product = ?, ProductCategory = ?', [$this->getId(), $id]);
 		}
 	}
 
@@ -226,5 +242,14 @@ class Product extends \Core\Object
 		foreach ($resources as $productResource) {
 			$productResource->remove();
 		}
+	}
+
+	public function getCategoriesIds()
+	{
+		if (!$this->getRelated('product_categories')->isEmpty()) {
+			return $this->getRelated('product_categories')->getValues('id');
+		}
+
+		return [];
 	}
 }

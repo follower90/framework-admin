@@ -14,8 +14,8 @@ class Index extends Controller
 		$data['content'] = $this->view->render('templates/index.phtml', [
 			'page' => $page->getValues(),
 			'slides' => Orm::find('Slider', ['active'], [1])->getData(),
-			'latest' => Orm::find('Product', ['active'], [1], ['limit' => 4])->getData(),
-			'featured' => Orm::find('Product', ['active'], [1], ['limit' => 4])->getData()
+			'latest' => \App\Service\Product::getByProductCategory('new_products', 4)->getData(),
+			'featured' => \App\Service\Product::getByProductCategory('top_products', 4)->getData()
 		]);
 
 		return $this->render($data);

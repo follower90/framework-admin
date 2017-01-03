@@ -40,6 +40,8 @@ class Product extends Controller
 		$product = Orm::load('Product', $args['edit']);
 		$data['product'] = $product->getValues();
 		$data['product']['catalog_id'] = $product->getCatalogId();
+		$data['product']['categories'] = $product->getCategoriesIds();
+		$data['categories'] = Orm::find('ProductCategory')->getData();
 		$data['statuses'] = \Admin\Object\Product::getStatusMap();
 
 		$data['filters'] = Orm::find('Filter')->getData();
@@ -106,6 +108,7 @@ class Product extends Controller
 		}
 
 		$product->setCatalog($args['catalog_id']);
+		$product->setCategories($args['categories']);
 
 		Router::redirect('/admin/product/edit/' . $product->getId());
 	}
