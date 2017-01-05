@@ -25,64 +25,33 @@ class Product extends \Core\Api
 		$data = explode(',', $args['file']);
 		$data = base64_decode($data[1]);
 
-		$productResource = Orm::findOne('Product_Resource', ['productId', 'type', 'position'], [$args['id'], Product_Resource::TYPE_PHOTO, $args['position']]);
-		if ($productResource) {
-			Orm::delete($productResource);
-			Object_Resource::removeResources($productResource->getId(), 'product_resource', Object_Resource::TYPE_PHOTO_ORIGINAL);
-		}
-
-		$productResource = new Product_Resource([
-			'productId' => $args['id'],
-			'type' => Product_Resource::TYPE_PHOTO,
-			'position' => $args['position']
-		]);
-
-		$productResource->save();
-
-		$tmpOriginal = App::get()->getAppPath() . '/tmp/' . $args['original'];
-		File::put('/storage/product_resource/' . $productResource->getId() . '/' . $args['original'], file_get_contents($tmpOriginal));
-
-		Object_Resource::saveResource($productResource->getId(), 'product_resource', Object_Resource::TYPE_PHOTO_ORIGINAL, $args['original']);
-
-		File::put('/storage/product_resource/' . $productResource->getId() . '/' . 'photo_' . $args['position'] . '.jpg', $data);
-		Object_Resource::saveResource($productResource->getId(), 'product_resource', Object_Resource::TYPE_PHOTO, 'photo_' . $args['position'] . '.jpg');
-		return ['success' => true];
+		return \Admin\Service\Product::savePhoto($args['id'], $args['original'], $data);
 	}
 
-	public function methodUploadAdditionalPhoto($args)
+	public function methodUploadPhotoPreview($args)
 	{
 		$data = explode(',', $args['file']);
 		$data = base64_decode($data[1]);
 
-		$existingResource = Orm::findOne('Product_Resource', ['productId', 'type'], [$args['id'], Product_Resource::TYPE_PHOTO_ADDITIONAL], ['sort' => ['position', 'desc']]);
-		$position = $existingResource ? $existingResource->getValue('position') + 1 : 1;
+		$productResourceId = Orm::findOne('Object_Resource', ['resourceId'], [$args['resourceId']])->getValue('objectId');
 
-		$productResource = new Product_Resource([
-			'productId' => $args['id'],
-			'type' => Product_Resource::TYPE_PHOTO_ADDITIONAL,
-			'position' => $position
-		]);
+		$path = '/storage/product/' . $args['id'] . '/product_resource/' . $productResourceId . '/preview.jpg';
 
-		$productResource->save();
+		File::put($path, $data);
+		Object_Resource::saveResource($productResourceId, 'product_resource', Object_Resource::TYPE_PHOTO_PREVIEW, $path);
 
-		$tmpOriginal = App::get()->getAppPath() . '/tmp/' . $args['original'];
-		File::put('/storage/product_resource/' . $productResource->getId() . '/' . $args['original'], file_get_contents($tmpOriginal));
-
-		Object_Resource::saveResource($productResource->getId(), 'product_resource', Object_Resource::TYPE_PHOTO_ORIGINAL, $args['original']);
-
-		File::put('/storage/product_resource/' . $productResource->getId() . '/' . 'photo_' . $position . '.jpg', $data);
-		$id = Object_Resource::saveResource($productResource->getId(), 'product_resource', Object_Resource::TYPE_PHOTO, 'photo_' . $position . '.jpg');
-
-		return ['id' => $id];
+		return ['success' => true];
 	}
 
-	public function methodRemoveAdditionalPhoto($args)
+	public function methodRemovePhoto($args)
 	{
 		$objectResource = Orm::findOne('Object_Resource', ['resourceId'], [$args['id']]);
 
 		if ($objectResource) {
 			$productResource = Orm::load('Product_Resource', $objectResource->getValue('objectId'));
+
 			Object_Resource::removeResources($productResource->getId(), 'product_resource', Object_Resource::TYPE_PHOTO);
+			Object_Resource::removeResources($productResource->getId(), 'product_resource', Object_Resource::TYPE_PHOTO_PREVIEW);
 			Object_Resource::removeResources($productResource->getId(), 'product_resource', Object_Resource::TYPE_PHOTO_ORIGINAL);
 
 			Orm::delete($productResource);

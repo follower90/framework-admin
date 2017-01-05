@@ -24,14 +24,7 @@ class Catalog extends \Core\Api
 		$data = explode(',', $args['file']);
 		$data = base64_decode($data[1]);
 
-		$tmpOriginal = App::get()->getAppPath() . '/tmp/' . $args['original'];
-		File::put('/storage/catalog/' . $args['id'] . '/' . $args['original'], file_get_contents($tmpOriginal));
-
-		Object_Resource::removeResources($args['id'], 'catalog', Object_Resource::TYPE_PHOTO_ORIG);
-		Object_Resource::saveResource($args['id'], 'catalog', Object_Resource::TYPE_PHOTO_ORIG, $args['original']);
-
-		File::put('/storage/catalog/' . $args['id'] . '/' . 'photo.jpg', $data);
-		Object_Resource::saveResource($args['id'], 'catalog', Object_Resource::TYPE_PHOTO, 'photo.jpg');
+		\Admin\Service\Catalog::uploadPhoto($args['id'], $args['original'], $data);
 		return ['success' => true];
 	}
 }

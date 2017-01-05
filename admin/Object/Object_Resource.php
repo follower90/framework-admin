@@ -9,6 +9,7 @@ class Object_Resource extends \Core\Object
 {
 	const TYPE_PHOTO = 1;
 	const TYPE_PHOTO_ORIGINAL = 2;
+	const TYPE_PHOTO_PREVIEW = 3;
 
 	protected static $_config;
 
@@ -49,7 +50,7 @@ class Object_Resource extends \Core\Object
 		$resource = Orm::load('Resource', $this->getValue('resourceId'));
 
 		if ($resource) {
-			File::delete(\Core\App::get()->getAppPath() . $resource->getValue('src'));
+			File::delete($resource->getValue('src'));
 			Orm::delete($resource);
 		}
 
@@ -58,7 +59,7 @@ class Object_Resource extends \Core\Object
 
 	public static function removeResources($objectId, $objectType, $type)
 	{
-		$existingResources = Orm::find('Object_Resource', ['objectType', 'objectId', 'type'], [$objectId, $objectType, $type]);
+		$existingResources = Orm::find('Object_Resource', ['objectType', 'objectId', 'type'], [$objectType, $objectId, $type]);
 		if ($existingResources->getCount() > 0) {
 			foreach ($existingResources->getCollection() as $obj) {
 				$obj->remove();
@@ -66,7 +67,7 @@ class Object_Resource extends \Core\Object
 		}
 	}
 
-	public static function saveResource($objectId, $objectType, $type, $filename)
+	public static function saveResource($objectId, $objectType, $type, $path)
 	{
 		$existingResource = Orm::findOne('Object_Resource', ['objectType', 'objectId', 'type'], [$objectType, $objectId, $type]);
 
@@ -79,10 +80,9 @@ class Object_Resource extends \Core\Object
 			Orm::delete($existingResource);
 		}
 
-		$resource = Orm::create('Resource');
-		$resource->setValues([
-			'name' => $filename,
-			'src' => '/storage/' . $objectType . '/' . $objectId . '/' . $filename
+		$resource = new Resource([
+			'name' => basename($path),
+			'src' => $path
 		]);
 
 		$resource->save();

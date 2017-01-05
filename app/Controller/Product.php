@@ -17,7 +17,7 @@ class Product extends Controller
 
 		$data = [
 			'product' => $product->getValues(),
-			'photos' => array_merge($product->getPhotos(), $product->getAdditionalPhotos()),
+			'photos' => $product->getPhotos(),
 			'comments' => \App\Service\Comments::load('Product', $product->getId())->getComments(3),
 			'userinfo' => $this->user ? Orm::findOne('User_Info', ['userId'], $this->user->getId())->getValues() : [],
 			'breadcrumbs' => $this->getBreadcrumbs($product),

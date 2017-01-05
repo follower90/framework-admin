@@ -102,10 +102,12 @@ class Product extends \Core\Object
 	public function getValues()
 	{
 		$data = parent::getValues();
-		$data['photo_id'] = $this->getPhotoResourceId(Object_Resource::TYPE_PHOTO, 1);
-		$data['photo_id2'] = $this->getPhotoResourceId(Object_Resource::TYPE_PHOTO, 2);
-		$data['status_text'] = static::getStatus($this->getValue('status'));
+		$photos = $this->getPhotos();
 
+		$data['photo_id'] =  isset($photos[0]) ? $photos[0]['preview'] : null;
+		$data['photo_id2'] = isset($photos[1]) ? $photos[1]['preview'] : $data['photo_id'];
+
+		$data['status_text'] = static::getStatus($this->getValue('status'));
 		return $data;
 	}
 
@@ -192,38 +194,18 @@ class Product extends \Core\Object
 
 	public function getPhotos()
 	{
-		$additionalPhotos = Orm::find('Product_Resource', ['productId', 'type'], [$this->getId(), \Admin\Object\Product_Resource::TYPE_PHOTO]);
-		$additionalPhotosOR = Orm::find('Object_Resource', ['objectId', 'objectType', 'type'], [$additionalPhotos->getValues('id'), 'product_resource', Object_Resource::TYPE_PHOTO])->getData();
-		$additionalPhotosOROriginal = Orm::find('Object_Resource', ['objectId', 'objectType', 'type'], [$additionalPhotos->getValues('id'), 'product_resource', Object_Resource::TYPE_PHOTO_ORIGINAL])->getData();
+		$additionalPhotos = Orm::find('Product_Resource', ['productId', 'type'], [$this->getId(), \Admin\Object\Product_Resource::TYPE_PHOTO], ['sort' => ['position', 'desc']]);
 
 		$result = [];
-		$i = 0;
+		foreach ($additionalPhotos->getCollection() as $photo) {
+			$additionalPhoto = Orm::findOne('Object_Resource', ['objectId', 'objectType', 'type'], [$photo->getValue('id'), 'product_resource', Object_Resource::TYPE_PHOTO]);
+			$additionalPhotoPreview = Orm::findOne('Object_Resource', ['objectId', 'objectType', 'type'], [$photo->getValue('id'), 'product_resource', Object_Resource::TYPE_PHOTO_PREVIEW]);
+			$additionalPhotoOriginal = Orm::findOne('Object_Resource', ['objectId', 'objectType', 'type'], [$photo->getValue('id'), 'product_resource', Object_Resource::TYPE_PHOTO_ORIGINAL]);
 
-		$additionalPhotosOROriginal = array_values($additionalPhotosOROriginal);
-		foreach ($additionalPhotosOR as $item) {
 			$result[] = [
-				'preview' => $item['resourceId'],
-				'original' => $additionalPhotosOROriginal[$i++]['resourceId'],
-			];
-		}
-
-		return $result;
-	}
-
-	public function getAdditionalPhotos()
-	{
-		$additionalPhotos = Orm::find('Product_Resource', ['productId', 'type'], [$this->getId(), \Admin\Object\Product_Resource::TYPE_PHOTO_ADDITIONAL]);
-		$additionalPhotosOR = Orm::find('Object_Resource', ['objectId', 'objectType', 'type'], [$additionalPhotos->getValues('id'), 'product_resource', Object_Resource::TYPE_PHOTO])->getData();
-		$additionalPhotosOROriginal = Orm::find('Object_Resource', ['objectId', 'objectType', 'type'], [$additionalPhotos->getValues('id'), 'product_resource', Object_Resource::TYPE_PHOTO_ORIGINAL])->getData();
-
-		$result = [];
-		$i = 0;
-
-		$additionalPhotosOROriginal = array_values($additionalPhotosOROriginal);
-		foreach ($additionalPhotosOR as $item) {
-			$result[] = [
-				'preview' => $item['resourceId'],
-				'original' => $additionalPhotosOROriginal[$i++]['resourceId'],
+				'photo' => $additionalPhoto ? $additionalPhoto->getValue('resourceId') : null,
+				'original' => $additionalPhotoOriginal ? $additionalPhotoOriginal->getValue('resourceId') : null,
+				'preview' => $additionalPhotoPreview ? $additionalPhotoPreview->getValue('resourceId') : null,
 			];
 		}
 

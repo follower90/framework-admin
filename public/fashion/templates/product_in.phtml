@@ -10,7 +10,7 @@
 			<?php foreach ($vars['photos'] as $photo) { ?>
 				<div class="photo">
 					<a href="/api.php?method=Resource.get&id=<?= $photo['original']; ?>">
-						<img src="/api.php?method=Resource.get&id=<?= $photo['original']; ?>" class="img-responsive" />
+						<img src="/api.php?method=Resource.get&id=<?= $photo['photo']; ?>" class="img-responsive" />
 					</a>
 				</div>
 			<?php } ?>

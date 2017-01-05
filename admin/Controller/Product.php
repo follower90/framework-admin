@@ -51,33 +51,28 @@ class Product extends Controller
 			$filter['group'] = Orm::load('FilterSet', $filter['filterSetId'])->getValue('name');
 		}
 
-		$data['edit_photo'] = $this->view->render('templates/common/image_crop.phtml', [
+		$photosArray = [];
+		$photos = Orm::find('Product_Resource', ['productId', 'type'], [$data['product']['id'], \Admin\Object\Product_Resource::TYPE_PHOTO], ['sort' => ['position', 'desc']]);
+
+		foreach ($photos->getCollection() as $p) {
+			$photosObjectResource = Orm::findOne('Object_Resource', ['objectId', 'objectType', 'type'], [$p->getValue('id'), 'product_resource', Object_Resource::TYPE_PHOTO]);
+			$photosArray[$p->getValue('id')] = $photosObjectResource->getValue('resourceId');
+		}
+
+		$data['photo'] = $this->view->render('templates/modules/product/more_photo.phtml', [
 			'width' => Setting::get('product_image_width'),
 			'height' => Setting::get('product_image_height'),
-			'entity' => 'product',
+			'width_preview' => Setting::get('product_image_preview_width'),
+			'height_preview' => Setting::get('product_image_preview_height'),
 			'id' => $data['product']['id'],
-			'photo' => [
-				1 => $product->getPhotoResourceId(Object_Resource::TYPE_PHOTO, 1),
-				2 => $product->getPhotoResourceId(Object_Resource::TYPE_PHOTO, 2),
-			]
-		]);
-
-		$additionalPhotos = Orm::find('Product_Resource', ['productId', 'type'], [$data['product']['id'], \Admin\Object\Product_Resource::TYPE_PHOTO_ADDITIONAL]);
-		$additinalPhotosObjectResources = Orm::find('Object_Resource', ['objectId', 'objectType', 'type'], [$additionalPhotos->getValues('id'), 'product_resource', Object_Resource::TYPE_PHOTO]);
-
-		$data['upload_more_photo'] = $this->view->render('templates/common/more_photo.phtml', [
-			'width' => Setting::get('product_image_width'),
-			'height' => Setting::get('product_image_height'),
-			'entity' => 'product',
-			'id' => $data['product']['id'],
-			'photo' => $additinalPhotosObjectResources->getValues('resourceId')
+			'photo' => $photosArray
 		]);
 
 		$data['catalogs'] = Orm::find('Catalog', ['active'], [1])->getHashMap('id', 'name');
 		$data['content'] = $this->view->render('templates/modules/product/edit.phtml', $data);
 
-		$this->addCssPath(['/css/cropper.min.css', '/css/dropzone.css']);
-		$this->addJavaScriptPath(['/js/cropper.min.js', '/js/dropzone.js']);
+		$this->addCssPath(['/css/cropper.min.css']);
+		$this->addJavaScriptPath(['/js/cropper.min.js']);
 
 		return $this->render($data);
 	}

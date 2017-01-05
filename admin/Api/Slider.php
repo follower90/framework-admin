@@ -23,14 +23,9 @@ class Slider extends \Core\Api
 		$data = explode(',', $args['file']);
 		$data = base64_decode($data[1]);
 
-		$tmpOriginal = App::get()->getAppPath() . '/tmp/' . $args['original'];
-		File::put('/storage/slider/' . $args['id'] . '/' . $args['original'], file_get_contents($tmpOriginal));
-
-		Object_Resource::removeResources($args['id'], 'slider', Object_Resource::TYPE_PHOTO_ORIG);
-		Object_Resource::saveResource($args['id'], 'slider', Object_Resource::TYPE_PHOTO_ORIG, $args['original']);
-
-		File::put('/storage/slider/' . $args['id'] . '/' . 'photo.jpg', $data);
-		Object_Resource::saveResource($args['id'], 'slider', Object_Resource::TYPE_PHOTO, 'photo.jpg');
+		$path = '/storage/slider/' . $args['id'] . '/' . 'photo.jpg';
+		File::put($path, $data);
+		Object_Resource::saveResource($args['id'], 'slider', Object_Resource::TYPE_PHOTO, $path);
 		return ['success' => true];
 	}
 }

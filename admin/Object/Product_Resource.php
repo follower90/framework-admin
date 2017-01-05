@@ -5,7 +5,6 @@ namespace Admin\Object;
 class Product_Resource extends \Core\Object
 {
 	const TYPE_PHOTO = 1;
-	const TYPE_PHOTO_ADDITIONAL = 2;
 
 	protected static $_config;
 
