@@ -12,151 +12,22 @@
 	<br/>
 	<table data-entity="Product_Resource" class="table table-sortable table-bordered dataTable">
 		<thead>
-			<tr>
-				<td><?= __('Photo'); ?></td>
-				<td><?= __('Actions'); ?></td>
-			</tr>
+		<tr>
+			<td><?= __('Photo'); ?></td>
+			<td><?= __('Actions'); ?></td>
+		</tr>
 		</thead>
 		<tbody>
 
 		<?php foreach ($vars['photo'] as $objectId => $resourceId) { ?>
-			<tr data-id="<?=$objectId;?>">
-				<td><img height="100" src="/api.php?method=Resource.get&id=<?= $resourceId; ?>" /></td>
+			<tr data-id="<?= $objectId; ?>">
+				<td><img height="100" src="/api.php?method=Resource.get&id=<?= $resourceId; ?>"/></td>
 				<td><a class="remove" data-id="<?= $resourceId; ?>" href="#"><?= __('delete'); ?></a></td>
 			</tr>
 		<?php } ?>
 		</tbody>
 	</table>
 </div>
-
-<script>
-	var orig_filename;
-
-	$('.additional-photo').on('click', function (e) {
-		if ($(e.target).hasClass('remove') && confirm('<?= __('Are you sure?'); ?>')) {
-			var link = $(e.target);
-			$.ajax({
-				url: '/admin/api.php?method=Product.removePhoto',
-				type: 'POST',
-				data: {
-					id: link.data('id')
-				},
-				success: function () {
-					link.parent().parent().remove();
-				},
-				error: function () {
-				}
-			});
-		}
-	});
-
-	$('#edit-upload').on('change', function () {
-		var ext = $(this).val().split('.').pop().toLowerCase();
-
-		if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
-			alert('invalid extension: ' + ext);
-			return false;
-		}
-
-		$('#crop-modal').modal();
-		$('#modal-title').html('<?= __('Select photo area'); ?>');
-
-		$('#upload-more .crop-photo').on('click', function () {
-			var image = $('#upload-more .edit')
-				.cropper('getCroppedCanvas', { width: <?=$vars['width'];?>, height: <?=$vars['height'];?> })
-				.toDataURL('image/jpeg');
-
-			$('#upload-more .state-crop').hide();
-
-			$.ajax({
-				url: '/admin/api.php?method=Product.uploadPhoto',
-				type: 'POST',
-				data: {
-					id: <?= $vars['id']; ?>,
-					original: orig_filename,
-					file: image
-				},
-				success: function (data) {
-					var html = '<tr data-id="' + data.response.productResourceId + '">' +
-						'<td><img height="100" src="/api.php?method=Resource.get&id=' + data.response.resourceId + '?<?=time();?>" /></td>' +
-						'<td><a class="remove" data-id="' + data.response.resourceId + '" href="#"><?= __('delete'); ?></a></td>' +
-						'</tr>';
-
-					$('#modal-title').html('<?= __('Select preview area'); ?>');
-					$('.additional-photo table tbody').append(html);
-					$('#upload-more-step2').show();
-
-					var step2image = $('#upload-more-step2 #step2-image');
-
-						step2image.attr('src', image);
-						step2image.cropper({aspectRatio: <?=$vars['width_preview'];?>/<?=$vars['height_preview'];?>});
-						step2image.cropper('replace', image);
-
-					$('#upload-more-step2 .crop-photo').on('click', function () {
-
-						var previewImage = $('#upload-more-step2 #step2-image')
-							.cropper('getCroppedCanvas', { width: <?=$vars['width_preview'];?>, height: <?=$vars['height_preview'];?> })
-							.toDataURL('image/jpeg');
-
-						$.ajax({
-							url: '/admin/api.php?method=Product.uploadPhotoPreview',
-							type: 'POST',
-							data: {
-								id: <?= $vars['id']; ?>,
-								resourceId: data.response.resourceId,
-								file: previewImage
-							},
-							success: function() {
-								$('#upload-more-step2').hide();
-
-								$('#upload-more-step2 .crop-photo').off('click');
-								$('#upload-more .crop-photo').off('click');
-
-								$('.choose-input-file').show();
-
-								$('#edit-upload').val('');
-								$('#crop-modal').modal('hide');
-							},
-							error: function() {}
-						});
-					});
-				},
-				error: function () {
-				}
-			});
-		});
-
-		var formData = new FormData();
-		formData.append('file', this.files[0]);
-
-		orig_filename = this.files[0].name;
-		var editor = $('#upload-more .edit');
-
-		$.ajax({
-			url: '/admin/api.php?method=File.upload',
-			type: 'POST',
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function (data) {
-				$('.choose-input-file').hide();
-				$('#upload-more .state-crop').show();
-
-				editor.attr('src', data.response.src);
-				editor.cropper({
-					aspectRatio: <?=$vars['width'];?>/<?=$vars['height'];?>,
-					minContainerWidth: 500,
-					minContainerHeight: 400
-				});
-				editor.cropper('replace', data.response.src + '?' + '<?=time();?>');
-			},
-			error: function () {
-			}
-		});
-	});
-
-</script>
-
 
 <!-- Modal -->
 <div class="modal fade" id="crop-modal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -166,17 +37,143 @@
 				<h4 class="modal-title" id="modal-title"></h4>
 			</div>
 			<div class="modal-body">
-				<div id="upload-more">
-					<div class="state-crop" style="display: none;">
-						<img height="400" class="edit" src=""/>
-						<button class="btn btn-default crop-photo" type="button" style="margin-top: 10px;"><?= __('Crop') ?></button>
-					</div>
-				</div>
-				<div id="upload-more-step2" style="display: none;">
-					<img height="400" id="step2-image" src="" />
-					<button class="btn btn-default crop-photo" type="button" style="margin-top: 10px;"><?= __('Crop') ?></button>
-				</div>
+				<img height="400" id="photo-edit" src=""/>
+				<button class="btn btn-default" id="crop-photo" type="button"
+						style="margin-top: 10px;"><?= __('Crop') ?></button>
 			</div>
 		</div>
 	</div>
 </div>
+
+<script>
+	function ProductPhoto_RemovePhoto(id, tableRow) {
+		$.ajax({
+			url: '/admin/api.php?method=Product.removePhoto',
+			type: 'POST',
+			data: {id: id},
+			success: function () {
+				tableRow.remove();
+			},
+			error: function () {
+			}
+		});
+	}
+
+	function ProductPhoto_UploadTmpFile(file, success) {
+		var formData = new FormData();
+		formData.append('file', file);
+
+		$.ajax({
+			url: '/admin/api.php?method=File.upload',
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: success
+		});
+	}
+
+	function ProductPhoto_RowTemplate(productResourceId, resourceId) {
+		return '<tr data-id="' + productResourceId + '">' +
+			'<td><img height="100" src="/api.php?method=Resource.get&id=' + resourceId + '" /></td>' +
+			'<td><a class="remove" data-id="' + resourceId + '" href="#"><?= __('delete'); ?></a></td>' +
+			'</tr>';
+	}
+
+	function ProductPhoto_Crop(imgEditor, width, height) {
+		return imgEditor
+			.cropper('getCroppedCanvas', {width: width, height: height})
+			.toDataURL('image/jpeg');
+	}
+	
+	function ProductPhoto_InitCrop(imgEditor, data, width, height) {
+		imgEditor.attr('src', data);
+		imgEditor.cropper('destroy');
+		imgEditor.cropper({ aspectRatio: width / height, minContainerWidth: 550, minContainerHeight: 400 });
+		imgEditor.cropper('replace', data);
+	}
+
+	var editor = $('#photo-edit');
+	var fileInput = $('#edit-upload');
+	var cropButton = $('#crop-photo');
+	var modal = $('#crop-modal');
+	var modalTitle = $('#modal-title');
+	var photosList = $('.additional-photo table tbody');
+
+	var productId = <?= $vars['id']; ?>;
+	var config = {
+		width: <?=$vars['width'];?>,
+		height: <?=$vars['height'];?>,
+		previewWidth: <?=$vars['width_preview'];?>,
+		previewHeight: <?=$vars['height_preview'];?>
+	};
+
+	/* delete photo */
+	$('.additional-photo').on('click', function (e) {
+		var link = $(e.target);
+		if (link.hasClass('remove') && confirm('<?= __('Are you sure?'); ?>')) {
+			ProductPhoto_RemovePhoto(link.data('id'), link.parent().parent());
+		}
+	});
+
+	/* when file is selected */
+	fileInput.on('change', function () {
+		var ext = $(this).val().split('.').pop().toLowerCase();
+		if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+			alert('invalid extension: ' + ext);
+			return false;
+		}
+
+		var orig_filename = this.files[0].name;
+
+		ProductPhoto_UploadTmpFile(this.files[0], function (data) {
+			ProductPhoto_InitCrop(editor, data.response.src, config.width, config.height);
+			modalTitle.html('<?= __('Select photo area'); ?>');
+			modal.modal();
+		});
+
+		/* when photo was cropped */
+		cropButton.on('click', function () {
+			var image = ProductPhoto_Crop(editor, config.width, config.height);
+
+			$.ajax({
+				url: '/admin/api.php?method=Product.uploadPhoto',
+				type: 'POST',
+				data: {
+					id: productId,
+					original: orig_filename,
+					file: image
+				},
+				success: function (data) {
+					modalTitle.html('<?= __('Select preview area'); ?>');
+					photosList.append(ProductPhoto_RowTemplate(data.response.productResourceId, data.response.resourceId));
+					ProductPhoto_InitCrop(editor, image, config.previewWidth, config.previewHeight);
+					cropButton.off('click');
+
+					/* when photo preview was cropped */
+
+					cropButton.on('click', function () {
+						$.ajax({
+							url: '/admin/api.php?method=Product.uploadPhotoPreview',
+							type: 'POST',
+							data: {
+								id: productId,
+								resourceId: data.response.resourceId,
+								file: ProductPhoto_Crop(editor, config.previewWidth, config.previewHeight)
+							},
+							success: function () {
+								cropButton.off('click');
+								fileInput.val('');
+								modal.modal('hide');
+							},
+							error: function () {
+							}
+						});
+					});
+				},
+				error: function () {
+				}
+			});
+		});
+	});
+</script>

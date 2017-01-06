@@ -194,10 +194,10 @@ class Product extends \Core\Object
 
 	public function getPhotos()
 	{
-		$additionalPhotos = Orm::find('Product_Resource', ['productId', 'type'], [$this->getId(), \Admin\Object\Product_Resource::TYPE_PHOTO], ['sort' => ['position', 'desc']]);
+		$photos = Orm::find('Product_Resource', ['productId', 'type'], [$this->getId(), \Admin\Object\Product_Resource::TYPE_PHOTO], ['sort' => ['position', 'desc']]);
 
 		$result = [];
-		foreach ($additionalPhotos->getCollection() as $photo) {
+		foreach ($photos->getCollection() as $photo) {
 			$additionalPhoto = Orm::findOne('Object_Resource', ['objectId', 'objectType', 'type'], [$photo->getValue('id'), 'product_resource', Object_Resource::TYPE_PHOTO]);
 			$additionalPhotoPreview = Orm::findOne('Object_Resource', ['objectId', 'objectType', 'type'], [$photo->getValue('id'), 'product_resource', Object_Resource::TYPE_PHOTO_PREVIEW]);
 			$additionalPhotoOriginal = Orm::findOne('Object_Resource', ['objectId', 'objectType', 'type'], [$photo->getValue('id'), 'product_resource', Object_Resource::TYPE_PHOTO_ORIGINAL]);
