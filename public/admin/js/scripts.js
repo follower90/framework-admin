@@ -27,4 +27,5 @@ $(document).ready(function () {
 		}
 	});
 
+	if ($('#editor-1').length) CKEDITOR.replace('editor-1');
 });
