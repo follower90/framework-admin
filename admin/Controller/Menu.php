@@ -2,9 +2,10 @@
 
 namespace Admin\Controller;
 
-use Admin\Paging;
 use Core\Orm;
 use Core\Router;
+
+use Admin\Paging;
 
 class Menu extends Controller
 {
@@ -12,12 +13,19 @@ class Menu extends Controller
 	{
 		$data = [];
 
+		$filter = \Admin\Filter::init('menu');
+		$filter->setFilters($args);
+
+		$type = $filter->getFilter('type') ? $filter->getFilter('type') : \Admin\Object\Menu::TYPE_MAIN;
+
 		$paging = Paging::create('Menu', [
-			'page_size' => 10,
+			'page_size' => 20,
 			'current_page' => empty($args['page']) ? 1 : (int)$args['page'],
-			'order' => ['sort', 'desc']
+			'params' => [['type'], [$type]]
 		]);
 
+		$data['types'] = \Admin\Object\Menu::getTypesMap();
+		$data['filter'] = $filter->getFilters();
 		$data['paging'] = $paging->getPaging();
 		$data['menu'] = $paging->getObjects(true);
 
