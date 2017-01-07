@@ -44,4 +44,9 @@ class Blog extends \Core\Object
 
 		return self::$_config;
 	}
+
+	public static function active()
+	{
+		return static::where(['active' => 1]);
+	}
 }

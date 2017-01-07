@@ -6,6 +6,7 @@ use Admin\Object\Menu;
 use App\Service\Meta;
 use Core\Config;
 use Core\Router;
+use Core\Orm;
 
 class Controller extends \Core\Controller
 {
@@ -25,19 +26,19 @@ class Controller extends \Core\Controller
 	public function render($data = [])
 	{
 		$data['user'] = $this->user;
-		$data['languages'] = Config::getAvailableLanguages();
-		$data['currencies'] = \Core\Orm::find('Currency')->getData();
 
-		$data['currency'] = \Core\Orm::load('Currency', \Core\Config::get('site.currency'))->getValue('symbol');
+		$data['languages'] = Config::getAvailableLanguages();
+		$data['currencies'] = Orm::find('Currency')->getData();
+		$data['currency'] = Orm::load('Currency', Config::get('site.currency'))->getValue('symbol');
 
 		$data['meta'] = Meta::getData();
 
 		$controllerNameChunks = explode('\\', get_called_class());
 		$data['controller'] = array_pop($controllerNameChunks);
 
-		$data['main_menu'] = \Core\Orm::find('Menu', ['active', 'type'], [1, Menu::TYPE_MAIN], ['sort' => ['sort', 'desc']])->getData();
-		$data['bottom_menu'] = \Core\Orm::find('Menu', ['active', 'type'], [1, Menu::TYPE_BOTTOM], ['sort' => ['sort', 'desc']])->getData();
-		$data['catalogs'] = \Core\Orm::find('Catalog', ['active'], [1])->getData();
+		$data['main_menu'] = Orm::find('Menu', ['active', 'type'], [1, Menu::TYPE_MAIN], ['sort' => ['sort', 'desc']])->getData();
+		$data['bottom_menu'] = Orm::find('Menu', ['active', 'type'], [1, Menu::TYPE_BOTTOM], ['sort' => ['sort', 'desc']])->getData();
+		$data['catalogs'] = Orm::find('Catalog', ['active'], [1])->getData();
 
 		$this->_data = array_merge($this->_data, $data);
 		return $this->view->render('templates/base.phtml', $this->_data);

@@ -90,6 +90,27 @@ class Cart
 		}
 	}
 
+	public static function sendOrderEmailToUser($order, $email, $name)
+	{
+		$view = new \Core\View;
+		$view->setDefaultPath('public/fashion');
+
+		$siteName = \Admin\Object\Setting::get('sitename');
+		$mailTemplate = \Admin\Object\MailTemplate::get('new_order');
+
+		$body = $view->renderInlineTemplate(
+			$mailTemplate->getValue('body'),
+			[
+				'products' => Orm::find('Order_Product',['orderId'],[$order->getId()])->getData(),
+				'order' => $order->getValues(),
+				'site' => $siteName,
+				'name' => $name,
+			]
+		);
+
+		\App\Service\Mail::send($email, $siteName .' - ' . $mailTemplate->getValue('subject'), $body);
+	}
+
 	public static function clear()
 	{
 		foreach (static::getCart()->getCollection() as $item) {

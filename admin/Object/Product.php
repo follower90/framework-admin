@@ -102,7 +102,7 @@ class Product extends \Core\Object
 	public function getValues()
 	{
 		$data = parent::getValues();
-		$photos = $this->getPhotos();
+		$photos = $this->getPreviews();
 
 		$data['photo_id'] =  isset($photos[0]) ? $photos[0]['preview'] : null;
 		$data['photo_id2'] = isset($photos[1]) ? $photos[1]['preview'] : $data['photo_id'];
@@ -190,6 +190,19 @@ class Product extends \Core\Object
 		);
 
 		return $photo ? $photo->getValue('resourceId') : 0;
+	}
+
+	public function getPreviews()
+	{
+		$photos = Orm::find('Product_Resource', ['productId', 'type'], [$this->getId(), \Admin\Object\Product_Resource::TYPE_PHOTO], ['sort' => ['position', 'desc']]);
+		$result = [];
+
+		foreach ($photos->getCollection() as $photo) {
+			$preview = Orm::findOne('Object_Resource', ['objectId', 'objectType', 'type'], [$photo->getValue('id'), 'product_resource', Object_Resource::TYPE_PHOTO_PREVIEW]);
+			$result[] = ['preview' => $preview ? $preview->getValue('resourceId') : null];
+		}
+
+		return $result;
 	}
 
 	public function getPhotos()

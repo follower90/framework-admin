@@ -2,30 +2,34 @@
 
 namespace App\Controller;
 
-use Core\Orm;
+use \Admin\Object\Blog as _Blog;
+use \App\Service\Page_View as PageViewService;
 
 class Blog extends Controller
 {
 	public function methodIndex($args)
 	{
 		if (!$args['url'] || $args['url'] === 'all') {
-			$content = $this->view->render('templates/blog/list.phtml', [
+			$data = [
 				'breadcrumbs' => $this->getBreadcrumbs(),
-				'blogs' => \Admin\Object\Blog::where(['active' => 1])->getData()
-			]);
-			return $this->render(['content' => $content]);
+				'blogs' => _Blog::active()->getData()
+			];
+
+			$content = $this->view->render('templates/blog/list.phtml', $data);
 		} else {
-			$blog = \Admin\Object\Blog::findBy(['url' => $args['url']]);
+			$blog = _Blog::active()->findFirstBy('url', $args['url']);
 			if (!$blog) $this->render404();
 
-			$content = $this->view->render('templates/blog/entry.phtml', [
-				'breadcrumbs' => $this->getBreadcrumbs($blog->getId()),
+			$data = [
+				'breadcrumbs' => $this->getBreadcrumbs($blog->id),
 				'blog' => $blog->getValues(),
-				'views' =>  \App\Service\Page_View::view($blog->getId(), 'blog')
-			]);
+				'views' => PageViewService::view($blog->id, 'blog')
+			];
 
-			return $this->render(['content' => $content]);
+			$content = $this->view->render('templates/blog/entry.phtml', $data);
 		}
+
+		return $this->render(['content' => $content]);
 	}
 
 	private function getBreadcrumbs($blogId = null)
@@ -37,8 +41,8 @@ class Blog extends Controller
 		if (!$blogId) {
 			array_push($data, ['name' => __('All')]);
 		} else {
-			$blog = Orm::load('Blog', $blogId);
-			array_push($data, ['name' => $blog->getValue('name')]);
+			$blog = _Blog::find($blogId);
+			array_push($data, ['name' => $blog->name]);
 		}
 
 		return $this->renderBreadCrumbs($data);

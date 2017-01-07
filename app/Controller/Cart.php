@@ -5,59 +5,57 @@ namespace App\Controller;
 use Core\Orm;
 use Core\Router;
 
+use App\Service\Cart as CartService;
+
 class Cart extends Controller
 {
 	public function methodIndex()
 	{
-		$breadcrumbs = $this->renderBreadCrumbs([['name' => __('Cart')]]);
-
-		if (\App\Service\Cart::getCartCount() == 0) {
-			$data['content'] = $this->view->render('templates/cart_empty.phtml', ['breadcrumbs' => $breadcrumbs]);
-			return $this->render($data);
-		}
-
-		$cart = \App\Service\Cart::getCart()->getData();
-
-		$data = [
-			'cart' => $cart,
-			'total' => \App\Service\Cart::getTotal(),
-			'userinfo' => $this->user ? Orm::findOne('User_Info', ['userId'], $this->user->getId())->getValues() : [],
-			'breadcrumbs' => $breadcrumbs
+		$vars = [
+			'cart' => CartService::getCart()->getData(),
+			'total' => CartService::getTotal(),
+			'userinfo' => $this->user ? $this->user->getInfo() : [],
+			'breadcrumbs' => $this->renderBreadCrumbs([['name' => __('Cart')]])
 		];
 
-		$data['delivery_types'] = Orm::find('Delivery_Type')->getData();
-		$data['payment_types'] = Orm::find('Payment_Type')->getData();
+		if (CartService::getCartCount() == 0) {
+			$data = ['content' => $this->view->render('templates/cart_empty.phtml', $vars)];
+		} else {
 
-		$data['content'] = $this->view->render('templates/cart.phtml', $data);
+			$vars['delivery_types'] = Orm::find('Delivery_Type')->getData();
+			$vars['payment_types'] = Orm::find('Payment_Type')->getData();
+
+			$data = ['content' => $this->view->render('templates/cart.phtml', $vars)];
+		}
 
 		return $this->render($data);
 	}
 
 	public function methodRemove($args)
 	{
-		$item = \App\Service\Cart::find($args['remove']);
+		$item = CartService::find($args['remove']);
 		if ($item) Orm::delete($item);
 
-		return $this->methodIndex();
+		Router::redirect('/cart');
 	}
 
 	public function methodRecalculate($args)
 	{
 		$i = 0;
 		foreach ($args['id'] as $id) {
-			\App\Service\Cart::update($id, $args['count'][$i++]);
+			CartService::update($id, $args['count'][$i++]);
 		}
 
-		return $this->methodIndex();
+		Router::redirect('/cart');
 	}
 
 	public function methodOrder($args)
 	{
-		$order = \Core\Orm::create('Order');
+		$order = Orm::create('Order');
 
 		$order->setValues([
 			'userId' => $this->user ? $this->user->getId() : null,
-			'sum' => \App\Service\Cart::getTotal(),
+			'sum' => CartService::getTotal(),
 			'firstName' => $args['firstName'],
 			'lastName' => $args['lastName'],
 			'email' => $args['email'],
@@ -71,7 +69,7 @@ class Cart extends Controller
 
 		$order->save();
 
-		$cart = \App\Service\Cart::getCart()->getCollection();
+		$cart = CartService::getCart()->getCollection();
 
 		foreach($cart as $c) {
 			$product = Orm::load('Product', $c->getValue('productId'));
@@ -88,30 +86,17 @@ class Cart extends Controller
 			$orderedProduct->save();
 		}
 
-		$siteName = \Admin\Object\Setting::get('sitename');
+		$name = $args['firstName'] .' '. $args['lastName'];
 
-		$mailTemplate = \Admin\Object\MailTemplate::get('new_order');
-		$body = $this->view->renderInlineTemplate(
-			$mailTemplate->getValue('body'),
-			[
-				'products' => \Core\Orm::find('Order_Product',['orderId'],[$order->getId()])->getData(),
-				'order' => $order->getValues(),
-				'site' => $siteName,
-				'name' => $args['firstName'] .' '. $args['lastName'],
-			]
-		);
-
-		\App\Service\Mail::send($args['email'], $siteName .' - ' . $mailTemplate->getValue('subject'), $body);
-		\App\Service\Cart::clear();
+		CartService::sendOrderEmailToUser($order, $args['email'], $name);
+		CartService::clear();
 
 		Router::redirect('/cart/ordersent');
 	}
 
-	public function methodOrderSent($args)
+	public function methodOrderSent()
 	{
-		$info = Orm::findOne('InfoBlock', ['alias'], ['order_sent'])->getValues();
-
-		$data['content'] = $this->view->render('templates/page.phtml', $info);
-		return $this->render($data);
+		$info = \Admin\Object\InfoBlock::get('order_sent')->getValues();
+		return $this->render(['content' => $this->view->render('templates/page.phtml', $info)]);
 	}
 }

@@ -57,7 +57,7 @@ class Catalog extends \Core\Object
 		return self::$_config;
 	}
 
-	public function getValues()
+	public function getValuesWithPhoto()
 	{
 		$data = parent::getValues();
 		$data['photo_id'] = $this->getPhotoResourceId();

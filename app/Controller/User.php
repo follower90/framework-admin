@@ -91,7 +91,7 @@ class User extends Controller
 
 		}
 
-		$data['content'] = $this->view->render('templates/user/register.phtml', ['text' => InfoBlock::get('register__text')]);
+		$data['content'] = $this->view->render('templates/user/register.phtml', ['text' => InfoBlock::getText('register__text')]);
 		$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => __('Registration')]]);
 		return $this->render($data);
 	}

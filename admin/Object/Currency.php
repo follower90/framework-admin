@@ -2,7 +2,7 @@
 
 namespace Admin\Object;
 
-class Currency extends \Admin\Object\User
+class Currency extends \Core\Object
 {
 	protected static $_config;
 

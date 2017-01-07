@@ -34,7 +34,7 @@ class Catalog extends Controller
 			'breadcrumbs' => $this->getBreadcrumbs($catalogId),
 			'catalogs' => \Admin\Object\Catalog::where(['active' => 1])->getData(),
 			'catalogId' => $catalogId,
-			'catalog' => $currentCatalog ? $currentCatalog->getValues() : '',
+			'catalog' => $currentCatalog ? $currentCatalog->getValuesWithPhoto() : '',
 			'filters' => \App\Service\Product::getAvailableFiltersDataForCatalog($catalogId, $products['products_all']),
 			'products' => $products['products']->getData(),
 			'total' => $products['total'],

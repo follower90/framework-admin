@@ -38,10 +38,15 @@ class User extends \Core\Object
 	public function getValues()
 	{
 		$data = parent::getValues();
-		$userInfo = Orm::findOne('User_Info', ['userId'], [$this->getId()]);
-		$data['info'] = $userInfo ? $userInfo->getValues() : [];
+		$data['info'] = $this->getInfo();
 
 		return $data;
+	}
+
+	public function getInfo()
+	{
+		$userInfo = Orm::findOne('User_Info', ['userId'], [$this->getId()]);
+		return $userInfo ? $userInfo->getValues() : [];
 	}
 }
 

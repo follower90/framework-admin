@@ -29,9 +29,9 @@ class Contacts extends Controller
 		}
 
 		$data = [
-			'address' => InfoBlock::get('contacts__address'),
-			'phone' => InfoBlock::get('contacts__phone'),
-			'email' => InfoBlock::get('contacts__email'),
+			'address' => InfoBlock::getText('contacts__address'),
+			'phone' => InfoBlock::getText('contacts__phone'),
+			'email' => InfoBlock::getText('contacts__email'),
 		];
 
 		return $this->render([
