@@ -1,6 +1,7 @@
 # META
 #### (title, keywords, description)
 
+
 To ouput meta data on public app of your module's page, just use service `\App\Service\Meta`.
 
 \App\Service\Meta::getData() in your public controller will return associative array:
