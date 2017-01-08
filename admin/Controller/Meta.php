@@ -94,16 +94,16 @@ class Meta extends Controller
 
 	public function methodUpdate($args)
 	{
-		$meta = Orm::create('Meta');
-		$meta->setValues([
+		$this->checkWritePermissions();
+
+		\Admin\Service\Meta::update([
 			'moduleId' => $args['moduleId'],
 			'url' => $args['url'],
-			'title' => $args['title'],
-			'keywords' => $args['keywords'],
-			'description' => $args['description'],
+			'title' => trim($args['title']),
+			'keywords' => trim($args['keywords']),
+			'description' => trim($args['description'])
 		]);
 
-		$meta->save();
 		$this->back();
 	}
 }
