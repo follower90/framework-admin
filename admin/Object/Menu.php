@@ -66,8 +66,8 @@ class Menu extends \Core\Object
 	public static function getTypesMap()
 	{
 		return [
-			1 => \Admin\Utils::translate('Main Menu'),
-			2 => \Admin\Utils::translate('Bottom Menu')
+			static::TYPE_MAIN => \Admin\Utils::translate('Main Menu'),
+			static::TYPE_BOTTOM => \Admin\Utils::translate('Bottom Menu')
 		];
 	}
 }

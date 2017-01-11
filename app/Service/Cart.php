@@ -98,10 +98,13 @@ class Cart
 		$siteName = \Admin\Object\Setting::get('sitename');
 		$mailTemplate = \Admin\Object\MailTemplate::get('new_order');
 
+		$orderProducts = Orm::find('Order_Product',['orderId'],[$order->getId()]);
+		$products = Orm::find('Product', ['id'], $orderProducts->getValues('productId'));
+
 		$body = $view->renderInlineTemplate(
 			$mailTemplate->getValue('body'),
 			[
-				'products' => Orm::find('Order_Product',['orderId'],[$order->getId()])->getData(),
+				'products' => $products->getData(),
 				'order' => $order->getValues(),
 				'site' => $siteName,
 				'name' => $name,

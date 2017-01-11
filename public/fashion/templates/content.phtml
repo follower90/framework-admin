@@ -1,0 +1,5 @@
+<?php
+	echo ($vars['controller'] === 'Index')
+		? $vars['content']
+		: '<div id="main-container" class="container">' . $vars['content'] . '</div>';
+?>

@@ -88,11 +88,13 @@ class User extends Controller
 			\App\Service\Mail::send($args['info']['email'], $siteName .' - ' . $mailTemplate->getValue('subject'), $body);
 
 			return $this->methodRegistrationSuccess();
-
 		}
 
-		$data['content'] = $this->view->render('templates/user/register.phtml', ['text' => InfoBlock::getText('register__text')]);
-		$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => __('Registration')]]);
+		$data['content'] = $this->view->render('templates/user/register.phtml', [
+			'text' => InfoBlock::getText('register__text'),
+			'breadcrumbs' => $this->renderBreadCrumbs([['name' => __('Registration')]])
+		]);
+
 		return $this->render($data);
 	}
 

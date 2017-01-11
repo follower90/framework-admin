@@ -1,0 +1,33 @@
+<header id="header-area">
+	<?php include 'menu.phtml'; ?>
+	<div class="container">
+		<div class="main-header">
+			<div class="row">
+				<div class="col-md-3">
+					<div id="search">
+						<form action="/catalog/search">
+							<div class="input-group">
+								<input type="text" name="search" class="form-control input-lg" placeholder="<?= __('Search'); ?>" value="<?= isset($vars['search']) ? $vars['search'] : '';?>"/>
+							  <span class="input-group-btn">
+								<button class="btn btn-lg" type="button">
+									<i class="fa fa-search"></i>
+								</button>
+							  </span>
+							</div>
+						</form>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div id="logo">
+						<a href="/"><img src="/public/fashion/images/logo.png" title="<?=\Admin\Object\Setting::get('sitename');?>" alt="<?=\Admin\Object\Setting::get('sitename');?>" class="img-responsive"/></a>
+					</div>
+				</div>
+
+				<?php include 'basket.phtml'; ?>
+
+			</div>
+		</div>
+		<?php include 'cat_menu.phtml'; ?>
+	</div>
+</header>

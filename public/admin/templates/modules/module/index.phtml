@@ -21,6 +21,7 @@
 						<th>ID</th>
 						<th><?= __('Name') ?></th>
 						<th><?= __('Url') ?></th>
+						<th><?= __('Type') ?></th>
 						<th><?= __('Actions') ?></th>
 					</tr>
 					</thead>
@@ -29,10 +30,11 @@
 					foreach ($vars['modules'] as $row) {
 						echo '
                         <tr>
-                            <td>' . $row['id'] . '</td>
-                            <td>' . $row['name'] . '</td>
-                            <td>' . $row['url'] . '</td>
-                            <td>' . _snippet('actions', [$row['id'], 'module', ['duplicate', 'delete']]) . '</td>
+                            <td>' . $row->id . '</td>
+                            <td>' . $row->name . '</td>
+                            <td>' . $row->url . '</td>
+                            <td>' . $row->getType() . '</td>
+                            <td>' . _snippet('actions', [$row->id, 'module', ['duplicate', 'delete']]) . '</td>
                         </tr>';
 					}
 					?>

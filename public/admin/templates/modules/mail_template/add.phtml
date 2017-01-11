@@ -19,7 +19,7 @@
 			</div>
 			<div class="form-group">
 				<label><?= __('Body') ?></label>
-				<textarea rows="20" id="editor-1" class="form-control" name="body"></textarea>
+				<textarea rows="20" id="editor" class="form-control" name="body"></textarea>
 			</div>
 			<div class="form-group">
 				<input type="submit" class="btn btn-success" value="<?= __('Save') ?>"/>
@@ -30,7 +30,7 @@
 </div>
 
 <script>
-	CodeMirror.fromTextArea(document.getElementById("editor-1"), {
+	CodeMirror.fromTextArea(document.getElementById("editor"), {
 		lineNumbers: true,
 		mode: { name: "htmlmixed" }
 	});

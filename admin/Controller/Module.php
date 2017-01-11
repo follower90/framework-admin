@@ -18,7 +18,7 @@ class Module extends Controller
 		]);
 
 		$data['paging'] = $paging->getPaging();
-		$data['modules'] = $paging->getObjects();
+		$data['modules'] = $paging->getObjects(true);
 
 		$data['content'] = $this->view->render('templates/modules/module/index.phtml', $data);
 
@@ -27,12 +27,14 @@ class Module extends Controller
 
 	public function methodNew()
 	{
-		$data['content'] = $this->view->render('templates/modules/module/add.phtml', []);
+		$types = \Admin\Object\Module::getTypesMap();
+		$data['content'] = $this->view->render('templates/modules/module/add.phtml', ['types' => $types]);
 		return $this->render($data);
 	}
 
 	public function methodEdit($args)
 	{
+		$data['types'] = \Admin\Object\Module::getTypesMap();
 		$data['module'] = Orm::load('Module', $args['edit'])->getValues();
 		$data['content'] = $this->view->render('templates/modules/module/edit.phtml', $data);
 

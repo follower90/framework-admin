@@ -15,6 +15,17 @@
 				<input class="form-control" name="name" value="<?= $vars['module']['name']; ?>"/>
 			</div>
 			<div class="form-group">
+				<label><?= __('Type') ?></label>
+				<select class="form-control" name="type">
+					<?php
+					foreach ($vars['types'] as $id => $name) {
+						$selected = ($vars['module']['type'] == $id) ? 'selected' : '';
+						echo '<option ' . $selected . ' value="' . $id . '">' . $name . '</option>';
+					}
+					?>
+				</select>
+			</div>
+			<div class="form-group">
 				<label><?= __('Icon') ?> (<i id="icon-preview" class="fa fa-fw <?= $vars['module']['icon']; ?>"></i>) </label>
 				<input class="form-control icon-bind" name="icon" value="<?= $vars['module']['icon']; ?>"/>
 			</div>
