@@ -82,60 +82,32 @@ class Product
 		$catalog = Orm::load('Catalog', $catalogId);
 		if (!$catalog) return [];
 
-		$filterSets = [];
-		$filterSetsCollection = $catalog->getRelated('filter_sets');
+		$data = [];
 
-		foreach ($filterSetsCollection->getCollection() as $filterSet) {
-			$filtersCollection = Orm::find('Filter', ['filterSetId'], [$filterSet->getId()]);
-			$filterSets[$filterSet->getId()] = $filterSet->getValues();
+		$filterSets = $catalog
+			->getRelated('products')
+			->getRelated('filters')
+			->getRelated('filter_set');
 
-			foreach ($filtersCollection->getCollection() as $filter) {
-				$filterSets[$filterSet->getId()]['filters'][$filter->getId()] = $filter->getValues();
-				$filterSets[$filterSet->getId()]['filters'][$filter->getId()]['count'] = 0;
+		foreach ($filterSets->getCollection() as $filterSet) {
+			$filters = Orm::find('Filter', ['filterSetId'], [$filterSet->getId()]);
+			$data[$filterSet->getId()] = $filterSet->getValues();
+
+			foreach ($filters->getCollection() as $filter) {
+				$data[$filterSet->getId()]['filters'][$filter->getId()] = $filter->getValues();
+				$data[$filterSet->getId()]['filters'][$filter->getId()]['count'] = 0;
 			}
 		}
 
 		foreach ($products->getCollection() as $product) {
-			foreach ($product->getFilters()->getCollection() as $filter) {
-				if ($filterSets[$filter->getValue('filterSetId')]) {
-					$filterSets[$filter->getValue('filterSetId')]['filters'][$filter->getId()]['count']++;
+			foreach ($product->getRelated('filters')->getCollection() as $filter) {
+				if ($data[$filter->getValue('filterSetId')]) {
+					$data[$filter->getValue('filterSetId')]['filters'][$filter->getId()]['count']++;
 				}
 			}
 		}
 
-
-		return $filterSets;
-	}
-
-	public static function getAvailableFiltersData($products)
-	{
-		$filters = [];
-		$productFilters = [];
-
-		foreach ($products->getCollection() as $product) {
-			foreach ($product->getFilters()->getCollection() as $filter) {
-				array_push($filters, $filter->getValues());
-
-				isset($productFilters[$filter->getValue('id')])
-					? $productFilters[$filter->getValue('id')]++
-					: $productFilters[$filter->getValue('id')] = 1;
-			}
-		}
-
-		$filterSets = [];
-
-		foreach ($filters as $filter) {
-			$set = Orm::load('FilterSet', $filter['filterSetId'])->getValues();
-
-			if (!isset($filterSets[$set['id']])) {
-				$filterSets[$set['id']] = $set;
-			}
-
-			$filter['count'] = $productFilters[$filter['id']];
-			$filterSets[$set['id']]['filters'][$filter['id']] = $filter;
-		}
-
-		return $filterSets;
+		return $data;
 	}
 
 	public static function viewPrice($basicPrice)
@@ -152,17 +124,16 @@ class Product
 
 		$price = number_format($basicPrice / $basicCurrency->getValue('rate') * $currency->getValue('rate'), 2);
 
-		return
-			$currency->getValue('position') == \Admin\Object\Currency::SYMBOL_RIGHT
-				? $price . ' ' . $currency->getValue('symbol')
-				: $currency->getValue('symbol') . ' ' . $price;
+		return $currency->getValue('position') == \Admin\Object\Currency::SYMBOL_RIGHT
+			? $price . ' ' . $currency->getValue('symbol')
+			: $currency->getValue('symbol') . ' ' . $price;
 	}
 
 	public static function getByProductCategory($category, $limit)
 	{
 		$db = PDO::getInstance();
 		$category = \Admin\Object\ProductCategory::findBy(['url' => $category]);
-		$filterProducts = $db->rows('select Product as id from Product__ProductCategory where ProductCategory=' . $category->getId() . ';');
+		$filterProducts = $db->rows('select Product as id from Product__ProductCategory where ProductCategory=' . $category->getId());
 
 		return Orm::find('Product', ['active', 'id'], [1, array_column($filterProducts, 'id')], ['limit' => $limit]);
 	}

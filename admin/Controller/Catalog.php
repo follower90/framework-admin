@@ -73,6 +73,10 @@ class Catalog extends Controller
 
 		if (empty($args['url'])) {
 			$args['url'] = \Core\Library\String::translit($args['name']);
+
+			if (\Core\Orm::count('Catalog', ['url'], [$args['url']])) {
+				$args['url'] = $args['url'] . '_' . rand(0,1000);
+			}
 		}
 
 		$catalog->setValues($args);

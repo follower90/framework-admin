@@ -6,26 +6,27 @@
 
 <div class="row product-info full">
 	<div class="col-sm-8 images-block">
-		<div class="carousel" style="height:510px;">
+		<div class="carousel">
 			<?php foreach ($vars['photos'] as $photo) { ?>
 				<div class="photo">
 					<a href="/api.php?method=Resource.get&id=<?= $photo['original']; ?>">
-						<img src="/api.php?method=Resource.get&id=<?= $photo['photo']; ?>" class="img-responsive" />
+						<img data-zoom="/api.php?method=Resource.get&id=<?= $photo['original']; ?>" src="/api.php?method=Resource.get&id=<?= $photo['photo']; ?>" class="img-responsive" />
 					</a>
 				</div>
 			<?php } ?>
 		</div>
-
+		<div class="row"><br/></div>
 		<div class="carousel-preview">
 			<div class="row">
 				<?php $i = 0; foreach ($vars['photos'] as $photo) { ?>
-					<div class="item col-sm-2" data-num="<?=$i++;?>" >
-						<img src="/api.php?method=Resource.get&id=<?= $photo['preview']; ?>" class="thumbnail img-responsive"/>
+					<div class="item col-xs-2 col-sm-2 col-md-2 col-lg-2" data-num="<?=$i++;?>" >
+						<img src="/api.php?method=Resource.get&id=<?= $photo['preview']; ?>" class=" img-responsive"/>
 					</div>
 					<?php if ($i % 6 === 0) echo '</div><div class="row">'?>
 				<?php } ?>
 			</div>
 		</div>
+		<br/>
 	</div>
 
 	<div class="col-sm-4 product-details">
@@ -56,6 +57,7 @@
 					<p><?= htmlspecialchars_decode($vars['product']['text']); ?></p>
 				</div>
 
+				<?php if ($vars['product']['status'] == 1) { ?>
 				<div class="cart-button button-group">
 					<button type="button" class="btn btn-cart" onclick="addToCart(<?=$vars['product']['id'];?>);">
 						<?= __('Add to cart');?>
@@ -63,6 +65,7 @@
 					</button>
 					<span class="alert alert-success cart-added"><?= __('Added to cart'); ?></span>
 				</div>
+				<?php } ?>
 			</div>
 		</div>
 	</div>
@@ -88,13 +91,27 @@
 </div>
 
 <script>
-	$('.carousel .photo').hide();
-	$('.carousel .photo').first().show();
+	$(document).ready( function() {
 
-	$('.carousel-preview .item').on('click', function() {
-		$('.carousel-preview .item').removeClass('active');
-		$(this).addClass('active');
 		$('.carousel .photo').hide();
-		$($('.carousel .photo')[$(this).data('num')]).show();
+		$('.carousel .photo').first().show();
+		$('.carousel-preview .item').first().addClass('active');
+
+		$('.carousel-preview .item').on('click', function() {
+			$('.carousel-preview .item').removeClass('active');
+			$(this).addClass('active');
+			$('.carousel .photo').hide();
+			$($('.carousel .photo')[$(this).data('num')]).show();
+		});
+
+		var photos = document.querySelectorAll('.carousel .photo a img');
+
+		for (var i =0; i < photos.length; i++) {
+			new Drift(photos[i], {
+				paneContainer: document.querySelector('.product-details > .panel-smart')
+			}).enable();
+		}
+
 	});
+
 </script>

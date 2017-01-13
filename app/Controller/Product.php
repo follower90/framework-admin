@@ -26,7 +26,8 @@ class Product extends Controller
 			'recommended' => Orm::find('Product', ['active'], [1], ['limit' => 4])->getData(),
 		];
 
-		$this->addJavaScriptPath(['/js/comments.js']);
+		$this->addCssPath(['/css/drift.min.css']);
+		$this->addJavaScriptPath(['/js/comments.js', '/js/drift.min.js']);
 
 		return $this->render([
 			'content' => $this->view->render('templates/product_in.phtml', $data)

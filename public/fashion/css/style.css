@@ -843,7 +843,7 @@ hr {
     cursor: pointer;
 }
 .product-info .carousel-preview .item.active img {
-    background: #f2f2f2;
+    outline: 1px solid #252a2f;
 }
 
 .product-info .cart-added {
