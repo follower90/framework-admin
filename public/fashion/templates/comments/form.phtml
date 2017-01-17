@@ -1,0 +1,40 @@
+<!--<div class="col-lg-12 ">-->
+<!--	<div class="row">-->
+<!--		<div class="form-group">-->
+<!--			<input class="form-control comment-text" autocomplete="off" placeholder="--><? //= __('Leave a comment'); ?><!--..." name="comment" value=""/>-->
+<!--		</div>-->
+<!--		<div class="form-group comment-controls" style="display: none;">-->
+<!--			<input type="button" class="btn btn-sm btn-default comment-cancel" value="--><? //= __('Cancel') ?><!--"/>-->
+<!--			<input type="submit" class="btn btn-sm btn-brown comment-send" value="--><? //= __('Send') ?><!--"/>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--</div>-->
+
+<div class="col-lg-12 ">
+	<div class="row">
+		<form class="form-horizontal">
+			<div class="form-group required">
+				<label class="col-sm-2 control-label" for="input-name"><?= __('Name'); ?></label>
+				<div class="col-sm-10">
+					<input required type="text" name="name" value="<?= \Core\App::get()->getUser() ? \Core\App::get()->getUser()->getValue('login') : ''; ?>" id="input-name" placeholder="<?= __('Name'); ?>"
+						   class="comment-name form-control">
+				</div>
+			</div>
+			<div class="form-group required">
+				<label class="col-sm-2 control-label" for="input-review"><?= __('Review'); ?></label>
+				<div class="col-sm-10">
+					<textarea name="text" rows="5" class="comment-text form-control" placeholder="<?= __('Leave a comment'); ?>"></textarea>
+				</div>
+			</div>
+			<div class="buttons">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="button" class="comment-send btn btn-brown">
+						<?= __('Send'); ?>
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="col-lg-12 ">
+<div class="row"><br/></div></div>

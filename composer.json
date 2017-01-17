@@ -1,7 +1,8 @@
 {
   "require": {
     "follower/core": "dev-master",
-    "eoghanobrien/php-simple-mail": "dev-master"
+    "eoghanobrien/php-simple-mail": "dev-master",
+    "phpmailer/phpmailer": "^5.2"
   },
   "autoload": {
     "classmap": [

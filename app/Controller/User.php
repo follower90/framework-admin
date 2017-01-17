@@ -15,11 +15,13 @@ class User extends Controller
 
 	public function methodLogin($args)
 	{
+		if ($this->user) Router::redirect('/');
+
 		if ($args['login'] && $args['password']) {
 			$this->authorize($args['login'], $args['password']);
 
 			if ($this->user) {
-				Router::redirect('/');
+				$this->back();
 			} else {
 				$this->view->addNotice('error', __('Incorrect login or password'));
 			}
@@ -35,7 +37,7 @@ class User extends Controller
 		$authorizer = new \Admin\Authorize('User');
 		$authorizer->logout();
 
-		\Core\Router::redirect('/');
+		$this->back();
 	}
 
 	private function _validateRegistration($args)
@@ -55,6 +57,7 @@ class User extends Controller
 
 	public function methodRegister($args)
 	{
+		if ($this->user) Router::redirect('/');
 		if ($args['register'] && $this->_validateRegistration($args)) {
 			$user = \Admin\Object\User::create();
 			$info = Orm::create('User_Info');
@@ -111,6 +114,13 @@ class User extends Controller
 		$info = Orm::findOne('User_Info', ['userId'], [$user->getId()]);
 
 		$password = trim($args['password']);
+		$password_repeat = trim($args['password_repeat']);
+
+		if ($password != $password_repeat) {
+			$this->view->addNotice('error', __('Passwords does not match'));
+			Router::redirect('/user/profile');
+		}
+
 		if ($password) {
 			$user->setValue('password', $this->hashFunc($password));
 			$user->save();
@@ -119,6 +129,7 @@ class User extends Controller
 		$info->setValues($args['info']);
 		$info->save();
 
+		$this->view->addNotice('success', __('Information has been successfully saved'));
 		Router::redirect('/user/profile');
 	}
 

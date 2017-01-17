@@ -7,15 +7,6 @@
 <div class="row">
 	<div class="col-md-9">
 		<h2 class="main-heading2"><?= $vars['catalog']['name']; ?></h2>
-		<div class="row cat-intro">
-			<div class="col-sm-3">
-				<img src="/api.php?method=Resource.get&id=<?=$vars['catalog']['photo_id'];?>" alt="Image"
-					 class="img-responsive img-thumbnail"/>
-			</div>
-			<div class="col-sm-9 cat-body">
-				<?= htmlspecialchars_decode($vars['catalog']['text']); ?>
-			</div>
-		</div>
 
 		<?php include 'products_sort.phtml'; ?>
 

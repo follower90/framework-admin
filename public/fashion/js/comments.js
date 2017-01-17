@@ -3,59 +3,44 @@
 var Comments = {
 	type: null,
 	id: null,
+	limit: null,
 
-	initialize: function (type, id) {
+	initialize: function (type, id, limit) {
 		Comments.id = id;
 		Comments.type = type;
-		$('.comment-text').on('click', function () {
-			Comments.toggleControls(true);
-		});
-
-		$('.comment-cancel').on('click', function () {
-			Comments.toggleControls(false);
-			$('.comment-text').val('');
-		});
+		Comments.limit = limit;
 
 		$('.comment-send').on('click', function () {
 			Comments.send();
 		});
-
-		$('.comment-reply').on('click', function (e) {
-			e.preventDefault();
-		});
-
-		Comments.list();
 	},
 
 	list: function () {
-		$.ajax('/api.php?method=Comments.list', {
-			type: 'POST', data: {
-				id: Comments.id,
-				type: Comments.type
-			}
-		}).then(function () {
-			$('.comments-list').val('');
+		$.get('/api.php?method=Comments.list', {
+			id: Comments.id,
+			type: Comments.type,
+			limit: Comments.limit
+
+		}).then(function (data) {
+			$('.comments-list').html(data.response.comments);
 		});
 	},
 
 	send: function () {
+		var name = $('.comment-name').val().trim();
 		var value = $('.comment-text').val().trim();
 		if (value) {
 			$.ajax('/api.php?method=Comments.post', {
 				type: 'POST', data: {
 					id: Comments.id,
 					type: Comments.type,
+					name: name,
 					text: value
 				}
-			}).then(function () {
-				//$('.comment-text').val('');
-				window.location.reload();
+			}).then(function (data) {
+				$('.comments-list').append(data.response.comment);
+				$('.comment-text').val('');
 			});
 		}
-	},
-
-	toggleControls: function (visible) {
-		var visibility = visible ? 'visible' : 'hidden';
-		$('.comment-controls').css({ visibility: visibility});
 	}
 };

@@ -6,12 +6,22 @@ class Comments extends \Core\Api
 {
 	public function methodList($args)
 	{
-		return \App\Service\Comments::load($args['type'], $args['id'])->getComments();
+		$view = new \Core\View();
+		$view->setDefaultPath('public/fashion');
+
+		$comments = \App\Service\Comments::load($args['type'], $args['id'])->getComments($args['limit']);
+		return ['comments' => $view->render('templates/comments/list.phtml', ['comments' => $comments])];
 	}
 
 	public function methodPost($args)
 	{
 		$service = \App\Service\Comments::load($args['type'], $args['id']);
-		$service->addComment($args['text']);
+		$comment = $service->addComment($args['name'], $args['text']);
+
+		$view = new \Core\View();
+		$view->setDefaultPath('public/fashion');
+		$data = $comment->getValues();
+
+		return ['comment' => $view->render('templates/comments/comment.phtml', ['comment' => $data])];
 	}
 }

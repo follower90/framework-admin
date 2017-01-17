@@ -23,6 +23,10 @@
 				<textarea id="editor" rows="20" class="form-control" name="body"><?= $vars['template']['body']; ?></textarea>
 			</div>
 			<div class="form-group">
+				<label><?= __('Preview') ?></label>
+				<div class="panel-body" style="border: 1px dashed #c0c0c0;"><?= preg_replace('/(<\?=\s.*\s\?>)/sU', '$var', $vars['template']['body']); ?></div>
+			</div>
+			<div class="form-group">
 				<input type="submit" class="btn btn-default" value="<?= __('Save') ?>"/>
 				<input type="button" class="btn btn-cancel" onclick="location.href='/admin/mail_template';" value="<?= __('Cancel') ?>"/>
 			</div>

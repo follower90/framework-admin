@@ -37,6 +37,11 @@ class Comment extends \Core\Object
 					'default' => null,
 					'null' => false,
 				],
+				'name' => [
+					'type' => 'varchar',
+					'default' => '',
+					'null' => false,
+				],
 				'text' => [
 					'type' => 'text',
 					'default' => '',

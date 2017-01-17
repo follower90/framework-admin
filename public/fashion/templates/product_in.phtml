@@ -54,7 +54,7 @@
 				<h3><?= __('Description'); ?></h3>
 
 				<div class="form-group">
-					<p><?= htmlspecialchars_decode($vars['product']['text']); ?></p>
+					<p><?= htmlspecialchars_decode($vars['product']['text_m']); ?></p>
 				</div>
 
 				<?php if ($vars['product']['status'] == 1) { ?>
@@ -71,17 +71,27 @@
 	</div>
 </div>
 
+<div class="tabs-panel panel-smart">
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#tab-ainfo"><?= __('Description'); ?></a></li>
+		<li class=""><a href="#tab-review"><?= __('Comments'); ?></a></li>
+	</ul>
+	<div class="tab-content clearfix">
+		<div class="tab-pane active" id="tab-ainfo">
+			<p><?= htmlspecialchars_decode($vars['product']['text']); ?></p>
+		</div>
+		<div class="tab-pane" id="tab-review">
+			<?php
+			$vars['comments_type'] = 'Product';
+			$vars['comments_type_id'] = $vars['product']['id'];
+			include 'comments.phtml';
+			?>
+		</div>
+	</div>
+</div>
 
-<h3><?= __('Comments'); ?> <a href="/product/comments/<?=$vars['product']['url'];?>">(<?= __('view all'); ?>)</a></h3>
-<?php
-	$vars['comments_type'] = 'Product';
-	$vars['comments_type_id'] = $vars['product']['id'];
-	include 'comments.phtml';
-?>
-
-<div class="row"><br/></div>
-
-<h3><?= __('Recommended products'); ?></h3>
+<div class="product-info-box">
+<h4 class="heading"><?= __('Recommended products'); ?></h4>
 
 <div class="row">
 	<?php
@@ -89,9 +99,14 @@
 		include 'index/product.phtml';
 	} ?>
 </div>
+</div>
 
 <script>
 	$(document).ready( function() {
+		$('.nav-tabs a').click(function (e) {
+			e.preventDefault();
+			$(this).tab('show');
+		});
 
 		$('.carousel .photo').hide();
 		$('.carousel .photo').first().show();

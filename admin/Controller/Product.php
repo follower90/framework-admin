@@ -31,6 +31,8 @@ class Product extends Controller
 	public function methodNew()
 	{
 		$vars['catalogs'] = Orm::find('Catalog', ['active'], [1])->getHashMap('id', 'name');
+		$vars['statuses'] = \Admin\Object\Product::getStatusMap();
+
 		$data['content'] = $this->view->render('templates/modules/product/add.phtml', $vars);
 		return $this->render($data);
 	}

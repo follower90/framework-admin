@@ -233,10 +233,10 @@ class Product extends \Core\Object
 	public function beforeDelete()
 	{
 		$resources = Orm::find('Product_Resource', ['productId'], [$this->getId()]);
+		$comments = Orm::find('Comment', ['entity', 'entityId'], ['Product', $this->getId()]);
 
-		foreach ($resources as $productResource) {
-			$productResource->remove();
-		}
+		$resources->removeAll();
+		$comments->removeAll();
 	}
 
 	public function getCategoriesIds()

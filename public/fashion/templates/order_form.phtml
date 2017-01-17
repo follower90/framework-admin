@@ -12,10 +12,24 @@
 						<div class="form-group">
 							<label for="delivery" class="control-label col-sm-3"><?= __('Delivery Type') ?>:</label>
 							<div class="col-sm-9">
-								<select class="form-control" name="delivery">
+								<select class="delivery_type form-control" name="delivery">
 									<?php foreach ($vars['delivery_types'] as $type) { ?>
 										<option value="<?= $type['id']; ?>"><?= $type['name']; ?></option>
 									<?php } ?>
+								</select>
+							</div>
+						</div>
+						<div class="form-group" style="display: none;">
+							<label for="delivery" class="control-label col-sm-3"><?= __('City') ?>:</label>
+							<div class="col-sm-9">
+								<select class="np_city form-control" name="np_city" style="width: 100%">
+								</select>
+							</div>
+						</div>
+						<div class="form-group" style="display: none;">
+							<label for="delivery" class="control-label col-sm-3"><?= __('Warehouse') ?>:</label>
+							<div class="col-sm-9">
+								<select class="np_warehouse form-control" name="np_warehouse" style="width: 100%">
 								</select>
 							</div>
 						</div>
@@ -106,3 +120,45 @@
 		</div>
 	</form>
 </section>
+
+<script>
+	$(document).ready(function () {
+		var NpCitySelect = $('.np_city'),
+			NpWarehouseSelect = $('.np_warehouse'),
+
+			NpCityForm = NpCitySelect.parent().parent(),
+			NpWarehouseForm = NpWarehouseSelect.parent().parent();
+
+			NpCitySelect.select2();
+
+		$('.delivery_type').on('change', function () {
+
+			if ($(this).val() == 2) {
+				NpCitySelect.html('');
+				NpCitySelect.append('<option value="0">-</option>');
+				NpCityForm.show();
+
+				$.ajax('/api.php?method=NovaPoshta.cities').success(function (data) {
+					$.each(data.response.items, function (i, item) {
+						NpCitySelect.append('<option data-ref="' + item.ref + '" value="' + i + '">' + item.name_ru + '</option>');
+					});
+				})
+			} else {
+				NpCityForm.hide();
+				NpWarehouseForm.hide();
+			}
+		});
+
+		NpCitySelect.on('change', function () {
+			$.ajax('/api.php?method=NovaPoshta.warehouses&cityRef=' + $('option:selected', $(this)).data('ref')).success(function (data) {
+				NpWarehouseSelect.html('');
+				NpWarehouseForm.show();
+				NpWarehouseSelect.append('<option value="0">-</option>');
+				$.each(data.response.items, function(i, item) {
+					NpWarehouseSelect.append('<option data-ref="' + item.ref + '" value="' + i + '">'+ item.name_ru + '</option>');
+				});
+				NpWarehouseSelect.select2();
+			})
+		})
+	});
+</script>

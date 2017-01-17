@@ -52,6 +52,18 @@ class Cart extends Controller
 	public function methodOrder($args)
 	{
 		$order = Orm::create('Order');
+		$info = 'Оплата: ' . Orm::load('Payment_Type', $args['payment'])->getValue('name');
+		$info .= "\nДоставка: " . Orm::load('Delivery_Type', $args['delivery'])->getValue('name');
+
+		if ($args['np_city']) {
+			$city = Orm::load('NovaPoshta_City', $args['np_city']);
+			$info .= "\nГород: " . $city->getValue('name_ru');
+		}
+
+		if ($args['np_warehouse']) {
+			$warehouse = Orm::load('NovaPoshta_Warehouse', $args['np_warehouse']);
+			$info .= "\nСклад: " . $warehouse->getValue('name_ru');
+		}
 
 		$order->setValues([
 			'userId' => $this->user ? $this->user->getId() : null,
@@ -62,9 +74,8 @@ class Cart extends Controller
 			'phone' => $args['phone'],
 			'city' => $args['city'],
 			'address' => $args['address'],
-			'payment' => Orm::load('Payment_Type', $args['payment'])->getValue('name'),
-			'delivery' => Orm::load('Delivery_Type', $args['delivery'])->getValue('name'),
-			'comment' => $args['comment']
+			'comment' => $args['comment'],
+			'info' => $info
 		]);
 
 		$order->save();
@@ -97,6 +108,6 @@ class Cart extends Controller
 	public function methodOrderSent()
 	{
 		$info = \Admin\Object\InfoBlock::get('order_sent')->getValues();
-		return $this->render(['content' => $this->view->render('templates/page.phtml', $info)]);
+		return $this->render(['content' => $this->view->render('templates/body.phtml', $info)]);
 	}
 }

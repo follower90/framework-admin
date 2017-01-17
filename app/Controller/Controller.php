@@ -59,7 +59,8 @@ class Controller extends \Core\Controller
 			'/css/responsive.css',
 			'/css/font-awesome/css/font-awesome.min.css',
 			'/css/magnific-popup.css',
-			'/css/style.css'
+			'/css/style.css',
+			'/css/select2.min.css'
 		]);
 
 		$this->addJavaScriptPath([
@@ -72,6 +73,7 @@ class Controller extends \Core\Controller
 			'/js/custom.js',
 			'/js/cart.js',
 			'/js/favourite.js',
+			'/js/select2.full.min.js',
 		]);
 	}
 

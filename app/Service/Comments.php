@@ -35,25 +35,23 @@ class Comments
 		}
 
 		$data = Orm::find('Comment', ['entity', 'entityId'], [$this->_entity, $this->_id], $params)->getData();
-
-		return array_map(function(&$comment) {
-			$comment['user'] = Orm::load('User', $comment['userId'])->getValue('login');
-			return $comment;
-		}, $data);
+		return $data;
 	}
 
-	public function addComment($text, $replyToCommentId = null)
+	public function addComment($name, $text, $replyToCommentId = null)
 	{
 		$user = \Core\App::getUser();
 		$comment = Orm::create('Comment');
 		$comment->setValues([
-			'userId' => $user->getId(),
+			'userId' => $user ? $user->getId() : null,
 			'entity' => $this->_entity,
 			'entityId' => $this->_id,
 			'parentId' => $replyToCommentId,
-			'text' => $text
+			'name' => $name,
+			'text' => $text,
+			'date' => date('Y-m-d H:i:s')
 		]);
 
-		$comment->save();
+		return $comment->save();
 	}
 }

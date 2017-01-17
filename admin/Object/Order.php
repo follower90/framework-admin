@@ -56,15 +56,10 @@ class Order extends \Core\Object
 					'default' => '',
 					'null' => false,
 				],
-				'payment' => [
+				'info' => [
 					'type' => 'varchar',
 					'default' => '',
-					'null' => false,
-				],
-				'delivery' => [
-					'type' => 'varchar',
-					'default' => '',
-					'null' => false,
+					'null' => true,
 				],
 				'date' => [
 					'type' => 'datetime',

@@ -99,12 +99,18 @@ class Cart
 		$mailTemplate = \Admin\Object\MailTemplate::get('new_order');
 
 		$orderProducts = Orm::find('Order_Product',['orderId'],[$order->getId()]);
-		$products = Orm::find('Product', ['id'], $orderProducts->getValues('productId'));
+
+		$products = [];
+		foreach ($orderProducts->getCollection() as $product) {
+			$data = Orm::load('Product', $product->getValue('productId'))->getValues();
+			$data['count'] = $product->getValue('count');
+			$products[] = $data;
+		}
 
 		$body = $view->renderInlineTemplate(
 			$mailTemplate->getValue('body'),
 			[
-				'products' => $products->getData(),
+				'products' => $products,
 				'order' => $order->getValues(),
 				'site' => $siteName,
 				'name' => $name,

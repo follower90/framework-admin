@@ -1,0 +1,14 @@
+<div class="row" data-id="<?=$vars['comment']['id'];?>">
+	<div class="col-lg-12">
+		<p class="small">
+			<b><?= $vars['comment']['name']; ?></b>
+		</p>
+		<p>
+			<?= $vars['comment']['text']; ?>
+		</p>
+		<p class="text-muted small">
+			<?= _libDate::date_view($vars['comment']['date'], 'dd MM YY hh:ii:ss'); ?>
+		</p>
+		<br/>
+	</div>
+</div>
