@@ -53,7 +53,7 @@
 							<?= __('Name'); ?>
 						</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" name="name" id="name" placeholder="<?= __('Name'); ?>">
+							<input type="text" class="form-control" name="name" id="name" placeholder="<?= __('Name'); ?>" value="<?=$vars['values']['name'];?>" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -61,7 +61,7 @@
 							Email
 						</label>
 						<div class="col-sm-10">
-							<input type="email" class="form-control" name="email" id="email" placeholder="Email">
+							<input type="email" class="form-control" name="email" id="email" placeholder="Email" value="<?=$vars['values']['email'];?>" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -69,8 +69,8 @@
 							<?= __('Subject'); ?>
 						</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" name="subject" id="subject"
-								   placeholder="<?= __('Subject'); ?>">
+							<input type="text" class="form-control" name="subject" id="subject" value="<?=$vars['values']['subject'];?>"
+								   placeholder="<?= __('Subject'); ?>" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -79,7 +79,7 @@
 						</label>
 						<div class="col-sm-10">
 								<textarea name="message" id="message" class="form-control" rows="5"
-										  placeholder="<?= __('Message'); ?>"></textarea>
+										  placeholder="<?= __('Message'); ?>"><?=$vars['values']['message'];?></textarea>
 						</div>
 					</div>
 					<div class="form-group">

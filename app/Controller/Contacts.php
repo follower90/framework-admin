@@ -23,7 +23,6 @@ class Contacts extends Controller
 
 				$this->view->addNotice('success', __('Message sent'));
 			} else {
-
 				$this->view->addNotice('error', __('Please fill the form'));
 			}
 		}
@@ -32,6 +31,7 @@ class Contacts extends Controller
 			'address' => InfoBlock::getText('contacts__address'),
 			'phone' => InfoBlock::getText('contacts__phone'),
 			'email' => InfoBlock::getText('contacts__email'),
+			'values' => $args
 		];
 
 		return $this->render([

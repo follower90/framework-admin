@@ -9,12 +9,12 @@ use App\Service\Cart as CartService;
 
 class Cart extends Controller
 {
-	public function methodIndex()
+	public function methodIndex($args)
 	{
 		$vars = [
 			'cart' => CartService::getCart()->getData(),
 			'total' => CartService::getTotal(),
-			'userinfo' => $this->user ? $this->user->getInfo() : [],
+			'userinfo' => $this->user ? $this->user->getInfo() : $args,
 			'breadcrumbs' => $this->renderBreadCrumbs([['name' => __('Cart')]])
 		];
 
@@ -51,6 +51,11 @@ class Cart extends Controller
 
 	public function methodOrder($args)
 	{
+		if (empty($args['address']) || !empty($args['firstName']) || !empty($args['email']) || !empty($args['phone'])) {
+			$this->view->addNotice('error', __('Please fill the form'));
+			return $this->methodIndex($args);
+		}
+
 		$order = Orm::create('Order');
 		$info = 'Оплата: ' . Orm::load('Payment_Type', $args['payment'])->getValue('name');
 		$info .= "\nДоставка: " . Orm::load('Delivery_Type', $args['delivery'])->getValue('name');

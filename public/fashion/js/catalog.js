@@ -16,6 +16,7 @@ function requestProducts(catalogId, args)
 			catalog: catalogId,
 			args: args,
 			sort: sort,
+			search: args.search,
 			page: page
 		},
 		success: function (data) {

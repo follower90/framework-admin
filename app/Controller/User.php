@@ -27,7 +27,7 @@ class User extends Controller
 			}
 		}
 
-		$data['content'] = $this->view->render('templates/user/login.phtml');
+		$data['content'] = $this->view->render('templates/user/login.phtml', ['values' => $args]);
 		$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => __('Authorization')]]);
 		return $this->render($data);
 	}
@@ -95,7 +95,8 @@ class User extends Controller
 
 		$data['content'] = $this->view->render('templates/user/register.phtml', [
 			'text' => InfoBlock::getText('register__text'),
-			'breadcrumbs' => $this->renderBreadCrumbs([['name' => __('Registration')]])
+			'breadcrumbs' => $this->renderBreadCrumbs([['name' => __('Registration')]]),
+			'values' => $args
 		]);
 
 		return $this->render($data);
