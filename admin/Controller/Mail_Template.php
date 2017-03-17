@@ -55,7 +55,6 @@ class Mail_Template extends Controller
 
 	public function methodSave($args)
 	{
-		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
 			$template = Orm::load('MailTemplate', $args['id']);
 		} else {
@@ -78,7 +77,6 @@ class Mail_Template extends Controller
 
 	public function methodDuplicate($args)
 	{
-		$this->checkWritePermissions();
 		$page = Orm::load('MailTemplate', $args['duplicate']);
 		$data = $page->getValues();
 		unset($data['id']);
@@ -91,7 +89,6 @@ class Mail_Template extends Controller
 
 	public function methodDelete($args)
 	{
-		$this->checkWritePermissions();
 		$page = Orm::load('MailTemplate', $args['delete']);
 
 		Orm::delete($page);

@@ -46,7 +46,6 @@ class Photos extends Controller
 
 	public function methodSave($args)
 	{
-		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
 			$album = Orm::load('Photo_Album', $args['id']);
 		} else {
@@ -75,7 +74,6 @@ class Photos extends Controller
 
 	public function methodDuplicate($args)
 	{
-		$this->checkWritePermissions();
 		$product = Orm::load('Photo_Album', $args['duplicate']);
 		$data = $product->getValues();
 		unset($data['id']);

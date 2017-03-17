@@ -81,7 +81,6 @@ class Product extends Controller
 
 	public function methodSave($args)
 	{
-		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
 			$product = Orm::load('Product', $args['id']);
 		} else {
@@ -118,7 +117,6 @@ class Product extends Controller
 
 	public function methodDuplicate($args)
 	{
-		$this->checkWritePermissions();
 		$product = Orm::load('Product', $args['duplicate']);
 		$data = $product->getValues();
 		unset($data['id']);

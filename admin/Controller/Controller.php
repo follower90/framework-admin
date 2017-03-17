@@ -15,11 +15,19 @@ class Controller extends \Core\Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->checkReadPermissions();
 		$this->prepareResources();
-
 		$this->view->setDefaultPath('public/admin');
 		$this->view->setNoticeObject('\Admin\Notice');
+	}
+
+	public function beforeRun($method)
+	{
+		if (in_array($method, ['methodIndex'])) echo 123;
+		$this->checkReadPermissions();
+
+		if (in_array($method, ['methodSave', 'methodDuplicate', 'methodDelete'])) {
+			$this->checkWritePermissions();
+		}
 	}
 
 	public function render($data = [])

@@ -55,7 +55,6 @@ class Slider extends Controller
 
 	public function methodSave($args)
 	{
-		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
 			$slide = Orm::load('Slider', $args['id']);
 		} else {
@@ -85,7 +84,6 @@ class Slider extends Controller
 
 	public function methodDuplicate($args)
 	{
-		$this->checkWritePermissions();
 		$slider = Orm::load('Slider', $args['duplicate']);
 		$data = $slider->getValues();
 		unset($data['id']);

@@ -45,7 +45,6 @@ class Page extends Controller
 
 	public function methodSave($args)
 	{
-		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
 			$page = Orm::load('Page', $args['id']);
 		} else {
@@ -70,7 +69,6 @@ class Page extends Controller
 
 	public function methodDuplicate($args)
 	{
-		$this->checkWritePermissions();
 		$page = Orm::load('Page', $args['duplicate']);
 		$data = $page->getValues();
 		unset($data['id']);
@@ -83,7 +81,6 @@ class Page extends Controller
 
 	public function methodDelete($args)
 	{
-		$this->checkWritePermissions();
 		$page = Orm::load('Page', $args['delete']);
 
 		Orm::delete($page);

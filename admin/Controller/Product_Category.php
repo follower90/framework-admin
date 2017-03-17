@@ -41,7 +41,6 @@ class Product_Category extends Controller
 
 	public function methodSave($args)
 	{
-		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
 			$template = Orm::load('ProductCategory', $args['id']);
 		} else {
@@ -64,7 +63,6 @@ class Product_Category extends Controller
 
 	public function methodDuplicate($args)
 	{
-		$this->checkWritePermissions();
 		$page = Orm::load('ProductCategory', $args['duplicate']);
 		$data = $page->getValues();
 		unset($data['id']);
@@ -77,7 +75,6 @@ class Product_Category extends Controller
 
 	public function methodDelete($args)
 	{
-		$this->checkWritePermissions();
 		$page = Orm::load('ProductCategory', $args['delete']);
 
 		Orm::delete($page);

@@ -45,7 +45,6 @@ class User extends Controller
 
 	public function methodSave($args)
 	{
-		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
 			$user = Orm::load('User', $args['id']);
 			$info = Orm::findOne('User_Info', ['userId'], [$user->getId()]);
@@ -77,7 +76,6 @@ class User extends Controller
 
 	public function methodDuplicate($args)
 	{
-		$this->checkWritePermissions();
 		$page = Orm::load('User', $args['duplicate']);
 		$data = $page->getValues();
 		unset($data['id']);
@@ -90,7 +88,6 @@ class User extends Controller
 
 	public function methodDelete($args)
 	{
-		$this->checkWritePermissions();
 		$user = Orm::load('User', $args['delete']);
 		$userInfo = Orm::findOne('User_Info', ['userId'], [$args['delete']]);
 

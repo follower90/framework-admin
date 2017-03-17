@@ -41,7 +41,6 @@ class Delivery_Type extends Controller
 
 	public function methodSave($args)
 	{
-		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
 			$type = Orm::load('Delivery_Type', $args['id']);
 		} else {
@@ -62,7 +61,6 @@ class Delivery_Type extends Controller
 
 	public function methodDuplicate($args)
 	{
-		$this->checkWritePermissions();
 		$page = Orm::load('Delivery_Type', $args['duplicate']);
 		$data = $page->getValues();
 		unset($data['id']);
@@ -75,7 +73,6 @@ class Delivery_Type extends Controller
 
 	public function methodDelete($args)
 	{
-		$this->checkWritePermissions();
 		$page = Orm::load('Delivery_Type', $args['delete']);
 
 		Orm::delete($page);

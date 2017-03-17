@@ -33,7 +33,6 @@ class Feedback extends Controller
 
 	public function methodDelete($args)
 	{
-		$this->checkWritePermissions();
 		$message = Orm::load('Feedback', $args['delete']);
 		Orm::delete($message);
 		$this->back();

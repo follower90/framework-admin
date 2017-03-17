@@ -53,7 +53,6 @@ class Menu extends Controller
 
 	public function methodSave($args)
 	{
-		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
 			$menu = Orm::load('Menu', $args['id']);
 		} else {
@@ -74,7 +73,6 @@ class Menu extends Controller
 
 	public function methodDuplicate($args)
 	{
-		$this->checkWritePermissions();
 		$page = Orm::load('Menu', $args['duplicate']);
 		$data = $page->getValues();
 		unset($data['id']);
@@ -87,7 +85,6 @@ class Menu extends Controller
 
 	public function methodDelete($args)
 	{
-		$this->checkWritePermissions();
 		$page = Orm::load('Menu', $args['delete']);
 
 		Orm::delete($page);

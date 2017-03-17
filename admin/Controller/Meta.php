@@ -49,7 +49,6 @@ class Meta extends Controller
 
 	public function methodSave($args)
 	{
-		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
 			$meta = Orm::load('Meta', $args['id']);
 		} else {
@@ -69,7 +68,6 @@ class Meta extends Controller
 
 	public function methodDuplicate($args)
 	{
-		$this->checkWritePermissions();
 		$page = Orm::load('Meta', $args['duplicate']);
 		$data = $page->getValues();
 		unset($data['id']);
@@ -82,7 +80,6 @@ class Meta extends Controller
 
 	public function methodDelete($args)
 	{
-		$this->checkWritePermissions();
 		$page = Orm::load('Meta', $args['delete']);
 
 		Orm::delete($page);
@@ -91,8 +88,6 @@ class Meta extends Controller
 
 	public function methodUpdate($args)
 	{
-		$this->checkWritePermissions();
-
 		\Admin\Service\Meta::update([
 			'moduleId' => $args['moduleId'],
 			'url' => $args['url'],

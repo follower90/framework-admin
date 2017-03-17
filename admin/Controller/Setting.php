@@ -41,14 +41,12 @@ class Setting extends Controller
 
 	public function methodSave($args)
 	{
-		$this->checkWritePermissions();
 		$setting = \Admin\Object\Setting::put($args['key'], $args['value']);
 		Router::redirect('/admin/setting/edit/' . $setting->getId());
 	}
 
 	public function methodDuplicate($args)
 	{
-		$this->checkWritePermissions();
 		$page = Orm::load('Setting', $args['duplicate']);
 		$data = $page->getValues();
 		unset($data['id']);
@@ -61,7 +59,6 @@ class Setting extends Controller
 
 	public function methodDelete($args)
 	{
-		$this->checkWritePermissions();
 		$page = Orm::load('Setting', $args['delete']);
 
 		Orm::delete($page);

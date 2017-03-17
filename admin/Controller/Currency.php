@@ -41,7 +41,6 @@ class Currency extends Controller
 
 	public function methodSave($args)
 	{
-		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
 			$currency = Orm::load('Currency', $args['id']);
 		} else {
@@ -70,7 +69,6 @@ class Currency extends Controller
 
 	public function methodDuplicate($args)
 	{
-		$this->checkWritePermissions();
 		$page = Orm::load('Currency', $args['duplicate']);
 		$data = $page->getValues();
 		unset($data['id']);
@@ -83,7 +81,6 @@ class Currency extends Controller
 
 	public function methodDelete($args)
 	{
-		$this->checkWritePermissions();
 		$currency = Orm::load('Currency', $args['delete']);
 		Orm::delete($currency);
 		$this->back();
