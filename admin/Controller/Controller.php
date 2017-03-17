@@ -22,7 +22,6 @@ class Controller extends \Core\Controller
 
 	public function beforeRun($method)
 	{
-		if (in_array($method, ['methodIndex'])) echo 123;
 		$this->checkReadPermissions();
 
 		if (in_array($method, ['methodSave', 'methodDuplicate', 'methodDelete'])) {
