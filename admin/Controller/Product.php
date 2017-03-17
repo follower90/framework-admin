@@ -92,10 +92,8 @@ class Product extends Controller
 			$args['url'] = String::translit($args['name']);
 		}
 
-		$product->setValues($args);
-
 		try {
-			Orm::save($product);
+			$product->updateAttributes($args);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$errors = explode("___", $e->getMessage());
 			array_map(function($error) { $this->view->addNotice('error', $error); }, $errors);
@@ -124,11 +122,10 @@ class Product extends Controller
 		$product = Orm::load('Product', $args['duplicate']);
 		$data = $product->getValues();
 		unset($data['id']);
+		$data['url'] = $product->getValue('url') .'_1';
 
 		$newProduct = Orm::create('Product');
-		$newProduct->setValues($data);
-		$newProduct->setValue('url', $product->getValue('url') .'_1');
-		Orm::save($newProduct);
+		$newProduct->updateAttributes($data);
 
 		$newProduct->setCatalog($product->getCatalogId());
 		$newProduct->setFilters($product->getFilters()->getValues('id'));

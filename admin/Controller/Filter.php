@@ -49,10 +49,8 @@ class Filter extends Controller
 			$filter = Orm::create('FilterSet');
 		}
 
-		$filter->setValues($args);
-
 		try {
-			Orm::save($filter);
+			$filter->updateAttributes($args);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$this->view->addNotice('error', $e->getMessage());
 			if ($filter->isNew()) {
@@ -77,12 +75,7 @@ class Filter extends Controller
 			$id = $args['id'][$i];
 
 			$filter = $id ? Orm::load('Filter', $id) : Orm::create('Filter');
-			$filter->setValues([
-				'name' => $name,
-				'filterSetId' => $filterSet->getId()
-			]);
-
-			$filter->save();
+			$filter->updateAttributes(['name' => $name, 'filterSetId' => $filterSet->getId()]);
 			array_push($ids, $filter->getId());
 			$i++;
 		}
@@ -98,9 +91,8 @@ class Filter extends Controller
 		$data = $page->getValues();
 		unset($data['id']);
 
-		$newPage = Orm::create('FilterSet');
-		$newPage->setValues($data);
-		Orm::save($newPage);
+		$filterSet = Orm::create('FilterSet');
+		$filterSet->updateAttributes($data);
 
 		Router::redirect('/admin/filter/');
 	}

@@ -49,10 +49,9 @@ class Product_Category extends Controller
 		}
 
 		$args['body'] = addslashes($args['body']);
-		$template->setValues($args);
 
 		try {
-			Orm::save($template);
+			$template->updateAttributes($args);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$this->view->addNotice('error', $e->getMessage());
 			if ($template->isNew()) {
@@ -70,9 +69,8 @@ class Product_Category extends Controller
 		$data = $page->getValues();
 		unset($data['id']);
 
-		$newPage = Orm::create('ProductCategory');
-		$newPage->setValues($data);
-		Orm::save($newPage);
+		$category = Orm::create('ProductCategory');
+		$category->updateAttributes($data);
 
 		Router::redirect('/admin/product_category/');
 	}

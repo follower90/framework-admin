@@ -60,13 +60,11 @@ class User extends Controller
 		}
 
 		unset($args['password']);
-		$user->setValues($args);
 
 		try {
-			Orm::save($user);
-			$info->setValues($args['info']);
-			$info->setValue('userId', $user->getId());
-			$info->save();
+			$user->updateAttributes($args);
+			$args['info']['userId'] = $user->getId();
+			$info->updateAttributes($args['info']);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$this->view->addNotice('error', $e->getMessage());
 			if ($user->isNew()) {
@@ -84,9 +82,8 @@ class User extends Controller
 		$data = $page->getValues();
 		unset($data['id']);
 
-		$newPage = Orm::create('User');
-		$newPage->setValues($data);
-		Orm::save($newPage);
+		$newUser = Orm::create('User');
+		$newUser->updateAttributes($data);
 
 		Router::redirect('/admin/user/');
 	}

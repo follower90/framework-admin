@@ -53,9 +53,8 @@ class Setting extends Controller
 		$data = $page->getValues();
 		unset($data['id']);
 
-		$newPage = Orm::create('Setting');
-		$newPage->setValues($data);
-		Orm::save($newPage);
+		$setting = Orm::create('Setting');
+		$setting->updateAttributes($data);
 
 		Router::redirect('/admin/setting/');
 	}

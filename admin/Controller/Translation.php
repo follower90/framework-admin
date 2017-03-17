@@ -57,10 +57,8 @@ class Translation extends Controller
 			$translation = Orm::create('Translation');
 		}
 
-		$translation->setValues($args);
-
 		try {
-			Orm::save($translation);
+			$translation->updateAttributes($args);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$this->view->addNotice('error', $e->getMessage());
 			if ($translation->isNew()) {
@@ -78,9 +76,8 @@ class Translation extends Controller
 		$data = $page->getValues();
 		unset($data['id']);
 
-		$newPage = Orm::create('Translation');
-		$newPage->setValues($data);
-		Orm::save($newPage);
+		$translation = Orm::create('Translation');
+		$translation->updateAttributes($data);
 
 		Router::redirect('/admin/translation/');
 	}

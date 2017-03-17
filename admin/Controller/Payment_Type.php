@@ -48,10 +48,8 @@ class Payment_Type extends Controller
 			$page = Orm::create('Payment_Type');
 		}
 
-		$page->setValues($args);
-
 		try {
-			Orm::save($page);
+			$page->updateAttributes($args);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$this->view->addNotice('error', $e->getMessage());
 			if ($page->isNew()) {
@@ -70,8 +68,7 @@ class Payment_Type extends Controller
 		unset($data['id']);
 
 		$newPage = Orm::create('Payment_Type');
-		$newPage->setValues($data);
-		Orm::save($newPage);
+		$newPage->updateAttributes($data);
 
 		Router::redirect('/admin/payment_type/');
 	}

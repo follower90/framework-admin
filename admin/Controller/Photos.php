@@ -53,9 +53,8 @@ class Photos extends Controller
 			$album = Orm::create('Photo_Album');
 		}
 
-		$album->setValues($args);
 		try {
-			Orm::save($album);
+			$album->updateAttributes($args);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$this->view->addNotice('error', $e->getMessage());
 			if ($album->isNew()) {
@@ -81,9 +80,8 @@ class Photos extends Controller
 		$data = $product->getValues();
 		unset($data['id']);
 
-		$newProduct = Orm::create('Photo_Album');
-		$newProduct->setValues($data);
-		Orm::save($newProduct);
+		$album = Orm::create('Photo_Album');
+		$album->updateAttributes($data);
 
 		Router::redirect('/admin/photos/');
 	}

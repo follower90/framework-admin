@@ -52,10 +52,8 @@ class Blog extends Controller
 			$args['url'] = \Core\Library\String::translit($args['name']);
 		}
 
-		$page->setValues($args);
-
 		try {
-			Orm::save($page);
+			$page->updateAttributes($args);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$this->view->addNotice('error', $e->getMessage());
 			if ($page->isNew()) {
@@ -74,8 +72,7 @@ class Blog extends Controller
 		unset($data['id']);
 
 		$newPage = Orm::create('Blog');
-		$newPage->setValues($data);
-		Orm::save($newPage);
+		$newPage->updateAttributes($data);
 
 		Router::redirect('/admin/blog/');
 	}

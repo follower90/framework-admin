@@ -63,10 +63,9 @@ class Mail_Template extends Controller
 		}
 
 		$args['body'] = addslashes($args['body']);
-		$template->setValues($args);
 
 		try {
-			Orm::save($template);
+			$template->updateAttributes($args);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$this->view->addNotice('error', $e->getMessage());
 			if ($template->isNew()) {
@@ -84,9 +83,8 @@ class Mail_Template extends Controller
 		$data = $page->getValues();
 		unset($data['id']);
 
-		$newPage = Orm::create('MailTemplate');
-		$newPage->setValues($data);
-		Orm::save($newPage);
+		$template = Orm::create('MailTemplate');
+		$template->updateAttributes($data);
 
 		Router::redirect('/admin/mail_template/');
 	}

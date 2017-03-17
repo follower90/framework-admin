@@ -58,10 +58,8 @@ class Admin_Group extends Controller
 			$group = Orm::create('Admin_Group');
 		}
 
-		$group->setValues($args);
-
 		try {
-			Orm::save($group);
+			$group->updateAttributes($args);
 			\Admin\Service\Admin_Group_Permission::updatePermissions($group->getId(), $args['type']);
 
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {

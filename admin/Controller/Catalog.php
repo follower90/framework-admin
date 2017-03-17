@@ -79,10 +79,8 @@ class Catalog extends Controller
 			}
 		}
 
-		$catalog->setValues($args);
-
 		try {
-			Orm::save($catalog);
+			$catalog->updateAttributes($args);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$this->view->addNotice('error', $e->getMessage());
 			if ($catalog->isNew()) {
@@ -100,9 +98,8 @@ class Catalog extends Controller
 		$data = $page->getValues();
 		unset($data['id']);
 
-		$newPage = Orm::create('Catalog');
-		$newPage->setValues($data);
-		Orm::save($newPage);
+		$catalog = Orm::create('Catalog');
+		$catalog->updateAttributes($data);
 
 		Router::redirect('/admin/catalog/');
 	}

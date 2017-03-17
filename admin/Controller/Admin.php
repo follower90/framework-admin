@@ -58,10 +58,7 @@ class Admin extends Controller
 		}
 
 		unset($args['password']);
-		$admin->setValues($args);
-
-		Orm::save($admin);
-
+		$admin->updateAttributes($args);
 		Router::redirect('/admin/admin/edit/' . $admin->getId());
 	}
 
@@ -73,8 +70,7 @@ class Admin extends Controller
 		unset($data['id']);
 
 		$newPage = Orm::create('Admin');
-		$newPage->setValues($data);
-		Orm::save($newPage);
+		$newPage->updateAttributes($data);
 
 		Router::redirect('/admin/admin/');
 	}

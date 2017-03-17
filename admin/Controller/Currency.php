@@ -56,10 +56,8 @@ class Currency extends Controller
 			});
 		}
 
-		$currency->setValues($args);
-
 		try {
-			Orm::save($currency);
+			$currency->updateAttributes($args);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$this->view->addNotice('error', $e->getMessage());
 			if ($currency->isNew()) {
@@ -77,9 +75,8 @@ class Currency extends Controller
 		$data = $page->getValues();
 		unset($data['id']);
 
-		$newPage = Orm::create('Setting');
-		$newPage->setValues($data);
-		Orm::save($newPage);
+		$setting = Orm::create('Setting');
+		$setting->updateAttributes($data);
 
 		Router::redirect('/admin/currency/');
 	}

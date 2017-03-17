@@ -48,10 +48,8 @@ class Infoblock extends Controller
 			$page = Orm::create('InfoBlock');
 		}
 
-		$page->setValues($args);
-
 		try {
-			Orm::save($page);
+			$page->updateAttributes($args);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$this->view->addNotice('error', $e->getMessage());
 			if ($page->isNew()) {
@@ -69,9 +67,8 @@ class Infoblock extends Controller
 		$data = $page->getValues();
 		unset($data['id']);
 
-		$newPage = Orm::create('InfoBlock');
-		$newPage->setValues($data);
-		Orm::save($newPage);
+		$block = Orm::create('InfoBlock');
+		$block->updateAttributes($data);
 
 		Router::redirect('/admin/infoblock/');
 	}

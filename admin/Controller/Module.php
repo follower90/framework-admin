@@ -50,10 +50,8 @@ class Module extends Controller
 			$page = Orm::create('Module');
 		}
 
-		$page->setValues($args);
-
 		try {
-			Orm::save($page);
+			$page->updateAttributes($args);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$this->view->addNotice('error', $e->getMessage());
 			if ($page->isNew()) {
@@ -71,9 +69,8 @@ class Module extends Controller
 		$data = $page->getValues();
 		unset($data['id']);
 
-		$newPage = Orm::create('Module');
-		$newPage->setValues($data);
-		Orm::save($newPage);
+		$module = Orm::create('Module');
+		$module->updateAttributes($data);
 
 		Router::redirect('/admin/module/');
 	}

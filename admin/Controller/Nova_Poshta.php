@@ -24,13 +24,11 @@ class Nova_Poshta extends Controller
 
 			if (!$city) {
 				$city = Orm::create('NovaPoshta_City');
-				$city->setValues([
+				$city->updateAttributes([
 					'name_ru' => addslashes($item['DescriptionRu']),
 					'name_ua' => addslashes($item['Description']),
 					'ref' => $item['Ref']
 				]);
-
-				Orm::save($city);
 			}
 		}
 
@@ -48,18 +46,16 @@ class Nova_Poshta extends Controller
 				$warehouse = Orm::findOne('NovaPoshta_Warehouse', ['ref'], [$item['Ref']]);
 				if (!$warehouse) {
 					$warehouse = Orm::create('NovaPoshta_Warehouse');
-					$warehouse->setValues([
+					$warehouse->updateAttributes([
 						'name_ru' => addslashes($item['DescriptionRu']),
 						'name_ua' => addslashes($item['Description']),
 						'cityRef' => $city->getValue('ref'),
 						'ref' => $item['Ref']
 					]);
 				}
-				Orm::save($warehouse);
 			}
 
-			$city->setValue('last_update', date('Y-m-d H:i:s'));
-			Orm::save($city);;
+			$city->updateAttributes(['last_update' => date('Y-m-d H:i:s')]);
 		}
 
 		$this->back();

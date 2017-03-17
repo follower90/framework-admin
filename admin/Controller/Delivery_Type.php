@@ -43,18 +43,16 @@ class Delivery_Type extends Controller
 	{
 		$this->checkWritePermissions();
 		if (!empty($args['id'])) {
-			$page = Orm::load('Delivery_Type', $args['id']);
+			$type = Orm::load('Delivery_Type', $args['id']);
 		} else {
-			$page = Orm::create('Delivery_Type');
+			$type = Orm::create('Delivery_Type');
 		}
 
-		$page->setValues($args);
-
 		try {
-			Orm::save($page);
+			$type->updateAttributes($args);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$this->view->addNotice('error', $e->getMessage());
-			if ($page->isNew()) {
+			if ($type->isNew()) {
 				Router::redirect('/admin/delivery_type/new');
 			}
 		}
@@ -69,9 +67,8 @@ class Delivery_Type extends Controller
 		$data = $page->getValues();
 		unset($data['id']);
 
-		$newPage = Orm::create('Delivery_Type');
-		$newPage->setValues($data);
-		Orm::save($newPage);
+		$type = Orm::create('Delivery_Type');
+		$type->updateAttributes($data);
 
 		Router::redirect('/admin/delivery_type/');
 	}

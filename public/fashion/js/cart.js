@@ -1,3 +1,21 @@
+var basket = (function () {
+	/*TODO rewrite functions below with this module */
+	return {
+		getTotals: function() {
+
+		},
+		add: function() {
+
+		},
+		remove: function() {
+
+		},
+		update: function() {
+
+		}
+	}
+})();
+
 function updateCartCount() {
 	$.ajax('/api.php?method=Cart.count')
 		.success(function (data) {

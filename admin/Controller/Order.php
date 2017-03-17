@@ -51,10 +51,8 @@ class Order extends Controller
 			$order = Orm::create('Order');
 		}
 
-		$order->setValues($args);
-
 		try {
-			Orm::save($order);
+			$order->updateAttributes($args);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$this->view->addNotice('error', $e->getMessage());
 			if ($order->isNew()) {
@@ -72,9 +70,8 @@ class Order extends Controller
 		$data = $page->getValues();
 		unset($data['id']);
 
-		$newPage = Orm::create('Order');
-		$newPage->setValues($data);
-		Orm::save($newPage);
+		$order = Orm::create('Order');
+		$order->updateAttributes($data);
 
 		Router::redirect('/admin/user/');
 	}

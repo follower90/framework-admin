@@ -56,10 +56,8 @@ class Meta extends Controller
 			$meta = Orm::create('Meta');
 		}
 
-		$meta->setValues($args);
-
 		try {
-			Orm::save($meta);
+			$meta->updateAttributes($args);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$this->view->addNotice('error', $e->getMessage());
 			if ($meta->isNew()) {
@@ -76,9 +74,8 @@ class Meta extends Controller
 		$data = $page->getValues();
 		unset($data['id']);
 
-		$newPage = Orm::create('Meta');
-		$newPage->setValues($data);
-		Orm::save($newPage);
+		$meta = Orm::create('Meta');
+		$meta->updateAttributes($data);
 
 		Router::redirect('/admin/meta/');
 	}

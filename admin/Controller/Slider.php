@@ -62,10 +62,8 @@ class Slider extends Controller
 			$slide = Orm::create('Slider');
 		}
 
-		$slide->setValues($args);
-
 		try {
-			Orm::save($slide);
+			$slide->updateAttributes($args);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$errors = explode("___", $e->getMessage());
 			array_map(function($error) { $this->view->addNotice('error', $error); }, $errors);
@@ -88,14 +86,13 @@ class Slider extends Controller
 	public function methodDuplicate($args)
 	{
 		$this->checkWritePermissions();
-		$product = Orm::load('Slider', $args['duplicate']);
-		$data = $product->getValues();
+		$slider = Orm::load('Slider', $args['duplicate']);
+		$data = $slider->getValues();
 		unset($data['id']);
+		$data['url'] = $slider->getValue('url') .'_1';
 
-		$newProduct = Orm::create('Slider');
-		$newProduct->setValues($data);
-		$newProduct->setValue('url', $product->getValue('url') .'_1');
-		Orm::save($newProduct);
+		$newSlider = Orm::create('Slider');
+		$newSlider->updateAttributes($data);
 
 		Router::redirect('/admin/slider/');
 	}

@@ -60,10 +60,8 @@ class Menu extends Controller
 			$menu = Orm::create('Menu');
 		}
 
-		$menu->setValues($args);
-
 		try {
-			Orm::save($menu);
+			$menu->updateAttributes($args);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
 			$this->view->addNotice('error', $e->getMessage());
 			if ($menu->isNew()) {
@@ -81,9 +79,8 @@ class Menu extends Controller
 		$data = $page->getValues();
 		unset($data['id']);
 
-		$newPage = Orm::create('Menu');
-		$newPage->setValues($data);
-		Orm::save($newPage);
+		$menu = Orm::create('Menu');
+		$menu->updateAttributes($data);
 
 		Router::redirect('/admin/menu/');
 	}
