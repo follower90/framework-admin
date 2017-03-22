@@ -28,4 +28,8 @@ $(document).ready(function () {
 	});
 
 	if ($('#editor-1').length) CKEDITOR.replace('editor-1');
+
+	$.datetimepicker.setLocale('ru');
+	$('.datetime').datetimepicker({ format:'Y-m-d H:i:s' });
+
 });

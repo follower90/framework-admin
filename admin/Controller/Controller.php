@@ -20,7 +20,7 @@ class Controller extends \Core\Controller
 		$this->view->setNoticeObject('\Admin\Notice');
 	}
 
-	public function beforeRun($method)
+	public function beforeRun($method, $args)
 	{
 		$this->checkReadPermissions();
 
@@ -77,17 +77,20 @@ class Controller extends \Core\Controller
 			'/css/sb-admin-2.css',
 			'/css/font-awesome.min.css',
 			'/css/selectize.bootstrap3.css',
+			'/css/jquery.datetimepicker.min.css',
 			'/css/styles.css',
 		]);
 
 		$this->addJavaScriptPath([
 			'/js/jquery.min.js',
 			'/js/bootstrap.min.js',
+			'/js/metismenu.min.js',
 			'/js/bootstrap-switch.min.js',
 			'/js/sb-admin-2.js',
 			'/js/plugin/ckeditor/ckeditor.js',
 			'/js/plugin/ckeditor/config.js',
 			'/js/selectize.min.js',
+			'/js/jquery.datetimepicker.full.min.js',
 			'/js/jquery-sortable.js',
 			'/js/scripts.js'
 		]);

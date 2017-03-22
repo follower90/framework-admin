@@ -106,7 +106,7 @@ class Translation extends Controller
 			$data = array_merge($data, $newData);
 		}
 
-		File::put('/translations_cache.json', json_encode($data));
+		File::put('/translations_cache.json', json_encode($data, JSON_UNESCAPED_UNICODE));
 		$this->back();
 	}
 }
