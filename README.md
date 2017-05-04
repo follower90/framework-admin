@@ -48,6 +48,13 @@ docker build -t cms .
 docker run -v "$PWD":/var/www/cms -p 4000:80 -p 3333:3306 cms
 ```
 
+### Run with nginx
+
+```
+./start_nginx 4000
+./stop_nginx 4000
+```
+
 Try http://localhost:4000/ to access web-site
 Try http://localhost:4000/admin to login admin part
 
