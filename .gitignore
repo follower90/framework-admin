@@ -1,6 +1,7 @@
 .idea
 .ckfinder
 vendor
+log
 tmp
 storage
 config.php

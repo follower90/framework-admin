@@ -2,10 +2,10 @@
 	<div class="row">
 		<div class="col-md-5">
 			<div class="display">
-				<a href="?view=list" class="<?=(isset($vars['args']['view']) && $vars['args']['view'] == 'list') ? 'active' : '';?>">
+				<a href="#" data-view="list" class="products-view <?=(isset($vars['args']['view']) && $vars['args']['view'] == 'list') ? 'active' : '';?>">
 					<i class="fa fa-th-list" title="<?= __('List View');?>"></i>
 				</a>
-				<a href="?view=grid" class="<?=(isset($vars['args']['view']) && $vars['args']['view'] == 'list') ? '' : 'active';?>">
+				<a href="#" data-view="grid" class="products-view <?=(isset($vars['args']['view']) && $vars['args']['view'] == 'list') ? '' : 'active';?>">
 					<i class="fa fa-th" title="<?= __('Grid View');?>"></i>
 				</a>
 			</div>
@@ -36,3 +36,11 @@
 		?>
 	</div>
 </div>
+
+<script>
+	$('.products-view').on('click', function () {
+		var data = JSON.parse('<?=json_encode($vars['args']);?>');
+			data.view = $(this).data('view');
+		requestProducts(<?=$vars['catalogId']?>, JSON.stringify(data));
+	});
+</script>
