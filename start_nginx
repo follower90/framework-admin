@@ -1,0 +1,16 @@
+#!/bin/bash
+
+NGINX_PORT=$1
+
+NGINX_WORKSPACE_ROOT=`pwd`
+NGINX_ERROR_LOG=`pwd`/log/nginx_error.log
+NGINX_ACCESS_LOG=`pwd`/log/nginx_access.log
+
+sed "s#NGINX_ROOT#/usr/local/etc/nginx#g" nginx.conf > "tmp/nginx_${NGINX_PORT}.conf"
+
+sed -i.bak "s#WORKSPACE_ROOT#$NGINX_WORKSPACE_ROOT#g" "`pwd`/tmp/nginx_${NGINX_PORT}.conf"
+sed -i.bak "s#ERROR_LOG#$NGINX_ERROR_LOG#g" "`pwd`/tmp/nginx_${NGINX_PORT}.conf"
+sed -i.bak "s#ACCESS_LOG#$NGINX_ACCESS_LOG#g" "`pwd`/tmp/nginx_${NGINX_PORT}.conf"
+sed -i.bak "s#NGINX_PORT#$NGINX_PORT#g" "`pwd`/tmp/nginx_${NGINX_PORT}.conf"
+
+nginx -g "pid `pwd`/tmp/nginx${NGINX_PORT}_pid;" -c "`pwd`/tmp/nginx_${NGINX_PORT}.conf" -p "`pwd`"

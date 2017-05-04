@@ -1,0 +1,7 @@
+#!/bin/bash
+
+NGINX_PORT=$1
+
+PID_FILE=tmp/nginx${NGINX_PORT}_pid
+PID=`cat $PID_FILE`
+kill -QUIT $PID

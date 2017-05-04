@@ -6,6 +6,28 @@ use Core\Orm;
 
 class Menu extends \Core\Api
 {
+	public function methodIndex($args)
+	{
+		header("Access-Control-Allow-Origin: *");
+		$items = Orm::find('Menu');
+		$result = [];
+		$items->stream()->each(function($item) use (&$result) {
+			$result[]= $item->getValues();
+		});
+
+		return $result;
+	}
+
+	public function methodGet($args)
+	{
+		header("Access-Control-Allow-Origin: *");
+
+		if (!$args['id']) return false;
+		$page = Orm::load('Menu', $args['id']);
+
+		return $page->getValues();
+	}
+
 	public function methodActive($args)
 	{
 		if (!$args['id']) return false;
