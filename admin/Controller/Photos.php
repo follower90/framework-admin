@@ -39,7 +39,7 @@ class Photos extends Controller
 		$data['content'] = $this->view->render('templates/modules/photos/edit.phtml', $data);
 
 		$this->addCssPath(['/css/dropzone.css']);
-		$this->addJavaScriptPath(['/js/dropzone.js']);
+		$this->addJavaScriptPath(['/js/dropzone.js', '/js/photos.upload.js']);
 
 		return $this->render($data);
 	}

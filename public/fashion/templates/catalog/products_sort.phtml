@@ -38,7 +38,10 @@
 </div>
 
 <script>
-	$('.products-view').on('click', function () {
+	$('.products-view').on('click', function (e) {
+		$('.display a').removeClass('active');
+		$(e.target).parent().addClass('active');
+
 		var data = JSON.parse('<?=json_encode($vars['args']);?>');
 			data.view = $(this).data('view');
 		requestProducts(<?=$vars['catalogId']?>, JSON.stringify(data));

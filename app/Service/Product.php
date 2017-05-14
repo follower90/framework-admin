@@ -77,15 +77,17 @@ class Product
 		return $result;
 	}
 
-	public static function getAvailableFiltersDataForCatalog($catalogId, $products)
+	public static function getAvailableFiltersDataForCatalog($catalogId, $products, $filters)
 	{
 		$catalog = Orm::load('Catalog', $catalogId);
 		if (!$catalog) return [];
 
 		$data = [];
 
-		$filterSets = $catalog
-			->getRelated('products')
+		$allProducts = $catalog
+			->getRelated('products');
+
+		$filterSets = $allProducts
 			->getRelated('filters')
 			->getRelated('filter_set');
 

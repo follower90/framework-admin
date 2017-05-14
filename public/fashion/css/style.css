@@ -808,7 +808,9 @@ hr {
 .product-filter .display a {
     color: #2f353b;
     font-size: 24px;
+    float: left;
     margin-right: 6px;
+    display: block;
 }
 
 .product-filter .display a:hover {

@@ -44,7 +44,7 @@ class User extends Controller
 	{
 		$isValid = true;
 
-		if (empty($args['email']) || empty($vars['login']) || empty($args['password'])) {
+		if (empty($args['info']['email']) || empty($args['login']) || empty($args['password'])) {
 			$isValid = false;
 			$this->view->addNotice('error', __('Please fill the form'));
 		} elseif ($args['password'] != $args['password_repeat']) {

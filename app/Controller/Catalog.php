@@ -35,7 +35,7 @@ class Catalog extends Controller
 			'catalogs' => \Admin\Object\Catalog::where(['active' => 1])->getData(),
 			'catalogId' => $catalogId,
 			'catalog' => $currentCatalog ? $currentCatalog->getValuesWithPhoto() : '',
-			'filters' => \App\Service\Product::getAvailableFiltersDataForCatalog($catalogId, $products['products_all']),
+			'filters' => \App\Service\Product::getAvailableFiltersDataForCatalog($catalogId, $products['products_all'], $filters),
 			'products' => $products['products']->getData(),
 			'total' => $products['total'],
 			'onpage' => $catalogOnPage,

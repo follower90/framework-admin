@@ -16,12 +16,11 @@
 					foreach ($vars['photos'] as $photo) {
 						if ($i++ % 4 === 0) echo '</div><div class="row">';
 						echo '<img width="100%" src="/api.php?method=Resource.get&id=' . $photo['resourceId'] . '" />';
-						echo '<br/>';
+						echo '<br/><br/>';
 					}
 					?>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </div>

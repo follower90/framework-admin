@@ -15,7 +15,7 @@ class Catalog extends \Core\Api
 		}
 
 		$products = \App\Service\Product::filterBy($args['catalog'], $args['filters'], $args['sort'], $args['page'], $where);
-		$filters = \App\Service\Product::getAvailableFiltersDataForCatalog($args['catalog'], $products['products_all']);
+		$filters = \App\Service\Product::getAvailableFiltersDataForCatalog($args['catalog'], $products['products_all'], $args['filters']);
 
 		$view = new View();
 		$view->setDefaultPath('public/fashion');
