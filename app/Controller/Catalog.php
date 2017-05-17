@@ -30,6 +30,11 @@ class Catalog extends Controller
 		$currentCatalog = Orm::load('Catalog', $catalogId);
 		$products = \App\Service\Product::filterBy($catalogId, $filters, $sort, $page);
 
+		$checkedFilters = [];
+		array_map(function($arr) use (&$checkedFilters) {
+			$checkedFilters = array_merge($checkedFilters, $arr);
+		} , $filters);
+
 		$content = $this->view->render('templates/catalog/catalog.phtml', [
 			'breadcrumbs' => $this->getBreadcrumbs($catalogId),
 			'catalogs' => \Admin\Object\Catalog::where(['active' => 1])->getData(),
@@ -40,7 +45,7 @@ class Catalog extends Controller
 			'total' => $products['total'],
 			'onpage' => $catalogOnPage,
 			'page' => $page,
-			'checked_filters' => $filters,
+			'checked_filters' => $checkedFilters,
 			'args' => $args,
 			'sort' => $sort
 		]);

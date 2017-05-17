@@ -1,12 +1,16 @@
 function requestProducts(catalogId, args)
 {
-	var filters = [];
+	var filters = {};
 	var args = JSON.parse(args);
 	var sort = $('#products-sort').val();
 	var page = $('#paging li.active a').data('page') || '';
 
-	$('#products-filters input[type=checkbox]').each(function (n, i) {
-		if ($(i).is(':checked')) filters.push($(i).val());
+
+	$('#products-filters .list-group-item').each(function (g, group) {
+		filters[g] = [];
+		$(group).find('input[type=checkbox]').each(function (n, i) {
+			if ($(i).is(':checked')) filters[g].push($(i).val());
+		});
 	});
 
 	$.ajax('/api.php?method=Catalog.products', {
@@ -27,9 +31,13 @@ function requestProducts(catalogId, args)
 
 			if (sort) url += '&sort=' + sort;
 
-			filters.forEach(function (filter) {
-				url += '&filters[]=' + filter;
-			});
+			for (var i in filters) {
+				if (filters.hasOwnProperty(i)) {
+					filters[i].forEach(function (filterId) {
+						url += '&filters[' + i + '][]=' + filterId;
+					});
+				}
+			}
 
 			window.history.pushState('', '', url);
 

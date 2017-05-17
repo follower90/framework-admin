@@ -20,6 +20,11 @@ class Catalog extends \Core\Api
 		$view = new View();
 		$view->setDefaultPath('public/fashion');
 
+		$checkedFilters = [];
+		array_map(function($arr) use (&$checkedFilters) {
+			$checkedFilters = array_merge($checkedFilters, $arr);
+		} , $args['filters']);
+
 		return [
 			'products' => $view->render('templates/catalog/products.phtml', [
 				'products' => $products['products']->getData(),
@@ -35,7 +40,7 @@ class Catalog extends \Core\Api
 
 			'filters' => $view->render('templates/catalog/products_filters.phtml', [
 				'filters' => $filters,
-				'checked_filters' => $args['filters']
+				'checked_filters' => $checkedFilters
 			])
 		];
 	}

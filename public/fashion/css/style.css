@@ -1215,6 +1215,11 @@ hr {
     margin-left: 20px;
 }
 
+.filter-group .count {
+    color: #777;
+    font-weight: normal;
+}
+
 /* Blockquote Styles Starts */
 
 .panel-smart blockquote {

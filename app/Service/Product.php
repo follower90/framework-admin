@@ -27,19 +27,23 @@ class Product
 			}
 
 			$productIds = $catalog->getRelated('products')->getValues('id');
-
 			if (is_array($filters) && !empty($filters)) {
 
-				$filterProducts = $db->rows('select Product, group_concat(Filter) as Filter from Product__Filter where Product in('.implode(',', $productIds).') group By Product');
+				$filterProducts = $db->rows('select Product, group_concat(Filter) as Filter from Product__Filter where Product in(' . implode(',', $productIds) . ') group By Product');
 
 				foreach ($filterProducts as $filterProduct) {
 					$filterInProduct = explode(',', $filterProduct['Filter']);
 					$matching = true;
 
-					foreach ($filters as $filter) {
-						if (!in_array($filter, $filterInProduct)) {
-							$matching = false;
+					foreach ($filters as $filterGroup) {
+						$matchingGroup = false;
+						foreach ($filterGroup as $filter) {
+							if (in_array($filter, $filterInProduct)) {
+								$matchingGroup = true;
+							}
 						}
+
+						if (!$matchingGroup) $matching = false;
 					}
 
 					if ($matching) {
@@ -77,7 +81,7 @@ class Product
 		return $result;
 	}
 
-	public static function getAvailableFiltersDataForCatalog($catalogId, $products, $filters)
+	public static function getAvailableFiltersDataForCatalog($catalogId, $products, $selectedFilters)
 	{
 		$catalog = Orm::load('Catalog', $catalogId);
 		if (!$catalog) return [];
@@ -97,19 +101,30 @@ class Product
 
 			foreach ($filters->getCollection() as $filter) {
 				$data[$filterSet->getId()]['filters'][$filter->getId()] = $filter->getValues();
-				$data[$filterSet->getId()]['filters'][$filter->getId()]['count'] = 0;
-			}
-		}
-
-		foreach ($products->getCollection() as $product) {
-			foreach ($product->getRelated('filters')->getCollection() as $filter) {
-				if ($data[$filter->getValue('filterSetId')]) {
-					$data[$filter->getValue('filterSetId')]['filters'][$filter->getId()]['count']++;
-				}
+				$data[$filterSet->getId()]['filters'][$filter->getId()]['count'] = self::getFilterCountsForSet($catalogId, $products, $selectedFilters, $filter);
 			}
 		}
 
 		return $data;
+	}
+
+	public static function getFilterCountsForSet($catalogId, $products, $filters, $filter)
+	{
+		$filterId = $filter->getId();
+		$filterSetId = $filter->getValue('filterSetId');
+
+		if (in_array($filterId, $filters[$filterSetId])) {
+			return '*';
+		}
+
+		if (!$filters[$filterSetId]) $filters[$filterSetId] = [];
+		$filters[$filterSetId][] = $filterId;
+
+		$productsFiltered = self::filterBy($catalogId, $filters);
+
+		return $products->getCount() >= $productsFiltered['total']
+			? $productsFiltered['total']
+			: $productsFiltered['total'] - $products->getCount();
 	}
 
 	public static function viewPrice($basicPrice)
