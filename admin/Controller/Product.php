@@ -120,7 +120,7 @@ class Product extends Controller
 		$product = Orm::load('Product', $args['duplicate']);
 		$data = $product->getValues();
 		unset($data['id']);
-		$data['url'] = $product->getValue('url') .'_1';
+		$data['url'] = $product->getValue('url') . '_' . time();
 
 		$newProduct = Orm::create('Product');
 		$newProduct->updateAttributes($data);

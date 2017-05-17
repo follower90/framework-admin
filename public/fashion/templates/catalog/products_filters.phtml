@@ -4,18 +4,18 @@
 		echo '<div class="list-group-item">' . $cat['name'] . '</div>';
 		echo '<div class="list-group-item"><div class="filter-group">';
 
-		$addFromAnotherSet = '';
-		array_map(function ($f) use (&$addFromAnotherSet) {
-			if ($f['count'] === '*') $addFromAnotherSet = '+';
+		$addMore = '';
+		array_map(function ($f) use (&$addMore) {
+			if ($f['count'] === '*') $addMore = '+';
 		}, $cat['filters']);
 
 		foreach ($cat['filters'] as $filter) {
 			$checked = in_array($filter['id'], $vars['checked_filters']) ? 'checked' : '';
 			$disabled = ($filter['count'] === 0) ? 'disabled' : '';
 
-			echo '<label ' . ($disabled ? 'style="opacity:0.5;"' : '') . ' class="checkbox"><input type="checkbox" ' . $checked . ' ' . $disabled . ' class="filter" value="' . $filter['id'] . '" name="filter[]"  />&nbsp;&nbsp;';
+			echo '<label ' . ($disabled ? 'style="opacity:0.5;"' : '') . ' class="checkbox"><input type="checkbox" ' . $checked . ' ' . $disabled . ' class="filter" data-set="' . $filter['filterSetId'] . '" value="' . $filter['id'] . '" name="filter[]"  />&nbsp;&nbsp;';
 			echo $filter['name'];
-			if ($filter['count'] !== '*') echo ' <span class="count">(' . $addFromAnotherSet . $filter['count'] . ')</span>';
+			if ($filter['count'] !== '*') echo ' <span class="count">(' . $addMore . $filter['count'] . ')</span>';
 			echo '</label>';
 		}
 		echo '</div></div>';

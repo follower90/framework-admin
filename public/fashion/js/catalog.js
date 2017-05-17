@@ -5,11 +5,10 @@ function requestProducts(catalogId, args)
 	var sort = $('#products-sort').val();
 	var page = $('#paging li.active a').data('page') || '';
 
-
 	$('#products-filters .list-group-item').each(function (g, group) {
-		filters[g] = [];
 		$(group).find('input[type=checkbox]').each(function (n, i) {
-			if ($(i).is(':checked')) filters[g].push($(i).val());
+			if (!filters[$(i).data('set')]) filters[$(i).data('set')] = [];
+			if ($(i).is(':checked')) filters[$(i).data('set')].push($(i).val());
 		});
 	});
 

@@ -19,7 +19,7 @@ $(function () {
 		}
 	});
 
-	var url = window.location.href;
+	var url = window.location.href.split('?')[0];
 	var element = $('ul.nav a').filter(function () {
 		return url == this.href || url.indexOf(this.href + '/') == 0;
 	}).addClass('active').parent().parent().addClass('in').parent();
