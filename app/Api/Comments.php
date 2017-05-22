@@ -16,7 +16,7 @@ class Comments extends \Core\Api
 	public function methodPost($args)
 	{
 		$service = \App\Service\Comments::load($args['type'], $args['id']);
-		$comment = $service->addComment($args['name'], $args['text']);
+		$comment = $service->addComment($args['name'], $args['text'], $args['rating']);
 
 		$view = new \Core\View();
 		$view->setDefaultPath('public/fashion');

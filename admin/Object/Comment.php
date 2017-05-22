@@ -27,6 +27,11 @@ class Comment extends \Core\Object
 					'default' => null,
 					'null' => true,
 				],
+				'rating' => [
+					'type' => 'int',
+					'default' => 0,
+					'null' => false,
+				],
 				'entity' => [
 					'type' => 'varchar',
 					'default' => null,

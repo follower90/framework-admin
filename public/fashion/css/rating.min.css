@@ -1,0 +1,1 @@
+.c-rating{list-style:none;margin:0;padding:0}.c-rating__item{height:24px;width:24px;list-style:none;float:left;background:url(../images/stars.svg);cursor:pointer}.c-rating__item.is-active,.c-rating__item:hover{background-position:-24px 0}

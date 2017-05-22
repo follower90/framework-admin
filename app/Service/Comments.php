@@ -38,7 +38,7 @@ class Comments
 		return $data;
 	}
 
-	public function addComment($name, $text, $replyToCommentId = null)
+	public function addComment($name, $text, $rating, $replyToCommentId = null)
 	{
 		$user = \Core\App::getUser();
 		$comment = Orm::create('Comment');
@@ -47,6 +47,7 @@ class Comments
 			'entity' => $this->_entity,
 			'entityId' => $this->_id,
 			'parentId' => $replyToCommentId,
+			'rating' => $rating,
 			'name' => $name,
 			'text' => $text,
 			'date' => date('Y-m-d H:i:s')

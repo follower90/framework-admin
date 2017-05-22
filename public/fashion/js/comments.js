@@ -29,12 +29,14 @@ var Comments = {
 	send: function () {
 		var name = $('.comment-name').val().trim();
 		var value = $('.comment-text').val().trim();
+		var rating = $('.rating').val();
 		if (value) {
 			$.ajax('/api.php?method=Comments.post', {
 				type: 'POST', data: {
 					id: Comments.id,
 					type: Comments.type,
 					name: name,
+					rating: rating,
 					text: value
 				}
 			}).then(function (data) {
