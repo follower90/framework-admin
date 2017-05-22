@@ -36,7 +36,7 @@ class Order extends Controller
 		$order = Orm::load('Order', $args['edit']);
 		$data['order'] = $order->getValues();
 		$data['products'] = Orm::find('Order_Product', ['orderId'], [$order->getId()])->getData();
-
+		$data['statuses'] = \Admin\Object\Order::getStatusMap();
 		$data['content'] = $this->view->render('templates/modules/order/edit.phtml', $data);
 
 		return $this->render($data);

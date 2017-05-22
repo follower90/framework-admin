@@ -88,43 +88,41 @@ class Product
 
 		$data = [];
 
-		$allProducts = $catalog
-			->getRelated('products');
-
-		$filterSets = $allProducts
+		$filterSets = $catalog
+			->getRelated('products')
 			->getRelated('filters')
 			->getRelated('filter_set');
 
 		foreach ($filterSets->getCollection() as $filterSet) {
-			$filters = Orm::find('Filter', ['filterSetId'], [$filterSet->getId()]);
-			$data[$filterSet->getId()] = $filterSet->getValues();
+			$filterSetId = $filterSet->getId();
+			$filters = Orm::find('Filter', ['filterSetId'], [$filterSetId]);
+			$data[$filterSetId] = $filterSet->getValues();
 
 			foreach ($filters->getCollection() as $filter) {
-				$data[$filterSet->getId()]['filters'][$filter->getId()] = $filter->getValues();
-				$data[$filterSet->getId()]['filters'][$filter->getId()]['count'] = self::getFilterCountsForSet($catalogId, $products, $selectedFilters, $filter);
+				$data[$filterSetId]['filters'][$filter->getId()] = $filter->getValues();
+				$data[$filterSetId]['filters'][$filter->getId()]['count'] = self::getFilterCountsForSet($catalogId, $filter, $selectedFilters, $products->getCount());
 			}
 		}
 
 		return $data;
+
 	}
 
-	public static function getFilterCountsForSet($catalogId, $products, $filters, $filter)
+	public static function getFilterCountsForSet($catalogId, $filter, $selectedFilters, $productCount)
 	{
 		$filterId = $filter->getId();
 		$filterSetId = $filter->getValue('filterSetId');
 
-		if (in_array($filterId, $filters[$filterSetId])) {
-			return '*';
-		}
+		if (in_array($filterId, $selectedFilters[$filterSetId])) return '*';
 
-		if (!$filters[$filterSetId]) $filters[$filterSetId] = [];
-		$filters[$filterSetId][] = $filterId;
+		if (!$selectedFilters[$filterSetId]) $filters[$filterSetId] = [];
+		$selectedFilters[$filterSetId][] = $filterId;
 
-		$productsFiltered = self::filterBy($catalogId, $filters);
+		$productsFiltered = self::filterBy($catalogId, $selectedFilters);
 
-		return $products->getCount() >= $productsFiltered['total']
+		return $productCount >= $productsFiltered['total']
 			? $productsFiltered['total']
-			: $productsFiltered['total'] - $products->getCount();
+			: $productsFiltered['total'] - $productCount;
 	}
 
 	public static function viewPrice($basicPrice)
