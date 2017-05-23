@@ -17,8 +17,8 @@ class Product extends Controller
 
 		$data = [
 			'product' => $product->getValues(),
+			'rating' => $product->getRating(),
 			'photos' => $product->getPhotos(),
-			'comments' => \App\Service\Comments::load('Product', $product->getId())->getComments(3),
 			'userinfo' => $this->user ? Orm::findOne('User_Info', ['userId'], $this->user->getId())->getValues() : [],
 			'breadcrumbs' => $this->getBreadcrumbs($product),
 			'delivery_types' =>Orm::find('Delivery_Type')->getData(),

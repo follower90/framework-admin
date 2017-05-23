@@ -239,6 +239,24 @@ class Product extends \Core\Object
 		$comments->removeAll();
 	}
 
+	public function getRating() {
+
+		$comments = \App\Service\Comments::load('Product', $this->getId())->getComments();
+		$rates = [];
+
+		array_map(function($comment) use (&$rates) {
+			if ($comment['rating'] > 0) {
+				array_push($rates, $comment['rating']);
+			}
+		}, $comments);
+
+		$ratingSum = array_reduce($rates, function($acc, $rate) {
+			return $acc + $rate;
+		});
+
+		return $ratingSum / count($rates);
+	}
+
 	public function getCategoriesIds()
 	{
 		if (!$this->getRelated('product_categories')->isEmpty()) {

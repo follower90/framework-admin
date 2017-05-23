@@ -889,6 +889,11 @@ hr {
 .product-info .product-details {
 }
 
+.product-info .product-rating {
+    float: left;
+    width: 100%;
+}
+
 .product-info .product-details h2 {
     margin-top: 0;
     font-size: 24px;
