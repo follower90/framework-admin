@@ -10,8 +10,6 @@ class Admin extends Controller
 {
 	public function methodIndex($args)
 	{
-		$data = [];
-
 		$paging = Paging::create('Admin', [
 			'page_size' => 10,
 			'current_page' => empty($args['page']) ? 1 : (int)$args['page']
@@ -19,7 +17,6 @@ class Admin extends Controller
 
 		$data['paging'] = $paging->getPaging();
 		$data['admins'] = $paging->getObjects(true);
-
 		$data['content'] = $this->view->render('templates/modules/admin/index.phtml', $data);
 
 		return $this->render($data);
@@ -74,9 +71,9 @@ class Admin extends Controller
 
 	public function methodDelete($args)
 	{
-		$page = Orm::load('Admin', $args['delete']);
+		$admin = Orm::load('Admin', $args['delete']);
 
-		Orm::delete($page);
+		Orm::delete($admin);
 		$this->back();
 	}
 }

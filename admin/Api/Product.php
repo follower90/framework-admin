@@ -59,4 +59,11 @@ class Product extends \Core\Api
 
 		return ['success' => true];
 	}
+
+	public function methodSearch($args)
+	{
+		$query = $args['query'];
+		$data = Orm::find('Product', ['~lang.name'], [$query]);
+		return array_values($data->getData());
+	}
 }

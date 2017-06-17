@@ -34,8 +34,10 @@ class Order extends Controller
 	public function methodEdit($args)
 	{
 		$order = Orm::load('Order', $args['edit']);
+		$products = $order->getRelated('products')->getData();
+
 		$data['order'] = $order->getValues();
-		$data['products'] = Orm::find('Order_Product', ['orderId'], [$order->getId()])->getData();
+		$data['products'] = $this->view->render('templates/modules/order/products.phtml', ['products' => $products, 'orderId' => $order->getId()]);
 		$data['statuses'] = \Admin\Object\Order::getStatusMap();
 		$data['content'] = $this->view->render('templates/modules/order/edit.phtml', $data);
 
@@ -58,6 +60,19 @@ class Order extends Controller
 				Router::redirect('/admin/order/new');
 			}
 		}
+
+		Router::redirect('/admin/order/edit/' . $order->getId());
+	}
+
+	public function methodUpdate($args)
+	{
+		foreach ($args['product'] as $id => $count) {
+			$p = Orm::load('Order_Product', $id);
+			$p->updateAttributes(['count' => $count]);
+		}
+
+		$order = Orm::load('Order', $args['id']);
+		$order->updateAttributes(['sum' => $order->calculateSum()]);
 
 		Router::redirect('/admin/order/edit/' . $order->getId());
 	}

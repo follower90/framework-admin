@@ -79,18 +79,18 @@ class Controller extends \Core\Controller
 
 	protected function renderBreadCrumbs($data = [])
 	{
-		$result = '<li><a href="/">'. __('Main').'</a></li>';
+		$items = ['<li><a href="/">' . __('Main') . '</a></li>'];
 
-		if (sizeof($data) > 0) {
+		if (!empty($data)) {
 			$last = array_pop($data);
-		}
 
-		foreach ($data as $val) {
-			$result .= '<li><a href=' . $val['url'] .'>' . $val['name']. '</a></li>';
-		}
+			foreach ($data as $val) {
+				$items[] = '<li><a href=' . $val['url'] . '>' . $val['name'] . '</a></li>';
+			}
 
-		$result .= '<li class="active">'. $last['name'] . '</li>';
-		return '<ol class="breadcrumb">' . $result . '</ol>';
+			$items[] = '<li class="active">' . $last['name'] . '</li>';
+		}
+		return $this->view->render('templates/breadcrumbs.phtml', ['items' => $items]);
 	}
 
 	protected function addJavaScriptPath($paths = [])

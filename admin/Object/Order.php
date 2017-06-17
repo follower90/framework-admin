@@ -8,7 +8,7 @@ class Order extends \Core\Object
 
 	const STATUS_NEW = 1;
 	const STATUS_PROCESS = 2;
-	const STATUS_FINISHED = 999;
+	const STATUS_FINISHED = 9;
 
 	public function getConfig()
 	{
@@ -100,7 +100,18 @@ class Order extends \Core\Object
 		return [
 			1 => __('New'),
 			2 => __('In progress'),
-			999 => __('Finished')
+			9 => __('Finished')
 		];
+	}
+
+	public function calculateSum() {
+		$products = $this->getRelated('products')->getCollection();
+
+		$sum = array_reduce($products, function($c, $product) {
+			$c += $product->getValue('price') * $product->getValue('count');
+			return $c;
+		}, 0);
+
+		return $sum;
 	}
 }
