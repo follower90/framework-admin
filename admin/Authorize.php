@@ -61,6 +61,7 @@ class Authorize
 	 * @param string $password
 	 * @param \Closure $hashFunction
 	 * @param bool $remember
+	 * @return \Core\Object $user
 	 * @throws \Exception
 	 */
 	public function login($login, $password, $hashFunction, $remember = false)
@@ -119,7 +120,8 @@ class Authorize
 	public function getUser()
 	{
 		if (!$this->_user = App::getUser()) {
-			if ($session = User_Session::findBy(['hash' => $this->_oauth_hash, 'entity' => $this->_entity])) {
+			$session = User_Session::findBy(['hash' => $this->_oauth_hash, 'entity' => $this->_entity]);
+			if ($session) {
 				$this->_user = Orm::load($this->_entity, $session->getValue('userId'));
 				App::setUser($this->_user);
 			}

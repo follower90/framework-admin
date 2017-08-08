@@ -98,14 +98,18 @@ class Controller extends \Core\Controller
 
 	protected function addJavaScriptPath($paths = [])
 	{
-		if (!is_array($paths)) $paths = [$paths];
+		if (!is_array($paths)) {
+			$paths = [$paths];
+		}
 		$this->_scripts = array_merge($this->_scripts, $paths);
 		$this->_data['scripts'] = $this->_scripts;
 	}
 
 	public function addCssPath($paths = [])
 	{
-		if (!is_array($paths)) $paths = [$paths];
+		if (!is_array($paths)) {
+			$paths = [$paths];
+		}
 
 		$this->_styles = array_merge($this->_styles, $paths);
 		$this->_data['styles'] = $this->_styles;

@@ -23,11 +23,15 @@ class Meta
 		$meta = Orm::findOne('Meta', ['url', 'moduleId'], [$data['url'], $data['moduleId']]);
 
 		if (!$data['title'] && !$data['keywords'] && !$data['description']) {
-			if ($meta) Orm::delete($meta);
+			if ($meta) {
+				Orm::delete($meta);
+			}
 			return;
 		}
 
-		if (!$meta) $meta = Orm::create('Meta');
+		if (!$meta) {
+			$meta = Orm::create('Meta');
+		}
 
 		$meta->setValues([
 			'moduleId' => $data['moduleId'],

@@ -15,7 +15,9 @@ class User extends Controller
 
 	public function methodLogin($args)
 	{
-		if ($this->user) Router::redirect('/');
+		if ($this->user) {
+			Router::redirect('/');
+		}
 
 		if ($args['login'] && $args['password']) {
 			$this->authorize($args['login'], $args['password']);
@@ -57,7 +59,10 @@ class User extends Controller
 
 	public function methodRegister($args)
 	{
-		if ($this->user) Router::redirect('/');
+		if ($this->user) {
+			Router::redirect('/');
+		}
+
 		if ($args['register'] && $this->_validateRegistration($args)) {
 			$user = \Admin\Object\User::create();
 			$info = Orm::create('User_Info');

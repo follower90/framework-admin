@@ -64,7 +64,7 @@ class Slider extends Controller
 		try {
 			$slide->updateAttributes($args);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
-			$errors = explode("___", $e->getMessage());
+			$errors = explode('___', $e->getMessage());
 			array_map(function($error) { $this->view->addNotice('error', $error); }, $errors);
 			if ($slide->isNew()) {
 				Router::redirect('/admin/slider/new');

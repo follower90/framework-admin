@@ -8,7 +8,7 @@ class Notice extends \Core\View\Notice
 		'error' => 'danger',
 	];
 
-	function show()
+	public function show()
 	{
 		return '<div class="alert alert-' . $this->_typesMap[$this->_type] . '">' . $this->_text . '</div>';
 	}

@@ -6,9 +6,8 @@ use Core\Orm;
 
 class Menu extends \Core\Api
 {
-	public function methodIndex($args)
+	public function methodIndex()
 	{
-		header("Access-Control-Allow-Origin: *");
 		$items = Orm::find('Menu');
 		$result = [];
 		$items->stream()->each(function($item) use (&$result) {
@@ -20,17 +19,20 @@ class Menu extends \Core\Api
 
 	public function methodGet($args)
 	{
-		header("Access-Control-Allow-Origin: *");
+		if (!$args['id']) {
+			return false;
+		}
 
-		if (!$args['id']) return false;
 		$page = Orm::load('Menu', $args['id']);
-
 		return $page->getValues();
 	}
 
 	public function methodActive($args)
 	{
-		if (!$args['id']) return false;
+		if (!$args['id']) {
+			return false;
+		}
+
 		$page = Orm::load('Menu', $args['id']);
 		$page->setValue('active', (int)$args['active']);
 		Orm::save($page);

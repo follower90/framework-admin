@@ -12,7 +12,7 @@ class Error extends Controller
 			'/css/font-awesome.min.css',
 		];
 
-		header("HTTP/1.0 404 Not Found");
+		header('HTTP/1.0 404 Not Found');
 		return $this->renderPage('templates/404.phtml', $data);
 	}
 }

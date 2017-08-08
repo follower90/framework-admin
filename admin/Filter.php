@@ -7,7 +7,7 @@ use \Core\Session;
 class Filter
 {
 	/**
-	 * @var screen
+	 * @var string $screen
 	 * Controller name, action name, or other alias
 	 */
 	private $_screen;
@@ -41,15 +41,15 @@ class Filter
 	{
 		$filters = Session::get($this->_screen);
 		$filters = json_decode($filters, true);
-
-		if (!$filters) $filters = [];
+		$filters = $filters ?: [];
 		$filters[$key] = $value;
 
 		Session::set($this->_screen, json_encode($filters));
 	}
 
 	/**
-	 * @return mixed
+	 * @param $data array
+	 * @return null
 	 * Sets bulk filters
 	 */
 	public function setFilters($data)

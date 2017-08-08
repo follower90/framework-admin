@@ -11,7 +11,9 @@ class Catalog extends \Core\Api
 {
 	public function methodActive($args)
 	{
-		if (!$args['id']) return false;
+		if (!$args['id']) {
+			return false;
+		}
 		$admin = \Admin\Object\Catalog::find($args['id']);
 		$admin->setValue('active', (int)$args['active']);
 		$admin->save();

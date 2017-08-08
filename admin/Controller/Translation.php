@@ -17,7 +17,7 @@ class Translation extends Controller
 		$filter = \Admin\Filter::init('translation');
 		$filter->setFilters($args);
 
-		$type = $filter->getFilter('type') ? $filter->getFilter('type') : 'admin';
+		$type = $filter->getFilter('type') ?: 'admin';
 
 		$paging = Paging::create('Translation', [
 			'page_size' => 50,
@@ -100,7 +100,7 @@ class Translation extends Controller
 			$lang = Config::get('site.language');
 
 			foreach ($translation as $t) {
-				$newData[$lang][$type][$t['alias']] = $t['value'] ? $t['value'] : $t['alias'];
+				$newData[$lang][$type][$t['alias']] = $t['value'] ?: $t['alias'];
 			}
 
 			$data = array_merge($data, $newData);

@@ -94,7 +94,7 @@ class Product extends Controller
 		try {
 			$product->updateAttributes($args);
 		} catch (\Core\Exception\UserInterface\ObjectValidationException $e) {
-			$errors = explode("___", $e->getMessage());
+			$errors = explode('___', $e->getMessage());
 			array_map(function($error) { $this->view->addNotice('error', $error); }, $errors);
 			if ($product->isNew()) {
 				Router::redirect('/admin/product/new');

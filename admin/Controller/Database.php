@@ -39,7 +39,7 @@ class Database extends Controller
 						$val = '""';
 					}
 				}
-				$result .= "(" . implode(',', $row) . ");\n";
+				$result .= '(' . implode(',', $row) . ");\n";
 			}
 
 			$result .= "\n\n";

@@ -48,10 +48,9 @@ class Snippet
 		return $view . $scripts;
 	}
 
-	public static function actions($id, $path, $actions = [])
+	public static function actions($id, $path, array $actions)
 	{
-		array_push($actions, 'edit');
-
+		$actions[] = 'edit';
 		$html = View::renderString('<div class="btn-group btn-sm">
 		  <a href="/admin/{1}/edit/{2}" class="btn btn-sm btn-default">{3}</a>
 		  <button class="btn dropdown-toggle btn-sm btn-default" data-toggle="dropdown">
@@ -61,11 +60,11 @@ class Snippet
 			[$path, $id, Utils::translate('Edit')]
 		);
 
-		if (in_array('duplicate', $actions)) {
+		if (in_array('duplicate', $actions, true)) {
 			$html .= View::renderString('<li><a class="duplicate_item_' . $id . '" href="/admin/{1}/duplicate/{2}">{3}</a></li>',
 				[$path, $id, __('Duplicate')]);
 		}
-		if (in_array('delete', $actions)) {
+		if (in_array('delete', $actions, true)) {
 			$html .= View::renderString('<li><a class="delete_item_' . $id . '" href="/admin/{1}/delete/{2}">{3}</a></li>',
 				[$path, $id, __('Delete')]);
 		}

@@ -16,7 +16,7 @@ class Utils
 		}
 
 		if ($data = Orm::findOne('Translation', ['alias', 'type'], [$key, $type])) {
-			return $data->getValue('value') ? $data->getValue('value') : $key;
+			return $data->getValue('value') ?: $key;
 		}
 
 		$translate = Orm::create('Translation');
@@ -56,10 +56,9 @@ class Utils
 		$data = json_decode($translation, true);
 		$lang = Config::get('site.language');
 
-		if (isset($data[$lang])
-			&& isset($data[$lang][$type])
-			&& isset($data[$lang][$type][$key])) {
-
+		if (array_key_exists($lang, $data)
+			&& array_key_exists($type, $data[$lang])
+			&& array_key_exists($key, $data[$lang][$type])) {
 				return $data[$lang][$type][$key];
 		}
 

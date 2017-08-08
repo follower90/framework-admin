@@ -8,7 +8,9 @@ class Page extends \Core\Api
 {
 	public function methodActive($args)
 	{
-		if (!$args['id']) return false;
+		if (!$args['id']) {
+			return false;
+		}
 		$page = Orm::load('Page', $args['id']);
 		$page->setValue('active', (int)$args['active']);
 		Orm::save($page);

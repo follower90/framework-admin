@@ -34,6 +34,10 @@ class Order extends Controller
 	public function methodEdit($args)
 	{
 		$order = Orm::load('Order', $args['edit']);
+		if (!$order) {
+			$this->render404();
+		}
+
 		$products = $order->getRelated('products')->getData();
 
 		$data['order'] = $order->getValues();

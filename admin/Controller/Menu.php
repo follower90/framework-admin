@@ -16,7 +16,7 @@ class Menu extends Controller
 		$filter = \Admin\Filter::init('menu');
 		$filter->setFilters($args);
 
-		$type = $filter->getFilter('type') ? $filter->getFilter('type') : \Admin\Object\Menu::TYPE_MAIN;
+		$type = $filter->getFilter('type') ?: \Admin\Object\Menu::TYPE_MAIN;
 
 		$paging = Paging::create('Menu', [
 			'page_size' => 20,

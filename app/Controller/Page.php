@@ -7,7 +7,9 @@ class Page extends Controller
 	public function methodIndex($args)
 	{
 		$page = \Admin\Object\Page::findBy(['url' => $args['page']]);
-		if (!$page) $this->render404();
+		if (!$page) {
+			$this->render404();
+		}
 
 		$data = [
 			'page' => $page->getValues(),

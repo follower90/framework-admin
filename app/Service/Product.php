@@ -113,11 +113,15 @@ class Product
 		$filterId = $filter->getId();
 		$filterSetId = $filter->getValue('filterSetId');
 
-		if (in_array($filterId, $selectedFilters[$filterSetId])) return '*';
+		if (in_array($filterId, $selectedFilters[$filterSetId])) {
+			return '*';
+		}
 
-		if (!$selectedFilters[$filterSetId]) $filters[$filterSetId] = [];
+		if (!$selectedFilters[$filterSetId]) {
+			$filters[$filterSetId] = [];
+		}
+
 		$selectedFilters[$filterSetId][] = $filterId;
-
 		$productsFiltered = self::filterBy($catalogId, $selectedFilters);
 
 		return $productCount >= $productsFiltered['total']

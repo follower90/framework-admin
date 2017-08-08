@@ -27,9 +27,9 @@ class Paging
 	private $_paging = [];
 
 	/**
-	 * @var array collection of fetched objects for one page
+	 * @var \Core\Collection collection of fetched objects for one page
 	 */
-	private $_collection = [];
+	private $_collection;
 
 	/**
 	 * @var array filter collection
@@ -52,17 +52,17 @@ class Paging
 
 	/**
 	 * Return paging object
-	 * @param $className
+	 * @param string $className
 	 * @param array $params
 	 * @return static
 	 */
-	public static function create($className, $params = [])
+	public static function create($className, array $params)
 	{
-		if (!isset($params['params'])) {
+		if (!array_key_exists('params', $params)) {
 			$params['params'] = [[], []];
 		}
 
-		if (!isset($params['order'])) {
+		if (!array_key_exists('order', $params)) {
 			$params['order'] = false;
 		}
 
@@ -127,11 +127,11 @@ class Paging
 	 */
 	public function firstItemOnPage()
 	{
-		$offset = ($this->_paging['offset'] > 0)
-			? $this->_onPage
-			: ($this->_paging['total'] > 0 ? 1 : 0);
+		$firstPageOffset = $this->_onPage;
+		$notFirstPageOffset = $this->_paging['total'] > 0 ? 1 : 0;
 
-		$page = ($this->_paging['page'] != 1) ? $this->_paging['page'] - 1 : 1;
+		$offset = ($this->_paging['offset'] > 0) ? $firstPageOffset : $notFirstPageOffset;
+		$page = ($this->_paging['page'] !== 1) ? $this->_paging['page'] - 1 : 1;
 		return $page * $offset;
 	}
 
@@ -150,7 +150,7 @@ class Paging
 	 */
 	public function isFirstPage()
 	{
-		return $this->_paging['page'] == 1;
+		return $this->_paging['page'] === 1;
 	}
 
 	/**

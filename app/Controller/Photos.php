@@ -17,10 +17,11 @@ class Photos extends Controller
 			return $this->render(['content' => $content]);
 		} else {
 			$album = \Admin\Object\Photo_Album::findBy(['url' => $args['url']]);
-			if (!$album) $this->render404();
+			if (!$album) {
+				$this->render404();
+			}
+
 			$albumId = $album->getId();
-
-
 			$photos = Orm::find('Photo', ['albumId'], [$albumId]);
 
 			$content = $this->view->render('templates/photos/album.phtml', [
