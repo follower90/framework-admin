@@ -27,7 +27,7 @@ class Product extends Controller
 		];
 
 		$this->addCssPath(['/css/drift.min.css', '/css/rating.min.css']);
-		$this->addJavaScriptPath(['/js/comments.js', '/js/rating.min.js', '/js/drift.min.js']);
+		$this->addJavaScriptPath(['/js/comments.js', '/js/lib/rating.min.js', '/js/lib/drift.min.js']);
 
 		return $this->render([
 			'content' => $this->view->render('templates/product.phtml', $data)

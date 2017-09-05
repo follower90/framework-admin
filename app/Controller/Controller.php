@@ -64,16 +64,18 @@ class Controller extends \Core\Controller
 		]);
 
 		$this->addJavaScriptPath([
-			'/js/jquery-1.11.1.min.js',
-			'/js/jquery-migrate-1.2.1.min.js',
-			'/js/bootstrap.min.js',
-			'/js/ie8-responsive-file-warning.js',
-			'/js/bootstrap-hover-dropdown.min.js',
-			'/js/jquery.magnific-popup.min.js',
+			'/js/lib/jquery-1.11.1.min.js',
+			'/js/lib/jquery-migrate-1.2.1.min.js',
+			'/js/lib/bootstrap.min.js',
+			'/js/lib/ie8-responsive-file-warning.js',
+			'/js/lib/bootstrap-hover-dropdown.min.js',
+			'/js/lib/jquery.magnific-popup.min.js',
+			'/js/lib/select2.full.min.js',
+			'/js/lib/lodash.js',
 			'/js/custom.js',
+			'/js/search.js',
 			'/js/cart.js',
 			'/js/favourite.js',
-			'/js/select2.full.min.js',
 		]);
 	}
 
