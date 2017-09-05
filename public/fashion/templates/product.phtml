@@ -128,11 +128,8 @@
 			}).enable();
 		}
 
-		var productRating = rating($('.product-rating')[0], 0, 5, function (e) {
+		var productRating = rating($('.product-rating')[0], 0, 5);
 			productRating.setRating(<?=$vars['rating'];?>);
-		});
-
-		productRating.setRating(<?=$vars['rating'];?>);
 	});
 
 </script>
