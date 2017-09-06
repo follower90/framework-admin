@@ -7,7 +7,7 @@
 					<div id="search">
 						<form action="/catalog/search">
 							<div class="input-group">
-								<input type="text" name="search" class="form-control input-lg" placeholder="<?= __('Search'); ?>" value="<?= isset($vars['search']) ? $vars['search'] : '';?>"/>
+								<input type="text" name="search" class="form-control input-lg" autocomplete="off" placeholder="<?= __('Search'); ?>" value="<?= isset($vars['search']) ? $vars['search'] : '';?>"/>
 							  <span class="input-group-btn">
 								<button class="btn btn-lg" type="button">
 									<i class="fa fa-search"></i>
@@ -15,6 +15,7 @@
 							  </span>
 							</div>
 						</form>
+						<div class="search-results"></div>
 					</div>
 				</div>
 
