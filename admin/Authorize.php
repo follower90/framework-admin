@@ -67,7 +67,7 @@ class Authorize
 	public function login($login, $password, $hashFunction, $remember = false)
 	{
 		if ($user = Orm::findOne($this->_entity, ['login', 'password'], [$login, $hashFunction($password)])) {
-			$this->_oauth_hash = $this->hash($login, $password);
+			$this->_oauth_hash = self::hash($this->_entity, $login, $password);
 			$this->_user = $user;
 
 			$params = [
@@ -90,6 +90,32 @@ class Authorize
 		}
 
 		return false;
+	}
+
+	/*
+	 * To authorize without password
+	 * used for social networks authorization
+	 * @param $entity
+	 * @param $object
+	 */
+	public static function authorize($entity, $object)
+	{
+		$oauthHash = self::hash($entity, $object->getValue('login'), $object->getValue('password'));
+
+		$params = [
+			'entity' => $entity,
+			'hash' => $oauthHash,
+			'userId' => $object->getId(),
+		];
+
+		if (!User_Session::findBy($params)) {
+			MySQL::insert('User_Session', $params);
+		}
+
+		Session::set(strtolower($entity) .'_oauth_hash', $oauthHash);
+		Cookie::set(strtolower($entity) .'_oauth_hash', $oauthHash);
+
+		return $object;
 	}
 
 	/**
@@ -132,12 +158,13 @@ class Authorize
 
 	/**
 	 * Hash function for security of user session hash and auth cookie value
+	 * @param $entity
 	 * @param $login
 	 * @param $password
 	 * @return string
 	 */
-	protected function hash($login, $password)
+	private static function hash($entity, $login, $password)
 	{
-		return md5($this->_entity . $login . $password . self::HASH_SALT);
+		return md5($entity . $login . $password . self::HASH_SALT);
 	}
 }

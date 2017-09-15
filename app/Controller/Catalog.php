@@ -64,7 +64,7 @@ class Catalog extends Controller
 		$filters = isset($args['filters']) ? $args['filters'] : [];
 		$catalogId = 0;
 
-		$products = \App\Service\Product::filterBy($catalogId, $filters, $sort, [], ['~lang.name' => '%' . $args['search'] . '%']);
+		$products = \App\Service\Product::filterBy($catalogId, $filters, $sort, [], ['~lang.name' => $args['search']]);
 
 		$content = $this->view->render('templates/catalog/catalog_search.phtml', [
 

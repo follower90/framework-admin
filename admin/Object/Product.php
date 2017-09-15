@@ -41,6 +41,11 @@ class Product extends \Core\Object
 					'default' => '',
 					'null' => false,
 				],
+				'old_price' => [
+					'type' => 'float',
+					'default' => 0,
+					'null' => false,
+				],
 				'price' => [
 					'type' => 'float',
 					'default' => 0,

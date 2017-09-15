@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Admin\Authorize;
 use Core\Orm;
 use Admin\Object\InfoBlock;
 use Core\Router;
@@ -32,6 +33,64 @@ class User extends Controller
 		$data['content'] = $this->view->render('templates/user/login.phtml', ['values' => $args]);
 		$data['breadcrumbs'] = $this->renderBreadCrumbs([['name' => __('Authorization')]]);
 		return $this->render($data);
+	}
+
+	public function methodSocialAuth($args)
+	{
+		$providerName = $args["provider"];
+
+		try {
+			$config = \Core\App::get()->getAppPath() . '/hybrid_auth.php';
+			$hybridauth = new \Hybrid_Auth($config);
+			$adapter = $hybridauth->authenticate($providerName);
+			$userProfile = $adapter->getUserProfile();
+		}
+		catch (\Exception $e) {
+			var_dump($e);exit;
+			$this->view->addNotice('error', __('Authorization error'));
+			$this->back();
+		}
+
+		$userHybridAuth = \Admin\Object\User_HybridAuth::findBy([
+			'hybridauth_provider_name' =>  $providerName,
+			'hybridauth_provider_uid' => $userProfile->identifier,
+		]);
+
+		if ($userHybridAuth) {
+			$user = \Admin\Object\User::find($userHybridAuth->getValue('userId'));
+		} else {
+			$user = \Admin\Object\User::findBy(['login' => $userProfile->displayName]);
+			if (!$user) {
+				$user = \Admin\Object\User::create();
+				$info = Orm::create('User_Info');
+
+				$user->setValues([
+					'login' => $userProfile->displayName,
+					'password' => '',
+				]);
+
+				$user->save();
+
+				$info->setValues([
+					'userId' => $user->getId(),
+					'email' => $userProfile->email,
+				]);
+
+				$info->save();
+			}
+
+			$userHybridAuth = Orm::create('User_HybridAuth');
+			$userHybridAuth->setValues([
+				'userId' => $user->getId(),
+				'hybridauth_provider_name' => $providerName,
+				'hybridauth_provider_uid' => $userProfile->identifier,
+			]);
+
+			$userHybridAuth->save();
+		}
+
+		\Admin\Authorize::authorize('User', $user);
+		header('Location: /');
 	}
 
 	public function methodLogout()

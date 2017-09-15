@@ -621,8 +621,8 @@ hr {
 }
 
 .product-col .price span.price-old {
-    font-size: 18px;
-    color: #828282;
+    font-size: 16px;
+    color: #ee2d3d;
     text-decoration: line-through;
 }
 
@@ -721,6 +721,18 @@ hr {
 
 .login-area {
     padding-top: 30px
+}
+
+.social-network-auth a {
+    font-size: 19px;
+    width: 25px;
+    height: 25px;
+    display: block;
+    float: left;
+    text-align: center;
+    line-height: 25px;
+    border: 1px solid #ccc;
+    margin: 5px;
 }
 
 .registration-area {
@@ -966,8 +978,8 @@ hr {
 }
 
 .product-info .product-details .price-old {
-    font-size: 18px;
-    color: #828282;
+    font-size: 16px;
+    color: #ee2d3d;
     text-decoration: line-through;
 }
 

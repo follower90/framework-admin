@@ -81,7 +81,7 @@ class Product
 		return $result;
 	}
 
-	public static function getAvailableFiltersDataForCatalog($catalogId, $products, $selectedFilters)
+	public static function getAvailableFiltersDataForCatalog($catalogId, $products, $selectedFilters = [])
 	{
 		$catalog = Orm::load('Catalog', $catalogId);
 		if (!$catalog) return [];

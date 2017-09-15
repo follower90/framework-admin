@@ -30,7 +30,12 @@ class Module
 	public static function detect()
 	{
 		$uri = Router::get('uri');
-		$moduleUri = explode('?', explode('/', $uri)[2])[0];
+		$urlParts = explode('/', $uri);
+		$moduleUri = '';
+
+		if (count($urlParts) > 2) {
+			$moduleUri = explode('?', $urlParts[2])[0];
+		}
 
 		return Orm::findOne('Module', ['url'], [$moduleUri]);
 	}

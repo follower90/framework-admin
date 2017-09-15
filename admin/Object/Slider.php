@@ -64,4 +64,10 @@ class Slider extends \Core\Object
 	{
 		return Orm::find('Object_Resource', ['objectType', 'objectId'], ['slider', $this->getId()]);
 	}
+
+	public function afterDelete() {
+		$this->resources()->stream()->each(function($resource) {
+			$resource->remove();
+		});
+	}
 }

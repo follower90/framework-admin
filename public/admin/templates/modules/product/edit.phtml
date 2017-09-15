@@ -54,6 +54,10 @@
 							<input class="form-control" name="url" value="<?= $vars['product']['url']; ?>"/>
 						</div>
 						<div class="form-group">
+							<label><?= __('Old price') ?> (<?= \Admin\Utils::getBasicCurrency()->getValue('name'); ?>)</label>
+							<input class="form-control" name="old_price" value="<?= $vars['product']['old_price']; ?>"/>
+						</div>
+						<div class="form-group">
 							<label><?= __('Price') ?> (<?= \Admin\Utils::getBasicCurrency()->getValue('name'); ?>)</label>
 							<input class="form-control" name="price" value="<?= $vars['product']['price']; ?>"/>
 						</div>

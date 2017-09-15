@@ -2,7 +2,8 @@
   "require": {
     "follower/core": "dev-master",
     "eoghanobrien/php-simple-mail": "dev-master",
-    "phpmailer/phpmailer": "^5.2"
+    "phpmailer/phpmailer": "^5.2",
+    "hybridauth/hybridauth": "^2.9"
   },
   "autoload": {
     "classmap": [

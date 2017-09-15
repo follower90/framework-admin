@@ -11,6 +11,9 @@
 				<a href="/product/view/<?= $product['url']; ?>"><?= (strlen($product['name']) > 22) ? mb_substr($product['name'], 0, 22) . '...' : $product['name']; ?></a>
 			</h4>
 			<div class="price">
+				<?php if ($product['old_price'] > 0) { ?>
+					<span class="price-old"><?= \App\Service\Product::viewPrice($product['old_price']); ?></span>
+				<?php } ?>
 				<span class="price-new"><?= \App\Service\Product::viewPrice($product['price']); ?></span>
 			</div>
 

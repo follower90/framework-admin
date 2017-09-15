@@ -18,6 +18,11 @@ class Blog extends \Core\Object
 						'default' => '',
 						'null' => false,
 					],
+					'text_m' => [
+						'type' => 'text',
+						'default' => '',
+						'null' => false,
+					],
 					'text' => [
 						'type' => 'text',
 						'default' => '',
