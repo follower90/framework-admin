@@ -27,7 +27,7 @@ class Product
 			}
 
 			$productIds = $catalog->getRelated('products')->getValues('id');
-			if (is_array($filters) && !empty($filters)) {
+			if (is_array($filters) && count($filters) !== 0) {
 
 				$filterProducts = $db->rows('select Product, group_concat(Filter) as Filter from Product__Filter where Product in(' . implode(',', $productIds) . ') group By Product');
 
@@ -43,11 +43,15 @@ class Product
 							}
 						}
 
-						if (!$matchingGroup) $matching = false;
+						if (!$matchingGroup) {
+							$matching = false;
+						}
 					}
 
 					if ($matching) {
-						if (!isset($productFilters['id'])) $productFilters['id'] = [];
+						if (!isset($productFilters['id'])) {
+							$productFilters['id'] = [];
+						}
 						array_push($productFilters['id'], $filterProduct['Product']);
 					}
 				}
@@ -113,12 +117,12 @@ class Product
 		$filterId = $filter->getId();
 		$filterSetId = $filter->getValue('filterSetId');
 
-		if (in_array($filterId, $selectedFilters[$filterSetId])) {
-			return '*';
+		if (!array_key_exists($filterSetId, $selectedFilters)) {
+			$selectedFilters[$filterSetId] = [];
 		}
 
-		if (!$selectedFilters[$filterSetId]) {
-			$filters[$filterSetId] = [];
+		if (in_array($filterId, $selectedFilters[$filterSetId])) {
+			return '*';
 		}
 
 		$selectedFilters[$filterSetId][] = $filterId;
@@ -134,7 +138,7 @@ class Product
 		$currencies = Orm::find('Currency');
 
 		$currency = $currencies->stream()->filter(function ($obj) {
-			return $obj->getId() == \Core\Config::get('site.currency');
+			return $obj->getId() === \Core\Config::get('site.currency');
 		})->findFirst();
 
 		$basicCurrency = $currencies->stream()->filter(function ($obj) {
@@ -150,10 +154,7 @@ class Product
 
 	public static function getByProductCategory($category, $limit)
 	{
-		$db = PDO::getInstance();
 		$category = \Admin\Object\ProductCategory::findBy(['url' => $category]);
-		$filterProducts = $db->rows('select Product as id from Product__ProductCategory where ProductCategory=' . $category->getId());
-
-		return Orm::find('Product', ['active', 'id'], [1, array_column($filterProducts, 'id')], ['limit' => $limit]);
+		return Orm::find('Product', ['active', 'product_categories.ProductCategory'], [1, $category->getId()], ['limit' => $limit]);
 	}
 }

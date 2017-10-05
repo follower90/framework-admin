@@ -75,7 +75,7 @@ class Catalog extends \Core\Object
 		}
 
 		$errors = $this->getErrors();
-		return empty($errors);
+		return count($errors) === 0;
 	}
 
 	public function getPhotoResourceId()

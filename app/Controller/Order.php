@@ -17,7 +17,7 @@ class Order extends Controller
 		$orders = \Core\Orm::find('Order', ['userId'], [\Core\App::getUser()->getId()])->getData();
 
 		$breadcrumbs = $this->renderBreadCrumbs([['name' => __('Orders')]]);
-		$data['content'] = $this->view->render('/templates/orders.phtml', ['orders' => $orders, 'breadcrumbs' => $breadcrumbs]);
+		$data['content'] = $this->view->render('templates/user/orders.phtml', ['orders' => $orders, 'breadcrumbs' => $breadcrumbs]);
 		return $this->render($data);
 	}
 
@@ -33,7 +33,7 @@ class Order extends Controller
 			}
 		}
 
-		$data['content'] = $this->view->render('/templates/order.phtml', [
+		$data['content'] = $this->view->render('templates/user/order.phtml', [
 			'order' => $order->getValues(),
 			'products' => $products
 		]);

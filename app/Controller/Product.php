@@ -2,9 +2,6 @@
 
 namespace App\Controller;
 
-use Admin\Object\Object_Resource;
-use Admin\Object\Product_Resource;
-use Core\Object;
 use Core\Orm;
 
 class Product extends Controller
@@ -19,7 +16,7 @@ class Product extends Controller
 			'product' => $product->getValues(),
 			'rating' => $product->getRating(),
 			'photos' => $product->getPhotos(),
-			'userinfo' => $this->user ? Orm::findOne('User_Info', ['userId'], $this->user->getId())->getValues() : [],
+			'userinfo' => $this->user ? Orm::findOne('User_Info', ['userId'], [$this->user->getId()])->getValues() : [],
 			'breadcrumbs' => $this->getBreadcrumbs($product),
 			'delivery_types' =>Orm::find('Delivery_Type')->getData(),
 			'payment_types' =>  Orm::find('Payment_Type')->getData(),
@@ -122,7 +119,7 @@ class Product extends Controller
 			array_push($data, ['url' => '/catalog/view/' . $catalog->getValue('url'), 'name' => $catalog->getValue('name')]);
 		}
 
-		if ($page == 'comments') {
+		if ($page === 'comments') {
 			array_push($data, ['url' => '/product/view/' .  $product->getValue('url'), 'name' => $product->getValue('name')]);
 			array_push($data, ['name' => __('Comments')]);
 		} else {

@@ -10,9 +10,11 @@
 	<div class="col-lg-12">
 		<div class="row">
 			<div class="col-lg-12">
-				<?php foreach ($vars['blogs'] as $blog) {
-					echo '<a href="/blog/view/' . $blog['url'] . '">' . $blog['name'] . '</a> <br/>';
-					?>
+				<?php foreach ($vars['blogs'] as $blog) { ?>
+					<div class="blog-list-item">
+						<a href="/blog/view/<?=$blog['url']; ?>"><?= $blog['name'] ; ?></a>
+						<p><?= $blog['text_m'] ; ?></p>
+					</div>
 				<?php } ?>
 			</div>
 		</div>

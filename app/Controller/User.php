@@ -46,7 +46,6 @@ class User extends Controller
 			$userProfile = $adapter->getUserProfile();
 		}
 		catch (\Exception $e) {
-			var_dump($e);exit;
 			$this->view->addNotice('error', __('Authorization error'));
 			$this->back();
 		}
@@ -56,7 +55,9 @@ class User extends Controller
 			'hybridauth_provider_uid' => $userProfile->identifier,
 		]);
 
-		if ($userHybridAuth) {
+		$user = \Core\App::get()->getUser();
+
+		if (!$user && $userHybridAuth) {
 			$user = \Admin\Object\User::find($userHybridAuth->getValue('userId'));
 		} else {
 			$user = \Admin\Object\User::findBy(['login' => $userProfile->displayName]);
@@ -74,6 +75,11 @@ class User extends Controller
 				$info->setValues([
 					'userId' => $user->getId(),
 					'email' => $userProfile->email,
+					'firstName' => $userProfile->firstName,
+					'lastName' => $userProfile->lastName,
+					'address' => '',
+					'phone' => '',
+					'city' => '',
 				]);
 
 				$info->save();
@@ -209,6 +215,22 @@ class User extends Controller
 			'breadcrumbs' => $this->renderBreadCrumbs([['name' => __('Profile')]])
 		]);
 		
+		return $this->render($data);
+	}
+
+	public function methodSocial_networks($args) {
+		if (!$user = \Core\App::get()->getUser()) {
+			Router::redirect('/user/login');
+		}
+
+		$networks = Orm::find('User_HybridAuth', ['userId'], [$user->getId()])->getData();
+
+		$data['content'] = $this->view->render('templates/user/social_networks.phtml', [
+			'connected_social_networks' => $networks,
+			'user' => $user->getValues(),
+			'breadcrumbs' => $this->renderBreadCrumbs([['name' => __('Social Networks')]])
+		]);
+
 		return $this->render($data);
 	}
 

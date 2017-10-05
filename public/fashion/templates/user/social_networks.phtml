@@ -1,0 +1,39 @@
+<div class="row">
+	<div class="col-lg-12">
+		<?php echo $vars['breadcrumbs']; ?>
+	</div>
+</div>
+
+<h2 class="sub-heading text-center">
+	<?= __('Social Networks') ?>
+</h2>
+
+<div class="row">
+	<div class="col-lg-12">
+		<ul class="nav nav-pills">
+			<li role="presentation"><a href="/user"><?= __('Profile') ?></a></li>
+			<li role="presentation"><a href="/order"><?= __('Orders') ?></a></li>
+			<li role="presentation" class="active"><a href="/user/social_networks"><?= __('Social Networks') ?></a></li>
+		</ul>
+	</div>
+</div>
+
+<br/>
+
+<div class="panel-body">
+	<h4><?= __('Connected social networks'); ?></h4>
+	<?php foreach ($vars['connected_social_networks'] as $item) {
+		echo '<p>- '.$item['hybridauth_provider_name'].'</p>';
+	}
+	?>
+</div>
+
+<div class="panel-body">
+	<h4><?= __('Connect more social networks'); ?></h4>
+	<div class="social-network-auth">
+		<a href="/user/socialAuth?provider=vk"><i class="fa fa-vk"></i></a>
+		<a href="/user/socialAuth?provider=twitter"><i class="fa fa-twitter"></i></a>
+		<a href="/user/socialAuth?provider=facebook"><i class="fa fa-facebook"></i></a>
+		<a href="/user/socialAuth?provider=google"><i class="fa fa-google"></i></a>
+	</div>
+</div>
