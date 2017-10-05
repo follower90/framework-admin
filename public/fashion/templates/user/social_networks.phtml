@@ -22,10 +22,9 @@
 
 <div class="panel-body">
 	<h4><?= __('Connected social networks'); ?></h4>
-	<?php foreach ($vars['connected_social_networks'] as $item) {
-		echo '<p>- '.$item['hybridauth_provider_name'].'</p>';
-	}
-	?>
+	<?php foreach ($vars['connected_social_networks'] as $item) { ?>
+		<p>- <?= $item['hybridauth_provider_name']; ?> <a href="/user/unlinkSocial?provider=<?= $item['hybridauth_provider_name']; ?>"><?= __('unlink'); ?></a></p>
+	<?php } ?>
 </div>
 
 <div class="panel-body">

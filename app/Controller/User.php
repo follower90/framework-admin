@@ -181,7 +181,7 @@ class User extends Controller
 
 	public function methodSave($args)
 	{
-		$user = \Core\App::get()->getUser();
+		$user = $this->_getUserOrDeny();
 		$info = Orm::findOne('User_Info', ['userId'], [$user->getId()]);
 
 		$password = trim($args['password']);
@@ -206,10 +206,7 @@ class User extends Controller
 
 	public function methodProfile()
 	{
-		if (!$user = \Core\App::get()->getUser()) {
-			Router::redirect('/user/login');
-		}
-
+		$user = $this->_getUserOrDeny();
 		$data['content'] = $this->view->render('templates/user/profile.phtml', [
 			'user' => $user->getValues(),
 			'breadcrumbs' => $this->renderBreadCrumbs([['name' => __('Profile')]])
@@ -219,10 +216,7 @@ class User extends Controller
 	}
 
 	public function methodSocial_networks($args) {
-		if (!$user = \Core\App::get()->getUser()) {
-			Router::redirect('/user/login');
-		}
-
+		$user = $this->_getUserOrDeny();
 		$networks = Orm::find('User_HybridAuth', ['userId'], [$user->getId()])->getData();
 
 		$data['content'] = $this->view->render('templates/user/social_networks.phtml', [
@@ -234,12 +228,32 @@ class User extends Controller
 		return $this->render($data);
 	}
 
+	public function methodUnlinkSocial($args) {
+		$user = $this->_getUserOrDeny();
+		$social = Orm::findOne('User_HybridAuth', ['userId', 'hybridauth_provider_name'], [$user->getId(), $args['provider']]);
+
+		if ($social) {
+			Orm::delete($social);
+		}
+
+		$this->back();
+	}
+
 	private function authorize($login, $password)
 	{
 		$authorizer = new \Admin\Authorize('User');
 		$this->user = $authorizer->login($login, $password, function ($pass) {
 			return $this->hashFunc($pass);
 		});
+	}
+
+	private function _getUserOrDeny() {
+		$user = \Core\App::get()->getUser();
+		if (!$user) {
+			Router::redirect('/user/login');
+		}
+
+		return $user;
 	}
 
 	private function hashFunc($password)
