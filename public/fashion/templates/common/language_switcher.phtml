@@ -5,7 +5,7 @@
 	</button>
 	<ul class="pull-left dropdown-menu">
 		<?php foreach ($vars['languages'] as $key => $lang) { ?>
-			<li><a tab-index="-1" href="/lang/?switch=<?= $key; ?>"><?= strtoupper($key); ?></a></li>
+			<li><a tab-index="-1" href="/lang/?switch=<?= $key; ?>"><?= $lang; ?></a></li>
 		<?php } ?>
 	</ul>
 </div>

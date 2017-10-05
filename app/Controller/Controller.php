@@ -29,7 +29,7 @@ class Controller extends \Core\Controller
 
 		$data['languages'] = Config::getAvailableLanguages();
 		$data['currencies'] = Orm::find('Currency')->getData();
-		$data['currency'] = Orm::load('Currency', Config::get('site.currency'))->getValue('symbol');
+		$data['currency'] = Orm::load('Currency', Config::get('site.currency'))->getValue('name');
 
 		$data['meta'] = Meta::getData();
 

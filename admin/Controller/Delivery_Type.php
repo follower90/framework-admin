@@ -56,7 +56,7 @@ class Delivery_Type extends Controller
 			}
 		}
 
-		Router::redirect('/admin/delivery_type/edit/' . $page->getId());
+		Router::redirect('/admin/delivery_type/edit/' . $type->getId());
 	}
 
 	public function methodDuplicate($args)
