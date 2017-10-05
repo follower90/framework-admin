@@ -2,8 +2,7 @@
 
 namespace App\Service;
 
-use \PHPMailer as PHPMailer;
-use \Admin\Object\Setting as Setting;
+use \Admin\Object\Setting;
 
 class Mail
 {
@@ -12,7 +11,7 @@ class Mail
 		$siteName = Setting::get('sitename');
 		$siteEmail = Setting::get('phpmailer.username');
 
-		$mail = new PHPMailer();
+		$mail = new \PHPMailer();
 		$mail->isSMTP();
 
 		$mail->SMTPAuth = true;
