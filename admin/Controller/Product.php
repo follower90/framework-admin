@@ -4,7 +4,6 @@ namespace Admin\Controller;
 
 use Admin\Object\Object_Resource;
 use Admin\Object\Setting;
-use Core\Library\String;
 use Admin\Paging;
 use Core\Orm;
 use Core\Router;
@@ -88,7 +87,7 @@ class Product extends Controller
 		}
 
 		if (empty($args['url'])) {
-			$args['url'] = String::translit($args['name']);
+			$args['url'] = _libString::translit($args['name']);
 		}
 
 		try {

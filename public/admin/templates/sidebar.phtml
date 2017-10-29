@@ -1,28 +1,21 @@
 <div class="navbar-default sidebar" role="navigation">
 	<div class="sidebar-nav navbar-collapse">
 		<ul class="nav" id="side-menu">
-
 			<?php foreach (\Admin\Object\Module::getTypesMap() as $type => $name) { ?>
 				<?php if (!$type) continue; ?>
-
 				<li><a href="#"><?= $name;?><span class="fa arrow"></span></a>
-				<ul class="nav nav-second-level">
+                    <ul class="nav nav-second-level">
 
-					<?php foreach ($vars['modules'] as $module) { ?>
-
-						<?php if ($module['type'] != $type) continue; ?>
-
-						<li>
-							<a href="/admin/<?= $module['url']; ?>">
-								<i class="fa fa-fw <?= $module['icon']; ?>"></i> <?= $module['name']; ?></a>
-						</li>
-					<?php } ?>
-
-
-				</ul></li>
-
+                        <?php foreach ($vars['modules'] as $module) { ?>
+                            <?php if ($module['type'] != $type) continue; ?>
+                            <li>
+                                <a href="/admin/<?= $module['url']; ?>">
+                                    <i class="fa fa-fw <?= $module['icon']; ?>"></i> <?= $module['name']; ?></a>
+                            </li>
+                        <?php } ?>
+                    </ul>
+                </li>
 			<?php } ?>
-
 		</ul>
 	</div>
 </div>

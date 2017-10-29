@@ -21,8 +21,8 @@
 			<div class="form-group">
 				<label><?= __('Type') ?></label>
 				<select class="form-control" name="type">
-					<option value="admin" <? if ($vars['translation']['type'] == 'admin') echo 'selected'; ?> ><?= __('Dashboard') ?></option>
-					<option value="app" <? if ($vars['translation']['type'] == 'app') echo 'selected'; ?>><?= __('Site') ?></option>
+					<option value="admin" <?php if ($vars['translation']['type'] == 'admin') echo 'selected'; ?> ><?= __('Dashboard') ?></option>
+					<option value="app" <?php if ($vars['translation']['type'] == 'app') echo 'selected'; ?>><?= __('Site') ?></option>
 				</select>
 			</div>
 			<div class="form-group">

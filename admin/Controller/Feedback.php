@@ -27,7 +27,7 @@ class Feedback extends Controller
 	{
 		$message = Orm::load('Feedback', $args['edit']);
 		$data['message'] = $message->getValues();
-		$data['content'] = $this->view->render('templates/modules/feedback/edit.phtml', $data);
+		$data['content'] = $this->view->render('templates/modules/feedback/view.phtml', $data);
 		return $this->render($data);
 	}
 

@@ -44,8 +44,7 @@ php -S localhost:4000
 ### Run with Docker
 
 ```
-docker build -t cms .
-docker run -v "$PWD":/var/www/cms -p 4000:80 -p 3333:3306 cms
+docker-compose up
 ```
 
 ### Run with nginx

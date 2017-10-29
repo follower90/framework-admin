@@ -1,72 +1,70 @@
 <div class="row">
-	<div class="col-lg-12">
-		<h1 class="page-header"><?= __('Translation') ?></h1>
-	</div>
+    <div class="col-lg-12">
+        <h1 class="page-header"><?= __('Translation') ?></h1>
+    </div>
 </div>
 
 <div class="row">
-	<div class="col-lg-6">
-		<button class="btn btn-warning"
-		onclick="location.href='/admin/translation/cache'"><?= __('Update cache'); ?></button>
-		<button class="btn btn-primary"
-				onclick="location.href='/admin/translation/new'"><?= __('Add new translation') ?></button>
-	</div>
+    <div class="col-lg-6">
+        <button class="btn btn-warning"
+                onclick="location.href='/admin/translation/cache'"><?= __('Update cache'); ?></button>
+        <button class="btn btn-primary"
+                onclick="location.href='/admin/translation/new'"><?= __('Add new translation') ?></button>
+    </div>
 </div>
 
 <br/>
 
 <div class="panel panel-default">
-	<div class="panel-heading">
-		<?= __('Filter') ?>
-	</div>
-	<div class="panel-body">
-		<form action="/admin/translation/">
-			<div class="form-group">
-				<label><?= __('Type') ?></label>
-				<select class="form-control" name="type">
-					<option
-						value="admin" <? if ($vars['filter']['type'] == 'admin') echo 'selected'; ?>><?= __('Dashboard') ?></option>
-					<option
-						value="app" <? if ($vars['filter']['type'] == 'app') echo 'selected'; ?>><?= __('Site') ?></option>
-				</select>
-			</div>
-			<div class="form-group">
-				<input type="submit" class="btn btn-success" value="<?= __('Filter') ?>"/>
-			</div>
-		</form>
-	</div>
+    <div class="panel-heading">
+        <?= __('Filter') ?>
+    </div>
+    <div class="panel-body">
+        <form action="/admin/translation/">
+            <div class="form-group">
+                <label><?= __('Type') ?></label>
+                <select class="form-control" name="type">
+                    <option value="admin" <?php if ($vars['filter']['type'] == 'admin') echo 'selected'; ?>><?= __('Dashboard') ?></option>
+                    <option value="app" <?php if ($vars['filter']['type'] == 'app') echo 'selected'; ?>><?= __('Site') ?></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-success" value="<?= __('Filter') ?>"/>
+            </div>
+        </form>
+    </div>
 </div>
 
 <br/>
 <div class="dataTable_wrapper">
-	<div class="dataTables_wrapper">
-		<div class="row">
-			<div class="col-lg-12">
-				<table class="table table-bordered dataTable">
-					<thead>
-					<tr>
-						<th>ID</th>
-						<th><?= __('Alias') ?></th>
-						<th><?= __('Translation') ?></th>
-						<th><?= __('Actions') ?></th>
-					</tr>
-					</thead>
-					<tbody>
-					<?php
-					foreach ($vars['translations'] as $row) {
-						echo '
+    <div class="dataTables_wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered dataTable">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th><?= __('Alias') ?></th>
+                        <th><?= __('Translation') ?></th>
+                        <th><?= __('Actions') ?></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    foreach ($vars['translations'] as $row) {
+                        echo '
                         <tr>
                             <td>' . $row['id'] . '</td>
                             <td>' . $row['alias'] . '</td>
                             <td>' . (isset($row['value']) ? $row['value'] : '-') . '</td>
                             <td>' . _snippet('actions', [$row['id'], 'translation', ['delete']]) . '</td>
                         </tr>';
-					}
-					?>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<?php echo $vars['paging']; ?>
-	</div>
+                    }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <?php echo $vars['paging']; ?>
+    </div>
 </div>

@@ -13,7 +13,7 @@
 			<ul class="nav navbar-nav ">
 				<?php foreach ($vars['main_menu'] as $row) { ?>
 
-					<? $active = (\Core\Router::get('uri') == $row['url']) ? 'class="active"' : '';?>
+					<?php $active = (\Core\Router::get('uri') == $row['url']) ? 'class="active"' : '';?>
 					<li <?=$active;?>><a href="<?=$row['url'];?>"><?=$row['name'];?></a></li>
 				<?php } ?>
 			</ul>
